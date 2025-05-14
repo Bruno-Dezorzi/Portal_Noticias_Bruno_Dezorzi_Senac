@@ -49,4 +49,11 @@ public class Categoria {
     this.descricao = descricao;
     this.categoriaPai = categoriaPai;
   }
+
+  public Categoria(String descricao, Categoria categoriaPai) {
+    this.descricao = descricao;
+    this.categoriaPai = categoriaPai;
+  }
+
+  public Categoria() {}
 }
