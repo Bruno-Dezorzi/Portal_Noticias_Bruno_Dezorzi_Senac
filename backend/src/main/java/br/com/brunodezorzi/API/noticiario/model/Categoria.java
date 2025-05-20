@@ -1,4 +1,4 @@
-package br.com.brunodezorzi.API.noticiario.model;
+package br.com.brunodezorzi.api.noticiario.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +17,11 @@ public class Categoria {
   private String descricao;
 
   @ManyToOne
-  @JoinColumn(name = "categoria_pai_id") // nome da coluna de FK na tabela
+  @JoinColumn(
+    name = "categoria_pai_id",
+    referencedColumnName = "id",
+    nullable = true
+  ) // nome da coluna de FK na tabela
   private Categoria categoriaPai;
 
   public Long getId() {

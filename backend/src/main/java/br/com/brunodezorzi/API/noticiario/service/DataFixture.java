@@ -1,14 +1,14 @@
-package br.com.brunodezorzi.API.noticiario.service;
+package br.com.brunodezorzi.api.noticiario.service;
 
-import br.com.brunodezorzi.API.noticiario.model.Autor;
-import br.com.brunodezorzi.API.noticiario.model.Categoria;
-import br.com.brunodezorzi.API.noticiario.model.Noticia;
-import br.com.brunodezorzi.API.noticiario.model.Usuario;
-import br.com.brunodezorzi.API.noticiario.repository.AutorRepository;
-import br.com.brunodezorzi.API.noticiario.repository.CategoriaRepository;
-import br.com.brunodezorzi.API.noticiario.repository.NoticiaRepository;
-import br.com.brunodezorzi.API.noticiario.repository.PessoaRepository;
-import br.com.brunodezorzi.API.noticiario.repository.UsuarioRepository;
+import br.com.brunodezorzi.api.noticiario.model.Autor;
+import br.com.brunodezorzi.api.noticiario.model.Categoria;
+import br.com.brunodezorzi.api.noticiario.model.Noticia;
+import br.com.brunodezorzi.api.noticiario.model.Usuario;
+import br.com.brunodezorzi.api.noticiario.repository.AutorRepository;
+import br.com.brunodezorzi.api.noticiario.repository.CategoriaRepository;
+import br.com.brunodezorzi.api.noticiario.repository.NoticiaRepository;
+import br.com.brunodezorzi.api.noticiario.repository.PessoaRepository;
+import br.com.brunodezorzi.api.noticiario.repository.UsuarioRepository;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
 import java.time.LocalDate;

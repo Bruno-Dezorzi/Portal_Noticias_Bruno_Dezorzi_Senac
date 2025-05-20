@@ -1,6 +1,6 @@
-package br.com.brunodezorzi.API.noticiario.repository;
+package br.com.brunodezorzi.api.noticiario.repository;
 
-import br.com.brunodezorzi.API.noticiario.model.Noticia;
+import br.com.brunodezorzi.api.noticiario.model.Noticia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface NoticiaRepository extends JpaRepository<Noticia, Long> {}

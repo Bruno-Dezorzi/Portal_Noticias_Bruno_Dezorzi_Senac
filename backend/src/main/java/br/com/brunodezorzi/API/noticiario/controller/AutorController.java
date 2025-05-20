@@ -1,13 +1,17 @@
-package br.com.brunodezorzi.API.noticiario.controller;
+package br.com.brunodezorzi.api.noticiario.controller;
 
-import br.com.brunodezorzi.API.noticiario.model.Autor;
-import br.com.brunodezorzi.API.noticiario.repository.AutorRepository;
+import br.com.brunodezorzi.api.noticiario.model.Autor;
+import br.com.brunodezorzi.api.noticiario.repository.AutorRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,17 +22,28 @@ public class AutorController {
   private AutorRepository autorRepository;
 
   //listar autores
-  @GetMapping("/autor")
-  @ResponseStatus(HttpStatus.OK)
-  public List<Autor> getAllAutores() {
-    return this.autorRepository.findAll();
+  @GetMapping("/listar")
+  public ResponseEntity<List<Autor>> listar() {
+    List<Autor> autores = autorRepository.findAll();
+    return ResponseEntity.ok(autores);
   }
+
   // pegar pelo id
-  /*@GetMapping("/autor/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public ResponseEntity<Autor> getAutorById(@PathVariable(value= "id") long Id)  throws ResourceNotFoundException {
-    Autor autor = autorRepository.findById(Id)
-	      .orElseThrow(() -> new ResourceNotFoundException("Conta não encontrada para o ID :: " + cadastroId));
-	    return ResponseEntity.ok().body(cadastro);
-  }*/
+  @GetMapping("/listar/{id}")
+  public ResponseEntity<Autor> listar(@PathVariable(value = "id") Long Id) {
+    Optional<Autor> autor = autorRepository.findById(Id);
+    if (autor.isPresent()) {
+      return new ResponseEntity<>(autor.get(), HttpStatus.OK);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @PutMapping("/novo/{id}")
+  public ResponseEntity<Autor> novo(
+    @PathVariable(value = "id") Long id,
+    @RequestBody Autor autor
+  ) {
+    return null;
+  }
 }

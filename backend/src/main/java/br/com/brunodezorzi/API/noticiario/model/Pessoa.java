@@ -1,4 +1,4 @@
-package br.com.brunodezorzi.API.noticiario.model;
+package br.com.brunodezorzi.api.noticiario.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

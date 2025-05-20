@@ -1,3 +1,3 @@
-package br.com.brunodezorzi.API.noticiario.controller;
+package br.com.brunodezorzi.api.noticiario.controller;
 
 public class UsuarioController {}
