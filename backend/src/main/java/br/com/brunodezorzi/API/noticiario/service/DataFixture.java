@@ -38,7 +38,7 @@ public class DataFixture implements CommandLineRunner {
   public void run(String... args) throws Exception {
     // Categoria: Esportes
     Categoria esportes = new Categoria();
-    esportes.setDescricao("Esportes");
+    esportes.setNome("Esportes");
     categoriaRepository.save(esportes);
 
     categoriaRepository.save(new Categoria("Futebol", esportes));
@@ -47,7 +47,7 @@ public class DataFixture implements CommandLineRunner {
 
     // Categoria: Lazer e Cultura
     Categoria lazerCultura = new Categoria();
-    lazerCultura.setDescricao("Lazer e Cultura");
+    lazerCultura.setNome("Lazer e Cultura");
     categoriaRepository.save(lazerCultura);
 
     categoriaRepository.save(new Categoria("Cinema", lazerCultura));
@@ -56,7 +56,7 @@ public class DataFixture implements CommandLineRunner {
 
     // Categoria: Política
     Categoria politica = new Categoria();
-    politica.setDescricao("Política");
+    politica.setNome("Política");
     categoriaRepository.save(politica);
 
     categoriaRepository.save(new Categoria("Governo", politica));
@@ -65,7 +65,7 @@ public class DataFixture implements CommandLineRunner {
 
     // Categoria: Internacional
     Categoria internacional = new Categoria();
-    internacional.setDescricao("Internacional");
+    internacional.setNome("Internacional");
     categoriaRepository.save(internacional);
 
     categoriaRepository.save(new Categoria("Diplomacia", internacional));
@@ -74,7 +74,7 @@ public class DataFixture implements CommandLineRunner {
 
     // Categoria: Economia
     Categoria economia = new Categoria();
-    economia.setDescricao("Economia");
+    economia.setNome("Economia");
     categoriaRepository.save(economia);
 
     categoriaRepository.save(new Categoria("Mercado Financeiro", economia));

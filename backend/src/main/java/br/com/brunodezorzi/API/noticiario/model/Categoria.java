@@ -14,7 +14,7 @@ public class Categoria {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String descricao;
+  private String nome;
 
   @ManyToOne
   @JoinColumn(
@@ -24,20 +24,17 @@ public class Categoria {
   ) // nome da coluna de FK na tabela
   private Categoria categoriaPai;
 
+  public Categoria(String nome, Categoria categoriaPai) {
+    this.categoriaPai = categoriaPai;
+    this.nome = nome;
+  }
+
   public Long getId() {
     return id;
   }
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public String getDescricao() {
-    return descricao;
-  }
-
-  public void setDescricao(String descricao) {
-    this.descricao = descricao;
   }
 
   public Categoria getCategoriaPai() {
@@ -48,16 +45,13 @@ public class Categoria {
     this.categoriaPai = categoriaPai;
   }
 
-  public Categoria(Long id, String descricao, Categoria categoriaPai) {
-    this.id = id;
-    this.descricao = descricao;
-    this.categoriaPai = categoriaPai;
-  }
-
-  public Categoria(String descricao, Categoria categoriaPai) {
-    this.descricao = descricao;
-    this.categoriaPai = categoriaPai;
-  }
-
   public Categoria() {}
+
+  public String getNome() {
+    return nome;
+  }
+
+  public void setNome(String nome) {
+    this.nome = nome;
+  }
 }
