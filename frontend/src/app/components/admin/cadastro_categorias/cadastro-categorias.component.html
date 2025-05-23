@@ -11,52 +11,52 @@
         .navbar {
             background-color: #0d6efd !important;
         }
-        
+
         .navbar-brand, .nav-link {
             color: white !important;
         }
-        
+
         .admin-header {
             background-color: #f8f9fa;
             padding: 20px 0;
             margin-bottom: 30px;
             border-bottom: 1px solid #dee2e6;
         }
-        
+
         .category-card {
             margin-bottom: 20px;
             transition: transform 0.3s;
         }
-        
+
         .category-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .admin-sidebar {
             background-color: #f8f9fa;
             padding: 20px;
             border-radius: 5px;
             height: 100%;
         }
-        
+
         .admin-sidebar .list-group-item.active {
             background-color: #0d6efd;
             border-color: #0d6efd;
         }
-        
+
         .admin-content {
             background-color: #ffffff;
             padding: 25px;
             border-radius: 5px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
-        
+
         .category-list {
             max-height: 400px;
             overflow-y: auto;
         }
-        
+
         .badge-count {
             font-size: 0.8rem;
             background-color: #0d6efd;
@@ -167,7 +167,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Main Content -->
             <div class="col-lg-9">
                 <div class="row">
@@ -177,50 +177,50 @@
                             <h4 class="mb-4" id="formTitle">Adicionar Nova Categoria</h4>
                             <form id="categoryForm">
                                 <input type="hidden" id="categoryId" value="">
-                                
+
                                 <div class="mb-3">
                                     <label for="categoryName" class="form-label">Nome da Categoria</label>
-                                    <input type="text" class="form-control" id="categoryName" required 
+                                    <input type="text" class="form-control" id="categoryName" required
                                            placeholder="Ex: Tecnologia, Saúde, Ciência...">
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="categorySlug" class="form-label">Slug (URL)</label>
                                     <div class="input-group">
                                         <span class="input-group-text">categoria.html?cat=</span>
-                                        <input type="text" class="form-control" id="categorySlug" required 
+                                        <input type="text" class="form-control" id="categorySlug" required
                                                placeholder="tecnologia">
                                     </div>
                                     <div class="form-text">Identificador único usado na URL (sem espaços ou caracteres especiais)</div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="categoryDescription" class="form-label">Descrição</label>
-                                    <textarea class="form-control" id="categoryDescription" rows="3" 
+                                    <textarea class="form-control" id="categoryDescription" rows="3"
                                               placeholder="Breve descrição da categoria..."></textarea>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="categoryIcon" class="form-label">Ícone</label>
                                     <div class="input-group">
                                         <span class="input-group-text"><i class="fas fa-icons"></i></span>
-                                        <input type="text" class="form-control" id="categoryIcon" 
+                                        <input type="text" class="form-control" id="categoryIcon"
                                                placeholder="fa-newspaper">
                                     </div>
                                     <div class="form-text">Classe do ícone Font Awesome (ex: fa-futbol, fa-film, fa-chart-line)</div>
                                 </div>
-                                
+
                                 <div class="mb-3">
                                     <label for="categoryColor" class="form-label">Cor</label>
-                                    <input type="color" class="form-control form-control-color" id="categoryColor" 
+                                    <input type="color" class="form-control form-control-color" id="categoryColor"
                                            value="#0d6efd" title="Escolha uma cor para a categoria">
                                 </div>
-                                
+
                                 <div class="mb-3 form-check">
                                     <input type="checkbox" class="form-check-input" id="categoryFeatured">
                                     <label class="form-check-label" for="categoryFeatured">Destacar no menu principal</label>
                                 </div>
-                                
+
                                 <div class="d-flex justify-content-between">
                                     <button type="button" class="btn btn-secondary" id="cancelEditBtn" style="display: none;">
                                         <i class="fas fa-times me-1"></i> Cancelar
@@ -232,7 +232,7 @@
                             </form>
                         </div>
                     </div>
-                    
+
                     <!-- List of categories -->
                     <div class="col-md-7">
                         <div class="admin-content">
@@ -245,7 +245,7 @@
                                     </button>
                                 </div>
                             </div>
-                            
+
                             <div class="category-list">
                                 <table class="table table-hover">
                                     <thead>
@@ -426,7 +426,7 @@
                         Av. Paulista, 1000<br>
                         São Paulo, SP 01310-100<br>
                         <i class="fas fa-phone"></i> (11) 3456-7890<br>
-                        <i class="fas fa-envelope"></i> 
+                        <i class="fas fa-envelope"></i>
                     </address>
                 </div>
             </div>
@@ -447,15 +447,15 @@
                     const categoryId = this.getAttribute('data-id');
                     const categoryRow = this.closest('tr');
                     const categoryName = categoryRow.querySelector('td:nth-child(2)').textContent.trim();
-                    
+
                     document.getElementById('deleteCategoryName').textContent = categoryName;
                     document.getElementById('confirmDeleteBtn').setAttribute('data-id', categoryId);
-                    
+
                     const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
                     deleteModal.show();
                 });
             });
-            
+
             // Edit functionality
             const editButtons = document.querySelectorAll('.edit-btn');
             editButtons.forEach(button => {
@@ -466,7 +466,7 @@
                     const categoryIcon = categoryRow.querySelector('td:nth-child(2) i').className.split(' ')[1];
                     const categoryColor = categoryRow.querySelector('td:nth-child(2) span:first-child').style.backgroundColor;
                     const categoryFeatured = categoryRow.querySelector('td:nth-child(4) i').classList.contains('text-success');
-                    
+
                     // Fill the form with category data
                     document.getElementById('categoryId').value = categoryId;
                     document.getElementById('categoryName').value = categoryName;
@@ -474,37 +474,37 @@
                     document.getElementById('categoryIcon').value = categoryIcon;
                     document.getElementById('categoryColor').value = rgbToHex(categoryColor);
                     document.getElementById('categoryFeatured').checked = categoryFeatured;
-                    
+
                     // Change form title and show cancel button
                     document.getElementById('formTitle').textContent = 'Editar Categoria';
                     document.getElementById('submitBtn').innerHTML = '<i class="fas fa-save me-1"></i> Atualizar Categoria';
                     document.getElementById('cancelEditBtn').style.display = 'block';
-                    
+
                     // Scroll to form
                     document.querySelector('.admin-content').scrollIntoView({behavior: 'smooth'});
                 });
             });
-            
+
             // Cancel edit button
             document.getElementById('cancelEditBtn').addEventListener('click', function() {
                 resetForm();
             });
-            
+
             // Form submission
             document.getElementById('categoryForm').addEventListener('submit', function(e) {
                 e.preventDefault();
-                
+
                 // Get form data
                 const categoryId = document.getElementById('categoryId').value;
                 const categoryName = document.getElementById('categoryName').value;
-                
+
                 // Show success message (would normally save to database)
                 alert(`Categoria "${categoryName}" ${categoryId ? 'atualizada' : 'adicionada'} com sucesso!`);
-                
+
                 // Reset form
                 resetForm();
             });
-            
+
             // Function to reset form
             function resetForm() {
                 document.getElementById('categoryForm').reset();
@@ -514,25 +514,25 @@
                 document.getElementById('cancelEditBtn').style.display = 'none';
                 document.getElementById('categoryColor').value = '#0d6efd';
             }
-            
+
             // Function to convert RGB to HEX
             function rgbToHex(rgb) {
                 if (!rgb) return '#0d6efd';
-                
+
                 // If rgb is already a hex value
                 if (rgb.startsWith('#')) return rgb;
-                
+
                 // Parse RGB
                 const rgbArray = rgb.match(/\d+/g);
                 if (!rgbArray || rgbArray.length < 3) return '#0d6efd';
-                
+
                 const r = parseInt(rgbArray[0]);
                 const g = parseInt(rgbArray[1]);
                 const b = parseInt(rgbArray[2]);
-                
+
                 return '#' + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
             }
-            
+
             // Auto-generate slug from category name
             document.getElementById('categoryName').addEventListener('input', function() {
                 const name = this.value;
@@ -542,10 +542,10 @@
                     .replace(/[^\w\s-]/g, '') // Remove caracteres especiais
                     .replace(/\s+/g, '-') // Substitui espaços por hifens
                     .replace(/-+/g, '-'); // Remove hifens duplicados
-                
+
                 document.getElementById('categorySlug').value = slug;
             });
-            
+
             // Simulate logout
             document.getElementById('logoutBtn').addEventListener('click', function() {
                 localStorage.removeItem('isLoggedIn');

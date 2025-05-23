@@ -12,37 +12,37 @@
         .navbar {
             background-color: #0d6efd !important;
         }
-        
+
         .navbar-brand, .nav-link {
             color: white !important;
         }
-        
+
         .carousel-caption {
             background-color: rgba(238, 229, 229, 0.247);
             border-radius: 10px;
             padding: 20px;
         }
-        
+
         .news-card {
             margin-bottom: 20px;
             transition: transform 0.3s;
         }
-        
+
         .news-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         .news-image {
             height: 200px;
             object-fit: cover;
         }
-        
+
         .news-date {
             color: #6c757d;
             font-size: 0.9rem;
         }
-        
+
         .login-form {
             max-width: 400px;
             margin: 0 auto;
@@ -51,31 +51,31 @@
             border-radius: 5px;
             margin-top: 50px;
         }
-        
+
         .comment-section {
             margin-top: 30px;
         }
-        
+
         .comment {
             border-bottom: 1px solid #eee;
             padding: 15px 0;
         }
-        
+
         .admin-area {
             background-color: #f8f9fa;
             padding: 20px;
             border-radius: 5px;
         }
-        
+
         #mainCarousel .carousel-item {
             height: 400px;
         }
-        
+
         #mainCarousel .carousel-item img {
             height: 100%;
             object-fit: cover;
         }
-        
+
         .news-thumbnail {
             width: 100px;
             height: 100px;
@@ -119,6 +119,9 @@
                     <button class="btn btn-outline-light" type="submit">Buscar</button>
                 </form>
                 <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="../admin/dashboard-adm/dashboard-adm.component.html" id="loginBtn">Admin</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../login/login.component.html" id="loginBtn">Entrar</a>
                     </li>
@@ -179,7 +182,7 @@
             <!-- Main News Column -->
             <div class="col-lg-8">
                 <h3 class="mb-4">Notícias Recentes</h3>
-                
+
                 <!-- News Item -->
                 <div class="card news-card">
                     <div class="row g-0">
@@ -196,7 +199,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- News Item -->
                 <div class="card news-card">
                     <div class="row g-0">
@@ -213,7 +216,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- News Item -->
                 <div class="card news-card">
                     <div class="row g-0">
@@ -230,7 +233,7 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- News Item -->
                 <div class="card news-card">
                     <div class="row g-0">
@@ -248,7 +251,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Sidebar -->
             <div class="col-lg-4">
                 <div class="card mb-4">
@@ -259,7 +262,7 @@
                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitas elit libera, a pharetra augue. Aenean iscinia bibendum nulla sed consectetur. Donec sed odio dui. Cras justo adio, dapibus ac facilisis in, egestas eget quam.</p>
                     </div>
                 </div>
-                
+
                 <div class="card mb-4">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0">Categorias</h5>
@@ -289,7 +292,7 @@
                         </ul>
                     </div>
                 </div>
-                
+
                 <div class="card">
                     <div class="card-header bg-primary text-white">
                         <h5 class="mb-0">Mais Lidas</h5>
@@ -346,7 +349,7 @@
                         Av. Paulista, 1000<br>
                         São Paulo, SP 01310-100<br>
                         <i class="fas fa-phone"></i> (11) 3456-7890<br>
-                        <i class="fas fa-envelope"></i> 
+                        <i class="fas fa-envelope"></i>
                     </address>
                 </div>
             </div>
@@ -364,7 +367,7 @@
             // Verificar se o usuário está logado
             const isLoggedIn = localStorage.getItem('isLoggedIn');
             const loginBtn = document.getElementById('loginBtn');
-            
+
             if (isLoggedIn === 'true') {
                 loginBtn.textContent = 'Minha Conta';
                 loginBtn.href = 'minha-conta.html';
