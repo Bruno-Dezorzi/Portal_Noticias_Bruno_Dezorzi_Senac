@@ -7,8 +7,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,11 +41,35 @@ public class AutorController {
     }
   }
 
-  @PutMapping("/novo/{id}")
-  public ResponseEntity<Autor> novo(
+  @PostMapping("/novo")
+  public ResponseEntity<Autor> novo(@RequestBody Autor autor) {
+    return new ResponseEntity<>(autorRepository.save(autor), HttpStatus.OK);
+  }
+
+  @PutMapping("/atualizar/{id}")
+  public ResponseEntity<Autor> atualizar(
     @PathVariable(value = "id") Long id,
-    @RequestBody Autor autor
+    @RequestBody Autor novAutor
   ) {
-    return null;
+    Optional<Autor> autor = autorRepository.findById(id);
+    if (autor.isPresent()) {
+      return new ResponseEntity<>(
+        autorRepository.save(novAutor),
+        HttpStatus.OK
+      );
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+  }
+
+  @DeleteMapping("/remover/{id}")
+  public ResponseEntity<Void> remover(@PathVariable("id") Long id) {
+    Optional<Autor> autor = autorRepository.findById(id);
+    if (autor.isPresent()) {
+      autorRepository.deleteById(id);
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    } else {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
   }
 }

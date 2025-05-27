@@ -37,9 +37,9 @@
         }
 
         .form-container {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px;
             background-color: #f8f9fa;
             border-radius: 10px;
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
@@ -56,6 +56,7 @@
 
         .form-label {
             font-weight: bold;
+            color: #2c3e50;
         }
 
         .required-field::after {
@@ -67,8 +68,9 @@
         .btn-publish {
             background-color: #0d6efd;
             color: white;
-            padding: 10px 30px;
+            padding: 12px 35px;
             transition: all 0.3s;
+            font-weight: bold;
         }
 
         .btn-publish:hover {
@@ -76,30 +78,44 @@
             transform: translateY(-2px);
         }
 
-        .editor-toolbar {
-            background-color: #f8f9fa;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-bottom: none;
-            border-radius: 5px 5px 0 0;
+        .section-divider {
+            border-top: 2px solid #dee2e6;
+            margin: 30px 0 20px 0;
+            padding-top: 20px;
         }
 
-        .editor-toolbar button {
-            margin-right: 5px;
-            background: none;
-            border: 1px solid #ddd;
-            border-radius: 3px;
-            padding: 5px 10px;
-            cursor: pointer;
+        .section-title {
+            color: #495057;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
         }
 
-        .editor-toolbar button:hover {
-            background-color: #e9ecef;
+        .form-section {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #0d6efd;
         }
 
-        #content-editor {
-            min-height: 300px;
-            border-radius: 0 0 5px 5px;
+        .btn-add-new {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .btn-add-new:hover {
+            background-color: #218838;
+        }
+
+        .info-text {
+            font-size: 0.9rem;
+            color: #6c757d;
+            font-style: italic;
         }
     </style>
 </head>
@@ -163,86 +179,183 @@
 
                 <div class="form-container">
                     <form id="newsForm">
-                        <div class="mb-3">
-                            <label for="title" class="form-label required-field">Título da Notícia</label>
-                            <input type="text" class="form-control" id="title" placeholder="Digite o título da notícia" required>
-                        </div>
+                        <!-- Seção: Informações Básicas da Notícia -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-newspaper me-2"></i>Informações da Notícia</h4>
 
-                        <div class="mb-3">
-                            <label for="subtitle" class="form-label">Subtítulo</label>
-                            <input type="text" class="form-control" id="subtitle" placeholder="Digite o subtítulo (opcional)">
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="category" class="form-label required-field">Categoria</label>
-                                <select class="form-select" id="category" required>
-                                    <option value="" selected disabled>Selecione uma categoria</option>
-                                    <option value="esportes">Esportes</option>
-                                    <option value="lazer">Lazer</option>
-                                    <option value="politica">Política</option>
-                                    <option value="economia">Economia</option>
-                                    <option value="internacional">Internacional</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="publishDate" class="form-label required-field">Data de Publicação</label>
-                                <input type="date" class="form-control" id="publishDate" required>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="summary" class="form-label required-field">Resumo da Notícia</label>
-                            <textarea class="form-control" id="summary" rows="3" placeholder="Digite um breve resumo da notícia" required></textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="featured" class="form-check-label">
-                                <input class="form-check-input me-2" type="checkbox" id="featured">
-                                Destaque no carrossel principal
-                            </label>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="coverImage" class="form-label required-field">Imagem de Capa</label>
-                            <input type="file" class="form-control" id="coverImage" accept="image/*" required>
-                            <img id="imagePreview" class="preview-image mt-2" alt="Prévia da imagem">
-                            <small class="form-text text-muted">A imagem deve ter pelo menos 1200x400 pixels para melhor visualização</small>
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="content" class="form-label required-field">Conteúdo da Notícia</label>
-
-                            <div class="editor-toolbar">
-                                <button type="button" data-command="bold"><i class="fas fa-bold"></i></button>
-                                <button type="button" data-command="italic"><i class="fas fa-italic"></i></button>
-                                <button type="button" data-command="underline"><i class="fas fa-underline"></i></button>
-                                <button type="button" data-command="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
-                                <button type="button" data-command="insertOrderedList"><i class="fas fa-list-ol"></i></button>
-                                <button type="button" data-command="createLink"><i class="fas fa-link"></i></button>
-                                <button type="button" data-command="insertImage"><i class="fas fa-image"></i></button>
+                            <div class="mb-3">
+                                <label for="id" class="form-label">ID da Notícia</label>
+                                <input type="number" class="form-control" id="id" placeholder="Deixe em branco para auto-geração">
+                                <small class="info-text">Se deixado em branco, será gerado automaticamente</small>
                             </div>
 
-                            <div class="form-control" id="content-editor" contenteditable="true"></div>
-                            <textarea id="content" class="d-none"></textarea>
+                            <div class="mb-3">
+                                <label for="titulo" class="form-label required-field">Título da Notícia</label>
+                                <input type="text" class="form-control" id="titulo" placeholder="Digite o título da notícia" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="subtitulo" class="form-label">Subtítulo</label>
+                                <input type="text" class="form-control" id="subtitulo" placeholder="Digite o subtítulo (opcional)">
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="dataPublicacao" class="form-label required-field">Data de Publicação</label>
+                                <input type="datetime-local" class="form-control" id="dataPublicacao" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="resumo" class="form-label required-field">Resumo da Notícia</label>
+                                <textarea class="form-control" id="resumo" rows="3" placeholder="Digite um breve resumo da notícia" required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="destaque" class="form-check-label">
+                                    <input class="form-check-input me-2" type="checkbox" id="destaque">
+                                    Destaque no carrossel principal
+                                </label>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="tags" class="form-label">Tags</label>
-                            <input type="text" class="form-control" id="tags" placeholder="Digite as tags separadas por vírgula">
-                            <small class="form-text text-muted">Exemplo: futebol, campeonato, brasileiro</small>
+                        <!-- Seção: Categoria -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-tags me-2"></i>Categoria</h4>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="categoria" class="form-label">Selecionar Categoria</label>
+                                    <select class="form-select" id="categoria">
+                                        <option value="" selected>Selecione uma categoria existente</option>
+                                        <option value="1">Esportes</option>
+                                        <option value="2">Lazer</option>
+                                        <option value="3">Política</option>
+                                        <option value="4">Economia</option>
+                                        <option value="5">Internacional</option>
+                                        <option value="6">Tecnologia</option>
+                                        <option value="7">Saúde</option>
+                                        <option value="8">Educação</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button type="button" class="btn btn-add-new" data-bs-toggle="modal" data-bs-target="#categoriaModal">
+                                        <i class="fas fa-plus me-1"></i>Nova Categoria
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Campos para Nova Categoria -->
+                            <div id="novaCategoriaFields" class="mt-3" style="display: none;">
+                                <div class="alert alert-info">
+                                    <h6><i class="fas fa-info-circle me-2"></i>Cadastrar Nova Categoria</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="categoriaId" class="form-label">ID</label>
+                                        <input type="number" class="form-control" id="categoriaId" placeholder="ID">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label for="categoriaNome" class="form-label required-field">Nome da Categoria</label>
+                                        <input type="text" class="form-control" id="categoriaNome" placeholder="Nome da categoria">
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <label for="categoriaDescricao" class="form-label">Descrição</label>
+                                    <textarea class="form-control" id="categoriaDescricao" rows="2" placeholder="Descrição da categoria (opcional)"></textarea>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label for="author" class="form-label required-field">Autor</label>
-                            <input type="text" class="form-control" id="author" required>
+                        <!-- Seção: Autor -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-user-edit me-2"></i>Autor</h4>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label for="autor" class="form-label">Selecionar Autor</label>
+                                    <select class="form-select" id="autor">
+                                        <option value="" selected>Selecione um autor existente</option>
+                                        <option value="1">João Silva - Repórter Esportivo</option>
+                                        <option value="2">Maria Santos - Jornalista Política</option>
+                                        <option value="3">Pedro Oliveira - Correspondente Internacional</option>
+                                        <option value="4">Ana Costa - Editora de Economia</option>
+                                        <option value="5">Carlos Mendes - Repórter Geral</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4 d-flex align-items-end">
+                                    <button type="button" class="btn btn-add-new" onclick="toggleNovoAutor()">
+                                        <i class="fas fa-plus me-1"></i>Novo Autor
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Campos para Novo Autor -->
+                            <div id="novoAutorFields" class="mt-3" style="display: none;">
+                                <div class="alert alert-info">
+                                    <h6><i class="fas fa-info-circle me-2"></i>Cadastrar Novo Autor</h6>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="autorId" class="form-label">ID</label>
+                                        <input type="number" class="form-control" id="autorId" placeholder="ID">
+                                    </div>
+                                    <div class="col-md-9">
+                                        <label for="autorNome" class="form-label required-field">Nome Completo</label>
+                                        <input type="text" class="form-control" id="autorNome" placeholder="Nome completo do autor">
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="autorEmail" class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="autorEmail" placeholder="email@exemplo.com">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="autorCargo" class="form-label">Cargo/Função</label>
+                                        <input type="text" class="form-control" id="autorCargo" placeholder="Ex: Repórter, Editor, Correspondente">
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <label for="autorBiografia" class="form-label">Biografia</label>
+                                    <textarea class="form-control" id="autorBiografia" rows="2" placeholder="Breve biografia do autor (opcional)"></textarea>
+                                </div>
+                            </div>
                         </div>
 
+                        <!-- Seção: Conteúdo e Mídia -->
+                        <div class="form-section">
+                            <h4 class="section-title"><i class="fas fa-edit me-2"></i>Conteúdo e Mídia</h4>
+
+                            <div class="mb-4">
+                                <label for="imagemCapa" class="form-label required-field">Imagem de Capa</label>
+                                <input type="file" class="form-control" id="imagemCapa" accept="image/*" required>
+                                <img id="imagePreview" class="preview-image mt-2" alt="Prévia da imagem">
+                                <small class="form-text text-muted">A imagem deve ter pelo menos 1200x400 pixels para melhor visualização</small>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="conteudo" class="form-label required-field">Conteúdo da Notícia</label>
+                                <textarea class="form-control" id="conteudo" rows="10" placeholder="Digite o conteúdo completo da notícia..." required></textarea>
+                                <small class="form-text text-muted">Use HTML básico para formatação se necessário</small>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tags" class="form-label">Tags</label>
+                                <input type="text" class="form-control" id="tags" placeholder="Digite as tags separadas por vírgula">
+                                <small class="form-text text-muted">Exemplo: futebol, campeonato, brasileiro</small>
+                            </div>
+                        </div>
+
+                        <!-- Botões de Ação -->
                         <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-outline-secondary">Salvar como rascunho</button>
+                            <button type="button" class="btn btn-outline-secondary" onclick="salvarRascunho()">
+                                <i class="fas fa-save me-2"></i>Salvar como Rascunho
+                            </button>
                             <div>
-                                <button type="button" class="btn btn-outline-danger me-2">Cancelar</button>
-                                <button type="submit" class="btn btn-publish">Publicar Notícia</button>
+                                <button type="button" class="btn btn-outline-danger me-2" onclick="cancelarCadastro()">
+                                    <i class="fas fa-times me-2"></i>Cancelar
+                                </button>
+                                <button type="submit" class="btn btn-publish">
+                                    <i class="fas fa-paper-plane me-2"></i>Publicar Notícia
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -290,10 +403,10 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Prévia da imagem
-            const coverImage = document.getElementById('coverImage');
+            const imagemCapa = document.getElementById('imagemCapa');
             const imagePreview = document.getElementById('imagePreview');
 
-            coverImage.addEventListener('change', function() {
+            imagemCapa.addEventListener('change', function() {
                 const file = this.files[0];
                 if (file) {
                     const reader = new FileReader();
@@ -305,55 +418,171 @@
                 }
             });
 
-            // Editor de texto
-            const buttons = document.querySelectorAll('.editor-toolbar button');
-            const contentEditor = document.getElementById('content-editor');
-            const contentTextarea = document.getElementById('content');
-
-            buttons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const command = this.dataset.command;
-
-                    if (command === 'createLink') {
-                        const url = prompt('Insira a URL do link:');
-                        if (url) document.execCommand(command, false, url);
-                    } else if (command === 'insertImage') {
-                        const url = prompt('Insira a URL da imagem:');
-                        if (url) document.execCommand(command, false, url);
-                    } else {
-                        document.execCommand(command, false, null);
-                    }
-
-                    // Atualiza o conteúdo no textarea escondido
-                    contentTextarea.value = contentEditor.innerHTML;
-                });
-            });
-
-            contentEditor.addEventListener('input', function() {
-                contentTextarea.value = this.innerHTML;
-            });
+            // Definir data padrão como agora
+            const dataPublicacao = document.getElementById('dataPublicacao');
+            const now = new Date();
+            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
+            dataPublicacao.value = localDateTime;
 
             // Formulário de envio
             const newsForm = document.getElementById('newsForm');
-
             newsForm.addEventListener('submit', function(e) {
                 e.preventDefault();
+                publicarNoticia();
+            });
+        });
+
+        function toggleNovoAutor() {
+            const fields = document.getElementById('novoAutorFields');
+            const selectAutor = document.getElementById('autor');
+
+            if (fields.style.display === 'none') {
+                fields.style.display = 'block';
+                selectAutor.disabled = true;
+                selectAutor.value = '';
+            } else {
+                fields.style.display = 'none';
+                selectAutor.disabled = false;
+                // Limpar campos do novo autor
+                ['autorId', 'autorNome', 'autorEmail', 'autorCargo', 'autorBiografia'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+            }
+        }
+
+        function toggleNovaCategoria() {
+            const fields = document.getElementById('novaCategoriaFields');
+            const selectCategoria = document.getElementById('categoria');
+
+            if (fields.style.display === 'none') {
+                fields.style.display = 'block';
+                selectCategoria.disabled = true;
+                selectCategoria.value = '';
+            } else {
+                fields.style.display = 'none';
+                selectCategoria.disabled = false;
+                // Limpar campos da nova categoria
+                ['categoriaId', 'categoriaNome', 'categoriaDescricao'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+            }
+        }
+
+        function criarObjetoNoticia() {
+            // Criar objeto Categoria
+            let categoria = null;
+            const categoriaSelect = document.getElementById('categoria');
+            const novaCategoriaFields = document.getElementById('novaCategoriaFields');
+
+            if (novaCategoriaFields.style.display !== 'none') {
+                // Nova categoria
+                categoria = {
+                    id: document.getElementById('categoriaId').value || null,
+                    nome: document.getElementById('categoriaNome').value,
+                    descricao: document.getElementById('categoriaDescricao').value || null
+                };
+            } else if (categoriaSelect.value) {
+                // Categoria existente
+                categoria = {
+                    id: parseInt(categoriaSelect.value),
+                    nome: categoriaSelect.options[categoriaSelect.selectedIndex].text
+                };
+            }
+
+            // Criar objeto Autor
+            let autor = null;
+            const autorSelect = document.getElementById('autor');
+            const novoAutorFields = document.getElementById('novoAutorFields');
+
+            if (novoAutorFields.style.display !== 'none') {
+                // Novo autor
+                autor = {
+                    id: document.getElementById('autorId').value || null,
+                    nome: document.getElementById('autorNome').value,
+                    email: document.getElementById('autorEmail').value || null,
+                    cargo: document.getElementById('autorCargo').value || null,
+                    biografia: document.getElementById('autorBiografia').value || null
+                };
+            } else if (autorSelect.value) {
+                // Autor existente
+                autor = {
+                    id: parseInt(autorSelect.value),
+                    nome: autorSelect.options[autorSelect.selectedIndex].text.split(' - ')[0]
+                };
+            }
+
+            // Criar objeto Noticia
+            const noticia = {
+                id: document.getElementById('id').value ? parseInt(document.getElementById('id').value) : null,
+                titulo: document.getElementById('titulo').value,
+                subtitulo: document.getElementById('subtitulo').value || null,
+                dataPublicacao: new Date(document.getElementById('dataPublicacao').value),
+                resumo: document.getElementById('resumo').value,
+                conteudo: document.getElementById('conteudo').value,
+                destaque: document.getElementById('destaque').checked,
+                tags: document.getElementById('tags').value || null,
+                categoria: categoria,
+                autor: autor
+            };
+
+            return noticia;
+        }
+
+        function publicarNoticia() {
+            try {
+                const noticia = criarObjetoNoticia();
+
+                // Validações básicas
+                if (!noticia.titulo) {
+                    alert('Por favor, informe o título da notícia.');
+                    return;
+                }
+
+                if (!noticia.autor) {
+                    alert('Por favor, selecione ou cadastre um autor.');
+                    return;
+                }
+
+                if (!noticia.dataPublicacao) {
+                    alert('Por favor, informe a data de publicação.');
+                    return;
+                }
 
                 // Aqui você enviaria os dados para o servidor
-                // Atualiza o conteúdo do textarea com o HTML do editor
-                contentTextarea.value = contentEditor.innerHTML;
+                console.log('Objeto Noticia criado:', noticia);
 
                 // Simular envio bem-sucedido
                 alert('Notícia publicada com sucesso!');
-                // Redirecionar para a página de gerenciamento
-                // window.location.href = 'gerenciar-noticias.html';
-            });
 
-            // Definir data padrão como hoje
-            const publishDate = document.getElementById('publishDate');
-            const today = new Date().toISOString().split('T')[0];
-            publishDate.value = today;
-        });
+                // Opcional: limpar formulário ou redirecionar
+                // newsForm.reset();
+                // window.location.href = 'gerenciar-noticias.html';
+
+            } catch (error) {
+                console.error('Erro ao criar notícia:', error);
+                alert('Erro ao publicar notícia. Verifique os dados informados.');
+            }
+        }
+
+        function salvarRascunho() {
+            try {
+                const noticia = criarObjetoNoticia();
+                noticia.status = 'rascunho';
+
+                console.log('Rascunho salvo:', noticia);
+                alert('Rascunho salvo com sucesso!');
+
+            } catch (error) {
+                console.error('Erro ao salvar rascunho:', error);
+                alert('Erro ao salvar rascunho.');
+            }
+        }
+
+        function cancelarCadastro() {
+            if (confirm('Tem certeza que deseja cancelar? Todos os dados não salvos serão perdidos.')) {
+                window.history.back();
+            }
+        }
     </script>
 </body>
 
