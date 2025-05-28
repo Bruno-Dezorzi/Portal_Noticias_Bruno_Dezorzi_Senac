@@ -1,0 +1,72 @@
+.navbar {
+  background-color: #0d6efd !important;
+}
+
+.navbar-brand, .nav-link {
+  color: white !important;
+}
+
+.carousel-caption {
+  background-color: rgba(238, 229, 229, 0.247);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.news-card {
+  margin-bottom: 20px;
+  transition: transform 0.3s;
+}
+
+.news-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.news-image {
+  height: 200px;
+  object-fit: cover;
+}
+
+.news-date {
+  color: #6c757d;
+  font-size: 0.9rem;
+}
+
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-top: 50px;
+}
+
+.comment-section {
+  margin-top: 30px;
+}
+
+.comment {
+  border-bottom: 1px solid #eee;
+  padding: 15px 0;
+}
+
+.admin-area {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+#mainCarousel .carousel-item {
+  height: 400px;
+}
+
+#mainCarousel .carousel-item img {
+  height: 100%;
+  object-fit: cover;
+}
+
+.news-thumbnail {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}

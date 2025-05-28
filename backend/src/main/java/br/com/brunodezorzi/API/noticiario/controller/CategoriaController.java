@@ -31,7 +31,9 @@ public class CategoriaController {
   }
 
   @GetMapping(value = "/listar/{id}")
-  public ResponseEntity<Categoria> listar(@PathVariable(value = "id") Long id) {
+  public ResponseEntity<Categoria> listar(
+    @PathVariable(value = "id") Integer id
+  ) {
     Optional<Categoria> categoria = categoriaRepository.findById(id);
     if (categoria.isPresent()) {
       return new ResponseEntity<>(categoria.get(), HttpStatus.OK);
@@ -50,7 +52,7 @@ public class CategoriaController {
 
   @PutMapping("/atualizar/{id}")
   public ResponseEntity<Categoria> atualizar(
-    @PathVariable(value = "id") Long id,
+    @PathVariable(value = "id") Integer id,
     @RequestBody Categoria novCategoria
   ) {
     Optional<Categoria> categoria = categoriaRepository.findById(id);
@@ -65,7 +67,7 @@ public class CategoriaController {
   }
 
   @DeleteMapping("/remover/{id}")
-  public ResponseEntity<Void> remover(@PathVariable("id") Long id) {
+  public ResponseEntity<Void> remover(@PathVariable("id") Integer id) {
     Optional<Categoria> categoria = categoriaRepository.findById(id);
     if (categoria.isPresent()) {
       categoriaRepository.deleteById(id);

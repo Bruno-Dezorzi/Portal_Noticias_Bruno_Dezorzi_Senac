@@ -30,7 +30,9 @@ public class UsuarioController {
   }
 
   @GetMapping(value = "/listar/{id}")
-  public ResponseEntity<Usuario> listar(@PathVariable(value = "id") Long id) {
+  public ResponseEntity<Usuario> listar(
+    @PathVariable(value = "id") Integer id
+  ) {
     Optional<Usuario> usuario = usuarioRepository.findById(id);
     if (usuario.isPresent()) {
       return new ResponseEntity<>(usuario.get(), HttpStatus.OK);
@@ -46,7 +48,7 @@ public class UsuarioController {
 
   @PutMapping("/atualizar/{id}")
   public ResponseEntity<Usuario> atualizar(
-    @PathVariable(value = "id") Long id,
+    @PathVariable(value = "id") Integer id,
     @RequestBody Usuario novusuario
   ) {
     Optional<Usuario> usuario = usuarioRepository.findById(id);
@@ -61,7 +63,7 @@ public class UsuarioController {
   }
 
   @DeleteMapping("/remover/{id}")
-  public ResponseEntity<Void> remover(@PathVariable("id") Long id) {
+  public ResponseEntity<Void> remover(@PathVariable("id") Integer id) {
     Optional<Usuario> usuario = usuarioRepository.findById(id);
     if (usuario.isPresent()) {
       usuarioRepository.deleteById(id);

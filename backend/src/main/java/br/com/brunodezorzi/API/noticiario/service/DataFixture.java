@@ -7,7 +7,6 @@ import br.com.brunodezorzi.api.noticiario.model.Usuario;
 import br.com.brunodezorzi.api.noticiario.repository.AutorRepository;
 import br.com.brunodezorzi.api.noticiario.repository.CategoriaRepository;
 import br.com.brunodezorzi.api.noticiario.repository.NoticiaRepository;
-import br.com.brunodezorzi.api.noticiario.repository.PessoaRepository;
 import br.com.brunodezorzi.api.noticiario.repository.UsuarioRepository;
 import com.thedeanda.lorem.Lorem;
 import com.thedeanda.lorem.LoremIpsum;
@@ -25,8 +24,8 @@ public class DataFixture implements CommandLineRunner {
   @Autowired
   NoticiaRepository noticiaRepository;
 
-  @Autowired
-  PessoaRepository pessoaRepository;
+  /*@Autowired
+  PessoaRepository pessoaRepository;*/
 
   @Autowired
   UsuarioRepository usuarioRepository;

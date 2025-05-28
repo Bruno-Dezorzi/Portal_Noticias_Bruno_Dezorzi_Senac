@@ -1,379 +1,233 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" routerLink="/">Meu Noticiário</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" routerLink="/home">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="navegarParaCategoria('esportes')">Esportes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="navegarParaCategoria('lazer')">Lazer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="navegarParaCategoria('politica')">Política</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="navegarParaCategoria('economia')">Economia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="navegarParaCategoria('internacional')">Internacional</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" (ngSubmit)="buscarNoticias()">
+        <input class="form-control me-2" type="search" placeholder="Buscar notícias"
+               aria-label="Search" [(ngModel)]="termoBusca" name="busca">
+        <button class="btn btn-outline-light" type="submit">Buscar</button>
+      </form>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/admin">Admin</a>
+        </li>
+        <li class="nav-item" *ngIf="!isLoggedIn">
+          <a class="nav-link" routerLink="/login">Entrar</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <a class="nav-link" routerLink="/minha-conta">Minha Conta</a>
+        </li>
+        <li class="nav-item" *ngIf="isLoggedIn">
+          <button class="btn btn-link nav-link" (click)="logout()">Sair</button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-<!DOCTYPE html>
-<html lang="pt-br">
+<!-- Main Carousel -->
+<div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"
+            aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"
+            aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"
+            aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="/api/placeholder/1200/400" class="d-block w-100" alt="Notícia em destaque 1">
+      <div class="carousel-caption">
+        <h2>Manchete da Notícia em Destaque</h2>
+        <p>Resumo da notícia em destaque, fornecendo uma breve descrição do evento.</p>
+        <button class="btn btn-primary" (click)="navegarParaNoticia(1)">Leia mais</button>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/api/placeholder/1200/400" class="d-block w-100" alt="Notícia em destaque 2">
+      <div class="carousel-caption">
+        <h2>Segunda Notícia em Destaque</h2>
+        <p>Resumo da segunda notícia em destaque, com descrição breve do acontecimento.</p>
+        <button class="btn btn-primary" (click)="navegarParaNoticia(2)">Leia mais</button>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <img src="/api/placeholder/1200/400" class="d-block w-100" alt="Notícia em destaque 3">
+      <div class="carousel-caption">
+        <h2>Terceira Notícia em Destaque</h2>
+        <p>Resumo da terceira notícia em destaque, descrevendo brevemente o evento.</p>
+        <button class="btn btn-primary" (click)="navegarParaNoticia(3)">Leia mais</button>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Anterior</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Próximo</span>
+  </button>
+</div>
 
-<head>
-    <title>Meu Noticiário - Portal de Notícias Senac</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .navbar {
-            background-color: #0d6efd !important;
-        }
+<!-- News Content -->
+<div class="container mt-5">
+  <div class="row">
+    <!-- Main News Column -->
+    <div class="col-lg-8">
+      <h3 class="mb-4">Notícias Recentes</h3>
 
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
+      <!-- Placeholder para quando não há notícias ou durante carregamento -->
+      <div class="alert alert-info" role="alert">
+        <h4 class="alert-heading">Em breve!</h4>
+        <p class="mb-0">As notícias mais recentes serão exibidas aqui assim que estiverem disponíveis.</p>
+      </div>
 
-        .carousel-caption {
-            background-color: rgba(238, 229, 229, 0.247);
-            border-radius: 10px;
-            padding: 20px;
-        }
-
-        .news-card {
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .news-image {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .news-date {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .login-form {
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            margin-top: 50px;
-        }
-
-        .comment-section {
-            margin-top: 30px;
-        }
-
-        .comment {
-            border-bottom: 1px solid #eee;
-            padding: 15px 0;
-        }
-
-        .admin-area {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        #mainCarousel .carousel-item {
-            height: 400px;
-        }
-
-        #mainCarousel .carousel-item img {
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .news-thumbnail {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Meu Noticiário</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="home.component.html">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=esportes">Esportes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=lazer">Lazer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=politica">Política</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=economia">Economia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=internacional">Internacional</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Buscar notícias" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Buscar</button>
-                </form>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../admin/dashboard-adm/dashboard-adm.component.html" id="loginBtn">Admin</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="../login/login.component.html" id="loginBtn">Entrar</a>
-                    </li>
-                </ul>
+      <!-- Template para notícias (comentado até implementar o serviço de dados) -->
+      <!--
+      <div class="card news-card" *ngFor="let noticia of noticias">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img [src]="noticia.imagem" class="img-fluid news-image rounded-start" [alt]="noticia.alt">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <span class="news-date">{{ noticia.data | date:'dd \'de\' MMMM \'de\' yyyy':'pt-BR' }}</span>
+              <h5 class="card-title">{{ noticia.titulo }}</h5>
+              <p class="card-text">{{ noticia.resumo }}</p>
+              <button class="btn btn-sm btn-primary" (click)="navegarParaNoticia(noticia.id)">Leia mais</button>
             </div>
+          </div>
         </div>
-    </nav>
-
-    <!-- Main Carousel -->
-    <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="/api/placeholder/1200/400" class="d-block w-100" alt="Notícia em destaque 1">
-                <div class="carousel-caption">
-                    <h2>Manchete da Notícia em Destaque</h2>
-                    <p>Resumo da notícia em destaque, fornecendo uma breve descrição do evento.</p>
-                    <a href="noticia.html?id=1" class="btn btn-primary">Leia mais</a>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="/api/placeholder/1200/400" class="d-block w-100" alt="Notícia em destaque 2">
-                <div class="carousel-caption">
-                    <h2>Segunda Notícia em Destaque</h2>
-                    <p>Resumo da segunda notícia em destaque, com descrição breve do acontecimento.</p>
-                    <a href="noticia.html?id=2" class="btn btn-primary">Leia mais</a>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img src="/api/placeholder/1200/400" class="d-block w-100" alt="Notícia em destaque 3">
-                <div class="carousel-caption">
-                    <h2>Terceira Notícia em Destaque</h2>
-                    <p>Resumo da terceira notícia em destaque, descrevendo brevemente o evento.</p>
-                    <a href="noticia.html?id=3" class="btn btn-primary">Leia mais</a>
-                </div>
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Próximo</span>
-        </button>
+      </div>
+      -->
     </div>
 
-    <!-- News Content -->
-    <div class="container mt-5">
-        <div class="row">
-            <!-- Main News Column -->
-            <div class="col-lg-8">
-                <h3 class="mb-4">Notícias Recentes</h3>
-
-                <!-- News Item -->
-                <div class="card news-card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/api/placeholder/300/200" class="img-fluid news-image rounded-start" alt="Notícia de futebol">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <span class="news-date">23 de abril de 2024</span>
-                                <h5 class="card-title">Título da Notícia 1</h5>
-                                <p class="card-text">Uma breve descrição da notícia em questão.</p>
-                                <a href="noticia.html?id=1" class="btn btn-sm btn-primary">Leia mais</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- News Item -->
-                <div class="card news-card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/api/placeholder/300/200" class="img-fluid news-image rounded-start" alt="Notícia de cinema">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <span class="news-date">24 de abril de 2024</span>
-                                <h5 class="card-title">Título da Notícia 2</h5>
-                                <p class="card-text">Uma breve descrição da notícia em questão.</p>
-                                <a href="noticia.html?id=2" class="btn btn-sm btn-primary">Leia mais</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- News Item -->
-                <div class="card news-card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/api/placeholder/300/200" class="img-fluid news-image rounded-start" alt="Notícia de política">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <span class="news-date">25 de abril de 2024</span>
-                                <h5 class="card-title">Título da Notícia 3</h5>
-                                <p class="card-text">Uma breve descrição da notícia em questão.</p>
-                                <a href="noticia.html?id=3" class="btn btn-sm btn-primary">Leia mais</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- News Item -->
-                <div class="card news-card">
-                    <div class="row g-0">
-                        <div class="col-md-4">
-                            <img src="/api/placeholder/300/200" class="img-fluid news-image rounded-start" alt="Notícia de economia">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <span class="news-date">23 de abril de 2024</span>
-                                <h5 class="card-title">Título da Notícia 4</h5>
-                                <p class="card-text">Uma breve descrição da notícia em questão.</p>
-                                <a href="noticia.html?id=4" class="btn btn-sm btn-primary">Leia mais</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sidebar -->
-            <div class="col-lg-4">
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Sobre Nós</h5>
-                    </div>
-                    <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla vitas elit libera, a pharetra augue. Aenean iscinia bibendum nulla sed consectetur. Donec sed odio dui. Cras justo adio, dapibus ac facilisis in, egestas eget quam.</p>
-                    </div>
-                </div>
-
-                <div class="card mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Categorias</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-group">
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Esportes
-                                <span class="badge bg-primary rounded-pill">14</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Lazer
-                                <span class="badge bg-primary rounded-pill">8</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Política
-                                <span class="badge bg-primary rounded-pill">12</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Economia
-                                <span class="badge bg-primary rounded-pill">10</span>
-                            </li>
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                Internacional
-                                <span class="badge bg-primary rounded-pill">6</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0">Mais Lidas</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex mb-3">
-                            <img src="/api/placeholder/100/100" class="news-thumbnail rounded me-3" alt="Notícia popular">
-                            <div>
-                                <h6 class="mb-1">Título da Notícia Popular 1</h6>
-                                <small class="text-muted">1250 visualizações</small>
-                            </div>
-                        </div>
-                        <div class="d-flex mb-3">
-                            <img src="/api/placeholder/100/100" class="news-thumbnail rounded me-3" alt="Notícia popular">
-                            <div>
-                                <h6 class="mb-1">Título da Notícia Popular 2</h6>
-                                <small class="text-muted">980 visualizações</small>
-                            </div>
-                        </div>
-                        <div class="d-flex">
-                            <img src="/api/placeholder/100/100" class="news-thumbnail rounded me-3" alt="Notícia popular">
-                            <div>
-                                <h6 class="mb-1">Título da Notícia Popular 3</h6>
-                                <small class="text-muted">750 visualizações</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <!-- Sidebar -->
+    <div class="col-lg-4">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Sobre Nós</h5>
         </div>
+        <div class="card-body">
+          <p>Seu portal de notícias completo e atualizado sobre os principais acontecimentos do Brasil e do mundo.
+             Mantenha-se informado com conteúdo de qualidade e credibilidade.</p>
+        </div>
+      </div>
+
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Categorias</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="#" (click)="navegarParaCategoria('esportes')" class="text-decoration-none">Esportes</a>
+              <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="#" (click)="navegarParaCategoria('lazer')" class="text-decoration-none">Lazer</a>
+              <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="#" (click)="navegarParaCategoria('politica')" class="text-decoration-none">Política</a>
+              <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="#" (click)="navegarParaCategoria('economia')" class="text-decoration-none">Economia</a>
+              <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <a href="#" (click)="navegarParaCategoria('internacional')" class="text-decoration-none">Internacional</a>
+              <span class="badge bg-primary rounded-pill">0</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">Mais Lidas</h5>
+        </div>
+        <div class="card-body">
+          <div class="text-muted text-center py-3">
+            <p class="mb-0">Notícias populares serão exibidas aqui.</p>
+          </div>
+
+          <!-- Template para notícias populares (comentado até implementar) -->
+          <!--
+          <div class="d-flex mb-3" *ngFor="let popular of noticiasPopulares; let last = last"
+               [class.mb-3]="!last">
+            <img [src]="popular.imagem" class="news-thumbnail rounded me-3" [alt]="popular.alt">
+            <div>
+              <h6 class="mb-1">{{ popular.titulo }}</h6>
+              <small class="text-muted">{{ popular.visualizacoes }} visualizações</small>
+            </div>
+          </div>
+          -->
+        </div>
+      </div>
     </div>
+  </div>
+</div>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white mt-5 py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5>Meu Noticiário</h5>
-                    <p>Seu portal de notícias completo e atualizado sobre os principais acontecimentos do Brasil e do mundo.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Links Rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Início</a></li>
-                        <li><a href="#" class="text-white">Últimas Notícias</a></li>
-                        <li><a href="#" class="text-white">Contato</a></li>
-                        <li><a href="#" class="text-white">Política de Privacidade</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contato</h5>
-                    <address>
-                        <strong>Meu Noticiário LTDA</strong><br>
-                        Av. Paulista, 1000<br>
-                        São Paulo, SP 01310-100<br>
-                        <i class="fas fa-phone"></i> (11) 3456-7890<br>
-                        <i class="fas fa-envelope"></i>
-                    </address>
-                </div>
-            </div>
-            <hr>
-            <div class="text-center">
-                <p>&copy; 2024 Meu Noticiário. Todos os direitos reservados.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Simulação de sistema de login
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verificar se o usuário está logado
-            const isLoggedIn = localStorage.getItem('isLoggedIn');
-            const loginBtn = document.getElementById('loginBtn');
-
-            if (isLoggedIn === 'true') {
-                loginBtn.textContent = 'Minha Conta';
-                loginBtn.href = 'minha-conta.html';
-            }
-        });
-    </script>
-</body>
-
-</html>
+<!-- Footer -->
+<footer class="bg-dark text-white mt-5 py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Meu Noticiário</h5>
+        <p>Seu portal de notícias completo e atualizado sobre os principais acontecimentos do Brasil e do mundo.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Links Rápidos</h5>
+        <ul class="list-unstyled">
+          <li><a routerLink="/" class="text-white text-decoration-none">Início</a></li>
+          <li><a routerLink="/noticias" class="text-white text-decoration-none">Últimas Notícias</a></li>
+          <li><a routerLink="/contato" class="text-white text-decoration-none">Contato</a></li>
+          <li><a routerLink="/privacidade" class="text-white text-decoration-none">Política de Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Contato</h5>
+        <address>
+          <strong>Meu Noticiário LTDA</strong><br>
+          Av. Paulista, 1000<br>
+          São Paulo, SP 01310-100<br>
+          <i class="fas fa-phone"></i> (11) 3456-7890<br>
+          <i class="fas fa-envelope"></i> contato&#64;meunoticiario.com.br
+        </address>
+      </div>
+    </div>
+    <hr>
+    <div class="text-center">
+      <p>&copy; 2024 Meu Noticiário. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>

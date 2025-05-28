@@ -1,551 +1,301 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="../home.component.html">
+      <i class="fas fa-arrow-left me-2"></i>Meu Noticiário
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+            <i class="fas fa-user-circle me-1"></i>Administrador
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Perfil</a></li>
+            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configurações</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="../login/login.component.html"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-<head>
-    <title>Dashboard Administrativo - Meu Noticiário</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <style>
-        .navbar {
-            background-color: #0d6efd !important;
-        }
-
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
-
-        .sidebar {
-            min-height: calc(100vh - 56px);
-            background-color: #f8f9fa;
-            border-right: 1px solid #dee2e6;
-        }
-
-        .sidebar .nav-link {
-            color: #495057 !important;
-            border-radius: 5px;
-            margin: 2px 0;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: #e9ecef;
-        }
-
-        .sidebar .nav-link.active {
-            background-color: #0d6efd;
-            color: white !important;
-        }
-
-        .stat-card {
-            border-left: 4px solid;
-            transition: transform 0.2s;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-
-        .stat-card.news {
-            border-left-color: #28a745;
-        }
-
-        .stat-card.categories {
-            border-left-color: #17a2b8;
-        }
-
-        .stat-card.users {
-            border-left-color: #ffc107;
-        }
-
-        .stat-card.views {
-            border-left-color: #dc3545;
-        }
-
-        .chart-container {
-            position: relative;
-            height: 300px;
-        }
-
-        .recent-activity {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .activity-item {
-            border-left: 3px solid #0d6efd;
-            padding-left: 15px;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .activity-item::before {
-            content: '';
-            position: absolute;
-            left: -6px;
-            top: 5px;
-            width: 10px;
-            height: 10px;
-            background-color: #0d6efd;
-            border-radius: 50%;
-        }
-
-        .quick-actions .btn {
-            margin-bottom: 10px;
-        }
-
-        .news-thumbnail {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-        }
-
-        .main-content {
-            padding: 20px;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="../home.component.html">
-                <i class="fas fa-arrow-left me-2"></i>Meu Noticiário
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+      <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#dashboard">
+              <i class="fas fa-tachometer-alt me-2"></i>Dashboard
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-user-circle me-1"></i>Administrador
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Perfil</a></li>
-                            <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Configurações</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="../login/login.component.html"><i class="fas fa-sign-out-alt me-2"></i>Sair</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../cadastro_noticias/cadastro-noticias.component.html">
+              <i class="fas fa-newspaper me-2"></i>Cadastrar Notícias
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gerenciar-noticias.html">
+              <i class="fas fa-edit me-2"></i>Gerenciar Notícias
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="../cadastro_categorias/cadastro-categorias.component.html">
+              <i class="fas fa-tags me-2"></i>Cadastrar Categorias
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="gerenciar-categorias.html">
+              <i class="fas fa-list me-2"></i>Gerenciar Categorias
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="usuarios.html">
+              <i class="fas fa-users me-2"></i>Usuários
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="comentarios.html">
+              <i class="fas fa-comments me-2"></i>Comentários
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="relatorios.html">
+              <i class="fas fa-chart-bar me-2"></i>Relatórios
+            </a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
-    <div class="container-fluid">
-        <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#dashboard">
-                                <i class="fas fa-tachometer-alt me-2"></i>Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../cadastro_noticias/cadastro-noticias.component.html">
-                                <i class="fas fa-newspaper me-2"></i>Cadastrar Notícias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="gerenciar-noticias.html">
-                                <i class="fas fa-edit me-2"></i>Gerenciar Notícias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="../cadastro_categorias/cadastro-categorias.component.html">
-                                <i class="fas fa-tags me-2"></i>Cadastrar Categorias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="gerenciar-categorias.html">
-                                <i class="fas fa-list me-2"></i>Gerenciar Categorias
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="usuarios.html">
-                                <i class="fas fa-users me-2"></i>Usuários
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="comentarios.html">
-                                <i class="fas fa-comments me-2"></i>Comentários
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="relatorios.html">
-                                <i class="fas fa-chart-bar me-2"></i>Relatórios
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
-                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2"><i class="fas fa-tachometer-alt me-2"></i>Dashboard Administrativo</h1>
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group me-2">
-                            <button type="button" class="btn btn-sm btn-outline-secondary">
-                                <i class="fas fa-download me-1"></i>Exportar
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Statistics Cards -->
-                <div class="row mb-4">
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card stat-card news">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Total de Notícias
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">127</div>
-                                    </div>
-                                    <div class="text-success">
-                                        <i class="fas fa-newspaper fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card stat-card categories">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                            Categorias Ativas
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
-                                    </div>
-                                    <div class="text-info">
-                                        <i class="fas fa-tags fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card stat-card users">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                            Usuários Registrados
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">1,847</div>
-                                    </div>
-                                    <div class="text-warning">
-                                        <i class="fas fa-users fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card stat-card views">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between">
-                                    <div>
-                                        <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                            Visualizações Hoje
-                                        </div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">15,742</div>
-                                    </div>
-                                    <div class="text-danger">
-                                        <i class="fas fa-eye fa-2x"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Charts Row -->
-                <div class="row mb-4">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-chart-line me-2"></i>Visualizações dos Últimos 7 Dias
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="viewsChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-chart-pie me-2"></i>Notícias por Categoria
-                                </h5>
-                            </div>
-                            <div class="card-body">
-                                <div class="chart-container">
-                                    <canvas id="categoriesChart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Quick Actions and Recent Activity -->
-                <div class="row mb-4">
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-bolt me-2"></i>Ações Rápidas
-                                </h5>
-                            </div>
-                            <div class="card-body quick-actions">
-                                <a href="cadastrar-noticias.html" class="btn btn-primary btn-block w-100">
-                                    <i class="fas fa-plus me-2"></i>Nova Notícia
-                                </a>
-                                <a href="cadastrar-categorias.html" class="btn btn-info btn-block w-100">
-                                    <i class="fas fa-tag me-2"></i>Nova Categoria
-                                </a>
-                                <a href="gerenciar-noticias.html" class="btn btn-warning btn-block w-100">
-                                    <i class="fas fa-edit me-2"></i>Gerenciar Notícias
-                                </a>
-                                <a href="relatorios.html" class="btn btn-success btn-block w-100">
-                                    <i class="fas fa-chart-bar me-2"></i>Ver Relatórios
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-clock me-2"></i>Atividades Recentes
-                                </h5>
-                            </div>
-                            <div class="card-body recent-activity">
-                                <div class="activity-item">
-                                    <h6 class="mb-1">Nova notícia publicada</h6>
-                                    <p class="mb-1 text-muted">Artigo "Copa do Mundo 2024" foi publicado na categoria Esportes</p>
-                                    <small class="text-muted">Há 2 horas</small>
-                                </div>
-                                <div class="activity-item">
-                                    <h6 class="mb-1">Usuário registrado</h6>
-                                    <p class="mb-1 text-muted">João Silva se registrou no portal</p>
-                                    <small class="text-muted">Há 4 horas</small>
-                                </div>
-                                <div class="activity-item">
-                                    <h6 class="mb-1">Comentário moderado</h6>
-                                    <p class="mb-1 text-muted">Comentário removido por violação das regras</p>
-                                    <small class="text-muted">Há 6 horas</small>
-                                </div>
-                                <div class="activity-item">
-                                    <h6 class="mb-1">Categoria criada</h6>
-                                    <p class="mb-1 text-muted">Nova categoria "Tecnologia" foi adicionada</p>
-                                    <small class="text-muted">Ontem</small>
-                                </div>
-                                <div class="activity-item">
-                                    <h6 class="mb-1">Backup realizado</h6>
-                                    <p class="mb-1 text-muted">Backup automático do sistema executado com sucesso</p>
-                                    <small class="text-muted">Ontem</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Latest News Table -->
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <h5 class="card-title mb-0">
-                                    <i class="fas fa-newspaper me-2"></i>Últimas Notícias Publicadas
-                                </h5>
-                                <a href="gerenciar-noticias.html" class="btn btn-sm btn-primary">Ver Todas</a>
-                            </div>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Imagem</th>
-                                                <th>Título</th>
-                                                <th>Categoria</th>
-                                                <th>Data</th>
-                                                <th>Status</th>
-                                                <th>Visualizações</th>
-                                                <th>Ações</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>
-                                                    <img src="/api/placeholder/50/50" class="news-thumbnail rounded" alt="Notícia">
-                                                </td>
-                                                <td>
-                                                    <strong>Copa do Mundo 2024 inicia amanhã</strong>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-success">Esportes</span>
-                                                </td>
-                                                <td>22/05/2024</td>
-                                                <td>
-                                                    <span class="badge bg-success">Publicado</span>
-                                                </td>
-                                                <td>1,250</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-outline-primary">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <img src="/api/placeholder/50/50" class="news-thumbnail rounded" alt="Notícia">
-                                                </td>
-                                                <td>
-                                                    <strong>Novos investimentos em tecnologia</strong>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-info">Economia</span>
-                                                </td>
-                                                <td>21/05/2024</td>
-                                                <td>
-                                                    <span class="badge bg-warning">Rascunho</span>
-                                                </td>
-                                                <td>0</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-outline-primary">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <img src="/api/placeholder/50/50" class="news-thumbnail rounded" alt="Notícia">
-                                                </td>
-                                                <td>
-                                                    <strong>Festival de cinema internacional</strong>
-                                                </td>
-                                                <td>
-                                                    <span class="badge bg-primary">Lazer</span>
-                                                </td>
-                                                <td>20/05/2024</td>
-                                                <td>
-                                                    <span class="badge bg-success">Publicado</span>
-                                                </td>
-                                                <td>890</td>
-                                                <td>
-                                                    <button class="btn btn-sm btn-outline-primary">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-outline-danger">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
+    <!-- Main Content -->
+    <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2"><i class="fas fa-tachometer-alt me-2"></i>Dashboard Administrativo</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+          <div class="btn-group me-2">
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              <i class="fas fa-download me-1"></i>Exportar
+            </button>
+          </div>
         </div>
-    </div>
+      </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Views Chart
-        const viewsCtx = document.getElementById('viewsChart').getContext('2d');
-        new Chart(viewsCtx, {
-            type: 'line',
-            data: {
-                labels: ['16/05', '17/05', '18/05', '19/05', '20/05', '21/05', '22/05'],
-                datasets: [{
-                    label: 'Visualizações',
-                    data: [12000, 14500, 13200, 15800, 16200, 14900, 15742],
-                    borderColor: '#0d6efd',
-                    backgroundColor: 'rgba(13, 110, 253, 0.1)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        });
+      <!-- Statistics Cards -->
+      <div class="row mb-4">
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card stat-card news">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                    Total de Notícias
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.totalNews }}</div>
+                </div>
+                <div class="text-success">
+                  <i class="fas fa-newspaper fa-2x"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        // Categories Chart
-        const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
-        new Chart(categoriesCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Esportes', 'Política', 'Economia', 'Lazer', 'Internacional'],
-                datasets: [{
-                    data: [25, 20, 18, 15, 12],
-                    backgroundColor: [
-                        '#28a745',
-                        '#dc3545',
-                        '#ffc107',
-                        '#17a2b8',
-                        '#6f42c1'
-                    ]
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                }
-            }
-        });
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card stat-card categories">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                    Categorias Ativas
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.activeCategories }}</div>
+                </div>
+                <div class="text-info">
+                  <i class="fas fa-tags fa-2x"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        // Auto-update time stamps (simulation)
-        setInterval(function() {
-            // Aqui você poderia fazer uma requisição AJAX para atualizar os dados
-            console.log('Atualizando dashboard...');
-        }, 30000); // Atualiza a cada 30 segundos
-    </script>
-</body>
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card stat-card users">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                    Usuários Registrados
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.registeredUsers | number }}</div>
+                </div>
+                <div class="text-warning">
+                  <i class="fas fa-users fa-2x"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-</html>
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card stat-card views">
+            <div class="card-body">
+              <div class="d-flex justify-content-between">
+                <div>
+                  <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+                    Visualizações Hoje
+                  </div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{ stats.todayViews | number }}</div>
+                </div>
+                <div class="text-danger">
+                  <i class="fas fa-eye fa-2x"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="row mb-4">
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-chart-line me-2"></i>Visualizações dos Últimos 7 Dias
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas #viewsChart></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-chart-pie me-2"></i>Notícias por Categoria
+              </h5>
+            </div>
+            <div class="card-body">
+              <div class="chart-container">
+                <canvas #categoriesChart></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions and Recent Activity -->
+      <div class="row mb-4">
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-bolt me-2"></i>Ações Rápidas
+              </h5>
+            </div>
+            <div class="card-body quick-actions">
+              <a href="cadastrar-noticias.html" class="btn btn-primary btn-block w-100">
+                <i class="fas fa-plus me-2"></i>Nova Notícia
+              </a>
+              <a href="cadastrar-categorias.html" class="btn btn-info btn-block w-100">
+                <i class="fas fa-tag me-2"></i>Nova Categoria
+              </a>
+              <a href="gerenciar-noticias.html" class="btn btn-warning btn-block w-100">
+                <i class="fas fa-edit me-2"></i>Gerenciar Notícias
+              </a>
+              <a href="relatorios.html" class="btn btn-success btn-block w-100">
+                <i class="fas fa-chart-bar me-2"></i>Ver Relatórios
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-header">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-clock me-2"></i>Atividades Recentes
+              </h5>
+            </div>
+            <div class="card-body recent-activity">
+              <div class="activity-item" *ngFor="let activity of recentActivities">
+                <h6 class="mb-1">{{ activity.title }}</h6>
+                <p class="mb-1 text-muted">{{ activity.description }}</p>
+                <small class="text-muted">{{ activity.time }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Latest News Table -->
+      <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h5 class="card-title mb-0">
+                <i class="fas fa-newspaper me-2"></i>Últimas Notícias Publicadas
+              </h5>
+              <a href="gerenciar-noticias.html" class="btn btn-sm btn-primary">Ver Todas</a>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Imagem</th>
+                      <th>Título</th>
+                      <th>Categoria</th>
+                      <th>Data</th>
+                      <th>Status</th>
+                      <th>Visualizações</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let news of latestNews">
+                      <td>
+                        <img [src]="news.image || '/api/placeholder/50/50'" class="news-thumbnail rounded" alt="Notícia">
+                      </td>
+                      <td>
+                        <strong>{{ news.title }}</strong>
+                      </td>
+                      <td>
+                        <span class="badge" [ngClass]="getCategoryBadgeClass(news.category)">{{ news.category }}</span>
+                      </td>
+                      <td>{{ news.date | date:'dd/MM/yyyy' }}</td>
+                      <td>
+                        <span class="badge" [ngClass]="getStatusBadgeClass(news.status)">{{ news.status }}</span>
+                      </td>
+                      <td>{{ news.views | number }}</td>
+                      <td>
+                        <button class="btn btn-sm btn-outline-primary me-1" (click)="editNews(news.id)">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" (click)="deleteNews(news.id)">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

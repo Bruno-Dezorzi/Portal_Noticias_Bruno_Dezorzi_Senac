@@ -31,7 +31,9 @@ public class NoticiaController {
   }
 
   @GetMapping(value = "/listar/{id}")
-  public ResponseEntity<Noticia> listar(@PathVariable(value = "id") Long id) {
+  public ResponseEntity<Noticia> listar(
+    @PathVariable(value = "id") Integer id
+  ) {
     Optional<Noticia> noticia = noticiaRepository.findById(id);
     if (noticia.isPresent()) {
       return new ResponseEntity<>(noticia.get(), HttpStatus.OK);
@@ -47,7 +49,7 @@ public class NoticiaController {
 
   @PutMapping("/atualizar/{id}")
   public ResponseEntity<Noticia> atualizar(
-    @PathVariable(value = "id") Long id,
+    @PathVariable(value = "id") Integer id,
     @RequestBody Noticia novnoticia
   ) {
     Optional<Noticia> noticia = noticiaRepository.findById(id);
@@ -62,7 +64,7 @@ public class NoticiaController {
   }
 
   @DeleteMapping("/remover/{id}")
-  public ResponseEntity<Void> remover(@PathVariable("id") Long id) {
+  public ResponseEntity<Void> remover(@PathVariable("id") Integer id) {
     Optional<Noticia> noticia = noticiaRepository.findById(id);
     if (noticia.isPresent()) {
       noticiaRepository.deleteById(id);

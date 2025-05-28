@@ -1,589 +1,277 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-    <title>Cadastro de Notícias - Meu Noticiário</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        .navbar {
-            background-color: #0d6efd !important;
-        }
-
-        .navbar-brand, .nav-link {
-            color: white !important;
-        }
-
-        .news-card {
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-
-        .news-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .news-image {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .news-date {
-            color: #6c757d;
-            font-size: 0.9rem;
-        }
-
-        .form-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 30px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .preview-image {
-            max-width: 100%;
-            max-height: 200px;
-            object-fit: contain;
-            margin-top: 10px;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .form-label {
-            font-weight: bold;
-            color: #2c3e50;
-        }
-
-        .required-field::after {
-            content: "*";
-            color: red;
-            margin-left: 4px;
-        }
-
-        .btn-publish {
-            background-color: #0d6efd;
-            color: white;
-            padding: 12px 35px;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .btn-publish:hover {
-            background-color: #0b5ed7;
-            transform: translateY(-2px);
-        }
-
-        .section-divider {
-            border-top: 2px solid #dee2e6;
-            margin: 30px 0 20px 0;
-            padding-top: 20px;
-        }
-
-        .section-title {
-            color: #495057;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .form-section {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-left: 4px solid #0d6efd;
-        }
-
-        .btn-add-new {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 5px 15px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-        }
-
-        .btn-add-new:hover {
-            background-color: #218838;
-        }
-
-        .info-text {
-            font-size: 0.9rem;
-            color: #6c757d;
-            font-style: italic;
-        }
-    </style>
-</head>
-
-<body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">Meu Noticiário</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.component.html">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=esportes">Esportes</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=lazer">Lazer</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=politica">Política</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=economia">Economia</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="categoria.html?cat=internacional">Internacional</a>
-                    </li>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Buscar notícias" aria-label="Search">
-                    <button class="btn btn-outline-light" type="submit">Buscar</button>
-                </form>
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="../../login/login.component.html" id="loginBtn">Entrar</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container mt-5 mb-5">
-        <div class="row">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Início</a></li>
-                        <li class="breadcrumb-item"><a href="minha-conta.html">Minha Conta</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Cadastrar Notícia</li>
-                    </ol>
-                </nav>
-
-                <h2 class="mb-4 text-center">Cadastrar Nova Notícia</h2>
-
-                <div class="form-container">
-                    <form id="newsForm">
-                        <!-- Seção: Informações Básicas da Notícia -->
-                        <div class="form-section">
-                            <h4 class="section-title"><i class="fas fa-newspaper me-2"></i>Informações da Notícia</h4>
-
-                            <div class="mb-3">
-                                <label for="id" class="form-label">ID da Notícia</label>
-                                <input type="number" class="form-control" id="id" placeholder="Deixe em branco para auto-geração">
-                                <small class="info-text">Se deixado em branco, será gerado automaticamente</small>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="titulo" class="form-label required-field">Título da Notícia</label>
-                                <input type="text" class="form-control" id="titulo" placeholder="Digite o título da notícia" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="subtitulo" class="form-label">Subtítulo</label>
-                                <input type="text" class="form-control" id="subtitulo" placeholder="Digite o subtítulo (opcional)">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="dataPublicacao" class="form-label required-field">Data de Publicação</label>
-                                <input type="datetime-local" class="form-control" id="dataPublicacao" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="resumo" class="form-label required-field">Resumo da Notícia</label>
-                                <textarea class="form-control" id="resumo" rows="3" placeholder="Digite um breve resumo da notícia" required></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="destaque" class="form-check-label">
-                                    <input class="form-check-input me-2" type="checkbox" id="destaque">
-                                    Destaque no carrossel principal
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Seção: Categoria -->
-                        <div class="form-section">
-                            <h4 class="section-title"><i class="fas fa-tags me-2"></i>Categoria</h4>
-
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <label for="categoria" class="form-label">Selecionar Categoria</label>
-                                    <select class="form-select" id="categoria">
-                                        <option value="" selected>Selecione uma categoria existente</option>
-                                        <option value="1">Esportes</option>
-                                        <option value="2">Lazer</option>
-                                        <option value="3">Política</option>
-                                        <option value="4">Economia</option>
-                                        <option value="5">Internacional</option>
-                                        <option value="6">Tecnologia</option>
-                                        <option value="7">Saúde</option>
-                                        <option value="8">Educação</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 d-flex align-items-end">
-                                    <button type="button" class="btn btn-add-new" data-bs-toggle="modal" data-bs-target="#categoriaModal">
-                                        <i class="fas fa-plus me-1"></i>Nova Categoria
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Campos para Nova Categoria -->
-                            <div id="novaCategoriaFields" class="mt-3" style="display: none;">
-                                <div class="alert alert-info">
-                                    <h6><i class="fas fa-info-circle me-2"></i>Cadastrar Nova Categoria</h6>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="categoriaId" class="form-label">ID</label>
-                                        <input type="number" class="form-control" id="categoriaId" placeholder="ID">
-                                    </div>
-                                    <div class="col-md-9">
-                                        <label for="categoriaNome" class="form-label required-field">Nome da Categoria</label>
-                                        <input type="text" class="form-control" id="categoriaNome" placeholder="Nome da categoria">
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <label for="categoriaDescricao" class="form-label">Descrição</label>
-                                    <textarea class="form-control" id="categoriaDescricao" rows="2" placeholder="Descrição da categoria (opcional)"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Seção: Autor -->
-                        <div class="form-section">
-                            <h4 class="section-title"><i class="fas fa-user-edit me-2"></i>Autor</h4>
-
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <label for="autor" class="form-label">Selecionar Autor</label>
-                                    <select class="form-select" id="autor">
-                                        <option value="" selected>Selecione um autor existente</option>
-                                        <option value="1">João Silva - Repórter Esportivo</option>
-                                        <option value="2">Maria Santos - Jornalista Política</option>
-                                        <option value="3">Pedro Oliveira - Correspondente Internacional</option>
-                                        <option value="4">Ana Costa - Editora de Economia</option>
-                                        <option value="5">Carlos Mendes - Repórter Geral</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4 d-flex align-items-end">
-                                    <button type="button" class="btn btn-add-new" onclick="toggleNovoAutor()">
-                                        <i class="fas fa-plus me-1"></i>Novo Autor
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Campos para Novo Autor -->
-                            <div id="novoAutorFields" class="mt-3" style="display: none;">
-                                <div class="alert alert-info">
-                                    <h6><i class="fas fa-info-circle me-2"></i>Cadastrar Novo Autor</h6>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="autorId" class="form-label">ID</label>
-                                        <input type="number" class="form-control" id="autorId" placeholder="ID">
-                                    </div>
-                                    <div class="col-md-9">
-                                        <label for="autorNome" class="form-label required-field">Nome Completo</label>
-                                        <input type="text" class="form-control" id="autorNome" placeholder="Nome completo do autor">
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-md-6">
-                                        <label for="autorEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="autorEmail" placeholder="email@exemplo.com">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="autorCargo" class="form-label">Cargo/Função</label>
-                                        <input type="text" class="form-control" id="autorCargo" placeholder="Ex: Repórter, Editor, Correspondente">
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <label for="autorBiografia" class="form-label">Biografia</label>
-                                    <textarea class="form-control" id="autorBiografia" rows="2" placeholder="Breve biografia do autor (opcional)"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Seção: Conteúdo e Mídia -->
-                        <div class="form-section">
-                            <h4 class="section-title"><i class="fas fa-edit me-2"></i>Conteúdo e Mídia</h4>
-
-                            <div class="mb-4">
-                                <label for="imagemCapa" class="form-label required-field">Imagem de Capa</label>
-                                <input type="file" class="form-control" id="imagemCapa" accept="image/*" required>
-                                <img id="imagePreview" class="preview-image mt-2" alt="Prévia da imagem">
-                                <small class="form-text text-muted">A imagem deve ter pelo menos 1200x400 pixels para melhor visualização</small>
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="conteudo" class="form-label required-field">Conteúdo da Notícia</label>
-                                <textarea class="form-control" id="conteudo" rows="10" placeholder="Digite o conteúdo completo da notícia..." required></textarea>
-                                <small class="form-text text-muted">Use HTML básico para formatação se necessário</small>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="tags" class="form-label">Tags</label>
-                                <input type="text" class="form-control" id="tags" placeholder="Digite as tags separadas por vírgula">
-                                <small class="form-text text-muted">Exemplo: futebol, campeonato, brasileiro</small>
-                            </div>
-                        </div>
-
-                        <!-- Botões de Ação -->
-                        <div class="d-flex justify-content-between mt-4">
-                            <button type="button" class="btn btn-outline-secondary" onclick="salvarRascunho()">
-                                <i class="fas fa-save me-2"></i>Salvar como Rascunho
-                            </button>
-                            <div>
-                                <button type="button" class="btn btn-outline-danger me-2" onclick="cancelarCadastro()">
-                                    <i class="fas fa-times me-2"></i>Cancelar
-                                </button>
-                                <button type="submit" class="btn btn-publish">
-                                    <i class="fas fa-paper-plane me-2"></i>Publicar Notícia
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container">
+    <a class="navbar-brand" href="#">Meu Noticiário</a>
+    <button class="navbar-toggler" type="button" (click)="toggleNavbar()" [attr.aria-expanded]="isNavbarCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" [class.show]="!isNavbarCollapsed">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="navegarCategoria('esportes')">Esportes</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="navegarCategoria('lazer')">Lazer</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="navegarCategoria('politica')">Política</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="navegarCategoria('economia')">Economia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="navegarCategoria('internacional')">Internacional</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search" (ngSubmit)="buscarNoticias()" #searchForm="ngForm">
+        <input class="form-control me-2" type="search" [(ngModel)]="termoBusca" name="busca" placeholder="Buscar notícias" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit">Buscar</button>
+      </form>
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" (click)="fazerLogin()">Entrar</a>
+        </li>
+      </ul>
     </div>
+  </div>
+</nav>
 
-    <!-- Footer -->
-    <footer class="bg-dark text-white mt-5 py-4">
-        <div class="container">
+<!-- Main Content -->
+<div class="container mt-5 mb-5">
+  <div class="row">
+    <div class="col-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#">Início</a></li>
+          <li class="breadcrumb-item"><a href="#">Minha Conta</a></li>
+          <li class="breadcrumb-item active" aria-current="page">Cadastrar Notícia</li>
+        </ol>
+      </nav>
+
+      <h2 class="mb-4 text-center">Cadastrar Nova Notícia</h2>
+
+      <div class="form-container">
+        <form [formGroup]="newsForm" (ngSubmit)="publicarNoticia()">
+          <!-- Seção: Informações Básicas da Notícia -->
+          <div class="form-section">
+            <h4 class="section-title"><i class="fas fa-newspaper me-2"></i>Informações da Notícia</h4>
+
+            <div class="mb-3">
+              <label for="id" class="form-label">ID da Notícia</label>
+              <input type="number" class="form-control" formControlName="id" placeholder="Deixe em branco para auto-geração">
+              <small class="info-text">Se deixado em branco, será gerado automaticamente</small>
+            </div>
+
+            <div class="mb-3">
+              <label for="titulo" class="form-label required-field">Título da Notícia</label>
+              <input type="text" class="form-control" formControlName="titulo" placeholder="Digite o título da notícia">
+              <div *ngIf="newsForm.get('titulo')?.invalid && newsForm.get('titulo')?.touched" class="text-danger">
+                Título é obrigatório
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="subtitulo" class="form-label">Subtítulo</label>
+              <input type="text" class="form-control" formControlName="subtitulo" placeholder="Digite o subtítulo (opcional)">
+            </div>
+
+            <div class="mb-3">
+              <label for="dataPublicacao" class="form-label required-field">Data de Publicação</label>
+              <input type="datetime-local" class="form-control" formControlName="dataPublicacao">
+              <div *ngIf="newsForm.get('dataPublicacao')?.invalid && newsForm.get('dataPublicacao')?.touched" class="text-danger">
+                Data de publicação é obrigatória
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="resumo" class="form-label required-field">Resumo da Notícia</label>
+              <textarea class="form-control" formControlName="resumo" rows="3" placeholder="Digite um breve resumo da notícia"></textarea>
+              <div *ngIf="newsForm.get('resumo')?.invalid && newsForm.get('resumo')?.touched" class="text-danger">
+                Resumo é obrigatório
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="destaque" class="form-check-label">
+                <input class="form-check-input me-2" type="checkbox" formControlName="destaque">
+                Destaque no carrossel principal
+              </label>
+            </div>
+          </div>
+
+          <!-- Seção: Categoria -->
+          <div class="form-section">
+            <h4 class="section-title"><i class="fas fa-tags me-2"></i>Categoria</h4>
+
             <div class="row">
-                <div class="col-md-4">
-                    <h5>Meu Noticiário</h5>
-                    <p>Seu portal de notícias completo e atualizado sobre os principais acontecimentos do Brasil e do mundo.</p>
-                </div>
-                <div class="col-md-4">
-                    <h5>Links Rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Início</a></li>
-                        <li><a href="#" class="text-white">Últimas Notícias</a></li>
-                        <li><a href="#" class="text-white">Contato</a></li>
-                        <li><a href="#" class="text-white">Política de Privacidade</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <h5>Contato</h5>
-                    <address>
-                        <strong>Meu Noticiário LTDA</strong><br>
-                        Av. Paulista, 1000<br>
-                        São Paulo, SP 01310-100<br>
-                        <i class="fas fa-phone"></i> (11) 3456-7890<br>
-                        <i class="fas fa-envelope"></i>
-                    </address>
-                </div>
+              <div class="col-md-8">
+                <label for="categoria" class="form-label">Selecionar Categoria</label>
+                <select class="form-select" formControlName="categoria" [disabled]="mostrarNovaCategoria">
+                  <option value="">Selecione uma categoria existente</option>
+                  <option *ngFor="let cat of categorias" [value]="cat.id">{{cat.nome}}</option>
+                </select>
+              </div>
+              <div class="col-md-4 d-flex align-items-end">
+                <button type="button" class="btn btn-add-new" (click)="toggleNovaCategoria()">
+                  <i class="fas fa-plus me-1"></i>Nova Categoria
+                </button>
+              </div>
             </div>
-            <hr>
-            <div class="text-center">
-                <p>&copy; 2024 Meu Noticiário. Todos os direitos reservados.</p>
+
+            <!-- Campos para Nova Categoria -->
+            <div *ngIf="mostrarNovaCategoria" class="mt-3">
+              <div class="alert alert-info">
+                <h6><i class="fas fa-info-circle me-2"></i>Cadastrar Nova Categoria</h6>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="categoriaId" class="form-label">ID</label>
+                  <input type="number" class="form-control" formControlName="categoriaId" placeholder="ID">
+                </div>
+                <div class="col-md-9">
+                  <label for="categoriaNome" class="form-label required-field">Nome da Categoria</label>
+                  <input type="text" class="form-control" formControlName="categoriaNome" placeholder="Nome da categoria">
+                </div>
+              </div>
+              <div class="mt-2">
+                <label for="categoriaDescricao" class="form-label">Descrição</label>
+                <textarea class="form-control" formControlName="categoriaDescricao" rows="2" placeholder="Descrição da categoria (opcional)"></textarea>
+              </div>
             </div>
-        </div>
-    </footer>
+          </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Prévia da imagem
-            const imagemCapa = document.getElementById('imagemCapa');
-            const imagePreview = document.getElementById('imagePreview');
+          <!-- Seção: Autor -->
+          <div class="form-section">
+            <h4 class="section-title"><i class="fas fa-user-edit me-2"></i>Autor</h4>
 
-            imagemCapa.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        imagePreview.style.display = 'block';
-                        imagePreview.src = e.target.result;
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
+            <div class="row">
+              <div class="col-md-8">
+                <label for="autor" class="form-label">Selecionar Autor</label>
+                <select class="form-select" formControlName="autor" [disabled]="mostrarNovoAutor">
+                  <option value="">Selecione um autor existente</option>
+                  <option *ngFor="let autor of autores" [value]="autor.id">{{autor.nome}} - {{autor.cargo}}</option>
+                </select>
+              </div>
+              <div class="col-md-4 d-flex align-items-end">
+                <button type="button" class="btn btn-add-new" (click)="toggleNovoAutor()">
+                  <i class="fas fa-plus me-1"></i>Novo Autor
+                </button>
+              </div>
+            </div>
 
-            // Definir data padrão como agora
-            const dataPublicacao = document.getElementById('dataPublicacao');
-            const now = new Date();
-            const localDateTime = new Date(now.getTime() - now.getTimezoneOffset() * 60000).toISOString().slice(0, 16);
-            dataPublicacao.value = localDateTime;
+            <!-- Campos para Novo Autor -->
+            <div *ngIf="mostrarNovoAutor" class="mt-3">
+              <div class="alert alert-info">
+                <h6><i class="fas fa-info-circle me-2"></i>Cadastrar Novo Autor</h6>
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <label for="autorId" class="form-label">ID</label>
+                  <input type="number" class="form-control" formControlName="autorId" placeholder="ID">
+                </div>
+                <div class="col-md-9">
+                  <label for="autorNome" class="form-label required-field">Nome Completo</label>
+                  <input type="text" class="form-control" formControlName="autorNome" placeholder="Nome completo do autor">
+                </div>
+              </div>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <label for="autorEmail" class="form-label">Email</label>
+                  <input type="email" class="form-control" formControlName="autorEmail" placeholder="email@exemplo.com">
+                </div>
+                <div class="col-md-6">
+                  <label for="autorCargo" class="form-label">Cargo/Função</label>
+                  <input type="text" class="form-control" formControlName="autorCargo" placeholder="Ex: Repórter, Editor, Correspondente">
+                </div>
+              </div>
+              <div class="mt-2">
+                <label for="autorBiografia" class="form-label">Biografia</label>
+                <textarea class="form-control" formControlName="autorBiografia" rows="2" placeholder="Breve biografia do autor (opcional)"></textarea>
+              </div>
+            </div>
+          </div>
 
-            // Formulário de envio
-            const newsForm = document.getElementById('newsForm');
-            newsForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                publicarNoticia();
-            });
-        });
+          <!-- Seção: Conteúdo e Mídia -->
+          <div class="form-section">
+            <h4 class="section-title"><i class="fas fa-edit me-2"></i>Conteúdo e Mídia</h4>
 
-        function toggleNovoAutor() {
-            const fields = document.getElementById('novoAutorFields');
-            const selectAutor = document.getElementById('autor');
+            <div class="mb-4">
+              <label for="imagemCapa" class="form-label required-field">Imagem de Capa</label>
+              <input type="file" class="form-control" (change)="onImageSelected($event)" accept="image/*">
+              <img *ngIf="imagePreview" [src]="imagePreview" class="preview-image mt-2" alt="Prévia da imagem">
+              <small class="form-text text-muted">A imagem deve ter pelo menos 1200x400 pixels para melhor visualização</small>
+            </div>
 
-            if (fields.style.display === 'none') {
-                fields.style.display = 'block';
-                selectAutor.disabled = true;
-                selectAutor.value = '';
-            } else {
-                fields.style.display = 'none';
-                selectAutor.disabled = false;
-                // Limpar campos do novo autor
-                ['autorId', 'autorNome', 'autorEmail', 'autorCargo', 'autorBiografia'].forEach(id => {
-                    document.getElementById(id).value = '';
-                });
-            }
-        }
+            <div class="mb-4">
+              <label for="conteudo" class="form-label required-field">Conteúdo da Notícia</label>
+              <textarea class="form-control" formControlName="conteudo" rows="10" placeholder="Digite o conteúdo completo da notícia..."></textarea>
+              <small class="form-text text-muted">Use HTML básico para formatação se necessário</small>
+              <div *ngIf="newsForm.get('conteudo')?.invalid && newsForm.get('conteudo')?.touched" class="text-danger">
+                Conteúdo é obrigatório
+              </div>
+            </div>
 
-        function toggleNovaCategoria() {
-            const fields = document.getElementById('novaCategoriaFields');
-            const selectCategoria = document.getElementById('categoria');
+            <div class="mb-3">
+              <label for="tags" class="form-label">Tags</label>
+              <input type="text" class="form-control" formControlName="tags" placeholder="Digite as tags separadas por vírgula">
+              <small class="form-text text-muted">Exemplo: futebol, campeonato, brasileiro</small>
+            </div>
+          </div>
 
-            if (fields.style.display === 'none') {
-                fields.style.display = 'block';
-                selectCategoria.disabled = true;
-                selectCategoria.value = '';
-            } else {
-                fields.style.display = 'none';
-                selectCategoria.disabled = false;
-                // Limpar campos da nova categoria
-                ['categoriaId', 'categoriaNome', 'categoriaDescricao'].forEach(id => {
-                    document.getElementById(id).value = '';
-                });
-            }
-        }
+          <!-- Botões de Ação -->
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" (click)="salvarRascunho()">
+              <i class="fas fa-save me-2"></i>Salvar como Rascunho
+            </button>
+            <div>
+              <button type="button" class="btn btn-outline-danger me-2" (click)="cancelarCadastro()">
+                <i class="fas fa-times me-2"></i>Cancelar
+              </button>
+              <button type="submit" class="btn btn-publish" [disabled]="newsForm.invalid">
+                <i class="fas fa-paper-plane me-2"></i>Publicar Notícia
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-        function criarObjetoNoticia() {
-            // Criar objeto Categoria
-            let categoria = null;
-            const categoriaSelect = document.getElementById('categoria');
-            const novaCategoriaFields = document.getElementById('novaCategoriaFields');
-
-            if (novaCategoriaFields.style.display !== 'none') {
-                // Nova categoria
-                categoria = {
-                    id: document.getElementById('categoriaId').value || null,
-                    nome: document.getElementById('categoriaNome').value,
-                    descricao: document.getElementById('categoriaDescricao').value || null
-                };
-            } else if (categoriaSelect.value) {
-                // Categoria existente
-                categoria = {
-                    id: parseInt(categoriaSelect.value),
-                    nome: categoriaSelect.options[categoriaSelect.selectedIndex].text
-                };
-            }
-
-            // Criar objeto Autor
-            let autor = null;
-            const autorSelect = document.getElementById('autor');
-            const novoAutorFields = document.getElementById('novoAutorFields');
-
-            if (novoAutorFields.style.display !== 'none') {
-                // Novo autor
-                autor = {
-                    id: document.getElementById('autorId').value || null,
-                    nome: document.getElementById('autorNome').value,
-                    email: document.getElementById('autorEmail').value || null,
-                    cargo: document.getElementById('autorCargo').value || null,
-                    biografia: document.getElementById('autorBiografia').value || null
-                };
-            } else if (autorSelect.value) {
-                // Autor existente
-                autor = {
-                    id: parseInt(autorSelect.value),
-                    nome: autorSelect.options[autorSelect.selectedIndex].text.split(' - ')[0]
-                };
-            }
-
-            // Criar objeto Noticia
-            const noticia = {
-                id: document.getElementById('id').value ? parseInt(document.getElementById('id').value) : null,
-                titulo: document.getElementById('titulo').value,
-                subtitulo: document.getElementById('subtitulo').value || null,
-                dataPublicacao: new Date(document.getElementById('dataPublicacao').value),
-                resumo: document.getElementById('resumo').value,
-                conteudo: document.getElementById('conteudo').value,
-                destaque: document.getElementById('destaque').checked,
-                tags: document.getElementById('tags').value || null,
-                categoria: categoria,
-                autor: autor
-            };
-
-            return noticia;
-        }
-
-        function publicarNoticia() {
-            try {
-                const noticia = criarObjetoNoticia();
-
-                // Validações básicas
-                if (!noticia.titulo) {
-                    alert('Por favor, informe o título da notícia.');
-                    return;
-                }
-
-                if (!noticia.autor) {
-                    alert('Por favor, selecione ou cadastre um autor.');
-                    return;
-                }
-
-                if (!noticia.dataPublicacao) {
-                    alert('Por favor, informe a data de publicação.');
-                    return;
-                }
-
-                // Aqui você enviaria os dados para o servidor
-                console.log('Objeto Noticia criado:', noticia);
-
-                // Simular envio bem-sucedido
-                alert('Notícia publicada com sucesso!');
-
-                // Opcional: limpar formulário ou redirecionar
-                // newsForm.reset();
-                // window.location.href = 'gerenciar-noticias.html';
-
-            } catch (error) {
-                console.error('Erro ao criar notícia:', error);
-                alert('Erro ao publicar notícia. Verifique os dados informados.');
-            }
-        }
-
-        function salvarRascunho() {
-            try {
-                const noticia = criarObjetoNoticia();
-                noticia.status = 'rascunho';
-
-                console.log('Rascunho salvo:', noticia);
-                alert('Rascunho salvo com sucesso!');
-
-            } catch (error) {
-                console.error('Erro ao salvar rascunho:', error);
-                alert('Erro ao salvar rascunho.');
-            }
-        }
-
-        function cancelarCadastro() {
-            if (confirm('Tem certeza que deseja cancelar? Todos os dados não salvos serão perdidos.')) {
-                window.history.back();
-            }
-        }
-    </script>
-</body>
-
-</html>
+<!-- Footer -->
+<footer class="bg-dark text-white mt-5 py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>Meu Noticiário</h5>
+        <p>Seu portal de notícias completo e atualizado sobre os principais acontecimentos do Brasil e do mundo.</p>
+      </div>
+      <div class="col-md-4">
+        <h5>Links Rápidos</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" class="text-white">Início</a></li>
+          <li><a href="#" class="text-white">Últimas Notícias</a></li>
+          <li><a href="#" class="text-white">Contato</a></li>
+          <li><a href="#" class="text-white">Política de Privacidade</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5>Contato</h5>
+        <address>
+          <strong>Meu Noticiário LTDA</strong><br>
+          Av. Paulista, 1000<br>
+          São Paulo, SP 01310-100<br>
+          <i class="fas fa-phone"></i> (11) 3456-7890<br>
+          <i class="fas fa-envelope"></i>
+        </address>
+      </div>
+    </div>
+    <hr>
+    <div class="text-center">
+      <p>&copy; 2024 Meu Noticiário. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>

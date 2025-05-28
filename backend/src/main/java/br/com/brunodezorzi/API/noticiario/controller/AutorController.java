@@ -32,7 +32,7 @@ public class AutorController {
 
   // pegar pelo id
   @GetMapping("/listar/{id}")
-  public ResponseEntity<Autor> listar(@PathVariable(value = "id") Long Id) {
+  public ResponseEntity<Autor> listar(@PathVariable(value = "id") Integer Id) {
     Optional<Autor> autor = autorRepository.findById(Id);
     if (autor.isPresent()) {
       return new ResponseEntity<>(autor.get(), HttpStatus.OK);
@@ -48,7 +48,7 @@ public class AutorController {
 
   @PutMapping("/atualizar/{id}")
   public ResponseEntity<Autor> atualizar(
-    @PathVariable(value = "id") Long id,
+    @PathVariable(value = "id") Integer id,
     @RequestBody Autor novAutor
   ) {
     Optional<Autor> autor = autorRepository.findById(id);
@@ -63,7 +63,7 @@ public class AutorController {
   }
 
   @DeleteMapping("/remover/{id}")
-  public ResponseEntity<Void> remover(@PathVariable("id") Long id) {
+  public ResponseEntity<Void> remover(@PathVariable("id") Integer id) {
     Optional<Autor> autor = autorRepository.findById(id);
     if (autor.isPresent()) {
       autorRepository.deleteById(id);
