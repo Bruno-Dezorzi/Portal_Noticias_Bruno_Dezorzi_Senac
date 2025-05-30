@@ -27,10 +27,11 @@ export class HomeComponent implements OnInit {
    * Verifica se o usuário está logado
    */
   verificarStatusLogin(): void {
-    // Simulação de verificação de login usando localStorage
+  if (typeof window !== 'undefined' && localStorage) {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     this.isLoggedIn = isLoggedIn === 'true';
   }
+}
 
   /**
    * Função para buscar notícias

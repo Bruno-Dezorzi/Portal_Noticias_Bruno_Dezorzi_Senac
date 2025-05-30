@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
+import { Router, RouterLink } from '@angular/router';
 
 Chart.register(...registerables);
 
@@ -30,7 +31,7 @@ interface News {
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './dashboard-adm.component.html',
   styleUrls: ['./dashboard-adm.component.css']
 })
@@ -41,6 +42,8 @@ export class DashboardAdmComponent implements AfterViewInit, OnDestroy {
   private viewsChart?: Chart;
   private categoriesChart?: Chart;
   private updateInterval?: number;
+
+  constructor(private router: Router) { }
 
   stats: Stats = {
     totalNews: 127,

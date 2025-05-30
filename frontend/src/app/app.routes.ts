@@ -13,5 +13,17 @@ export const routes: Routes = [
   {
     path: 'login',
     loadComponent: () => import('./components/login/login.component').then(c => c.LoginComponent)
+  },
+  {
+    path: 'admin',
+    loadComponent: () => import('./components/admin/dashboard-adm/dashboard-adm.component').then(c => c.DashboardAdmComponent)
+  },
+  {
+    path: 'cadastro_categoria',
+    loadComponent: () => import('./components/admin/cadastro_categorias/cadastro-categorias.component').then(c => c.AdminCategoriasComponent)
+  },
+  {
+    path: 'cadastro_noticia',
+    loadComponent: () => import('./components/admin/cadastro_noticias/cadastro-noticias.component').then(c => c.CadastroNoticiaComponent)
   }
 ];
