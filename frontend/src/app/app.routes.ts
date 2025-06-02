@@ -25,5 +25,13 @@ export const routes: Routes = [
   {
     path: 'cadastro_noticia',
     loadComponent: () => import('./components/admin/cadastro_noticias/cadastro-noticias.component').then(c => c.CadastroNoticiaComponent)
+  },
+  {
+    path: 'gerenciar_noticia',
+    loadComponent: () => import('./components/admin/gerenciar-noticias/gerenciar-noticias.component').then(c => c.GerenciarNoticiasComponent)
+  },
+  {
+    path: 'gerenciar_categoria',
+    loadComponent: () => import('./components/admin/gerenciar-categorias/gerenciar-categorias.component').then(c => c.GerenciarCategoriasComponent)
   }
 ];

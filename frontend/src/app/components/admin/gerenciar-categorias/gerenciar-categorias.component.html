@@ -1,0 +1,79 @@
+<!-- gerenciar-categorias.component.html -->
+<div class="container-fluid">
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Sistema de Notícias</a>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="#">Início</a>
+        <a class="nav-link" href="#">Categorias</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conteúdo Principal -->
+  <div class="container mt-4">
+    <div class="form-container">
+      <!-- Cabeçalho -->
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="section-title">Gerenciar Categorias</h2>
+        <a routerLink="/cadastro_categoria" class="btn btn-publish">
+          <i class="fas fa-plus me-2"></i>
+          Nova Categoria
+        </a>
+      </div>
+
+      <!-- Tabela de Categorias -->
+      <div class="form-section">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Categoria Pai</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (categoria of categoria$; track categoria.id) {
+                <tr class="category-card">
+                  <td>{{ categoria.id }}</td>
+                  <td>{{ categoria.nome }}</td>
+                  <td>
+                    @if (categoria.categoria) {
+                      <span class="badge parent-category-badge">
+                        {{ categoria.categoria.nome }}
+                      </span>
+                    } @else {
+                      <span class="text-muted">Categoria Principal</span>
+                    }
+                  </td>
+                  <td>
+                    <button (click)="editar(categoria.id)" class="btn btn-primary btn-sm me-2">
+                      Editar
+                    </button>
+                    <button (click)="remover(categoria.id)" class="btn btn-danger btn-sm">
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Estado Vazio -->
+      @if (categoria$.length === 0) {
+        <div class="text-center py-5">
+          <h4 class="text-muted">Nenhuma categoria cadastrada</h4>
+          <p class="info-text">Clique em "Nova Categoria" para começar</p>
+          <a routerLink="/cadastro_categoria" class="btn btn-publish">
+            Nova Categoria
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</div>
