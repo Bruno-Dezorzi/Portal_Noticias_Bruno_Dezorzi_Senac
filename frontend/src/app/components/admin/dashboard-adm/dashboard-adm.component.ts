@@ -1,9 +1,6 @@
-import { Component, ElementRef, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Chart, registerables } from 'chart.js';
 import { Router, RouterLink } from '@angular/router';
-
-Chart.register(...registerables);
 
 interface Stats {
   totalNews: number;
@@ -25,23 +22,16 @@ interface News {
   date: Date;
   status: string;
   views: number;
-  image?: string;
 }
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-dashboard-adm',
   standalone: true,
-  imports: [CommonModule,RouterLink],
+  imports: [CommonModule, RouterLink],
   templateUrl: './dashboard-adm.component.html',
   styleUrls: ['./dashboard-adm.component.css']
 })
-export class DashboardAdmComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('viewsChart', { static: false }) viewsChartRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('categoriesChart', { static: false }) categoriesChartRef!: ElementRef<HTMLCanvasElement>;
-
-  private viewsChart?: Chart;
-  private categoriesChart?: Chart;
-  private updateInterval?: number;
+export class DashboardAdmComponent implements OnInit {
 
   constructor(private router: Router) { }
 
@@ -72,11 +62,6 @@ export class DashboardAdmComponent implements AfterViewInit, OnDestroy {
       title: 'Categoria criada',
       description: 'Nova categoria "Tecnologia" foi adicionada',
       time: 'Ontem'
-    },
-    {
-      title: 'Backup realizado',
-      description: 'Backup automático do sistema executado com sucesso',
-      time: 'Ontem'
     }
   ];
 
@@ -87,8 +72,7 @@ export class DashboardAdmComponent implements AfterViewInit, OnDestroy {
       category: 'Esportes',
       date: new Date('2024-05-22'),
       status: 'Publicado',
-      views: 1250,
-      image: '/api/placeholder/50/50'
+      views: 1250
     },
     {
       id: 2,
@@ -96,8 +80,7 @@ export class DashboardAdmComponent implements AfterViewInit, OnDestroy {
       category: 'Economia',
       date: new Date('2024-05-21'),
       status: 'Rascunho',
-      views: 0,
-      image: '/api/placeholder/50/50'
+      views: 0
     },
     {
       id: 3,
@@ -105,133 +88,54 @@ export class DashboardAdmComponent implements AfterViewInit, OnDestroy {
       category: 'Lazer',
       date: new Date('2024-05-20'),
       status: 'Publicado',
-      views: 890,
-      image: '/api/placeholder/50/50'
+      views: 890
     }
   ];
 
-  ngAfterViewInit(): void {
-    this.initializeCharts();
-    this.startAutoUpdate();
-  }
-
-  ngOnDestroy(): void {
-    if (this.updateInterval) {
-      clearInterval(this.updateInterval);
-    }
-    if (this.viewsChart) {
-      this.viewsChart.destroy();
-    }
-    if (this.categoriesChart) {
-      this.categoriesChart.destroy();
-    }
-  }
-
-  private initializeCharts(): void {
-    this.createViewsChart();
-    this.createCategoriesChart();
-  }
-
-  private createViewsChart(): void {
-    const ctx = this.viewsChartRef.nativeElement.getContext('2d');
-    if (ctx) {
-      this.viewsChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-          labels: ['16/05', '17/05', '18/05', '19/05', '20/05', '21/05', '22/05'],
-          datasets: [{
-            label: 'Visualizações',
-            data: [12000, 14500, 13200, 15800, 16200, 14900, 15742],
-            borderColor: '#0d6efd',
-            backgroundColor: 'rgba(13, 110, 253, 0.1)',
-            tension: 0.4,
-            fill: true
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: {
-            y: {
-              beginAtZero: true
-            }
-          },
-          plugins: {
-            legend: {
-              display: false
-            }
-          }
-        }
-      });
-    }
-  }
-
-  private createCategoriesChart(): void {
-    const ctx = this.categoriesChartRef.nativeElement.getContext('2d');
-    if (ctx) {
-      this.categoriesChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-          labels: ['Esportes', 'Política', 'Economia', 'Lazer', 'Internacional'],
-          datasets: [{
-            data: [25, 20, 18, 15, 12],
-            backgroundColor: [
-              '#28a745',
-              '#dc3545',
-              '#ffc107',
-              '#17a2b8',
-              '#6f42c1'
-            ]
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }
-      });
-    }
-  }
-
-  private startAutoUpdate(): void {
-    this.updateInterval = window.setInterval(() => {
-      console.log('Atualizando dashboard...');
-      // Aqui você pode implementar a lógica para atualizar os dados
-      // Por exemplo, fazer uma chamada HTTP para buscar novos dados
-    }, 30000); // Atualiza a cada 30 segundos
+  ngOnInit(): void {
+    // Inicialização do componente
   }
 
   getCategoryBadgeClass(category: string): string {
     const classes: { [key: string]: string } = {
-      'Esportes': 'bg-success',
-      'Economia': 'bg-info',
-      'Lazer': 'bg-primary',
-      'Política': 'bg-warning',
-      'Internacional': 'bg-secondary'
+      'Esportes': 'badge-success',
+      'Economia': 'badge-info',
+      'Lazer': 'badge-primary',
+      'Política': 'badge-warning',
+      'Internacional': 'badge-secondary'
     };
-    return classes[category] || 'bg-secondary';
+    return classes[category] || 'badge-secondary';
   }
 
   getStatusBadgeClass(status: string): string {
     const classes: { [key: string]: string } = {
-      'Publicado': 'bg-success',
-      'Rascunho': 'bg-warning',
-      'Rejeitado': 'bg-danger'
+      'Publicado': 'badge-success',
+      'Rascunho': 'badge-warning',
+      'Rejeitado': 'badge-danger'
     };
-    return classes[status] || 'bg-secondary';
+    return classes[status] || 'badge-secondary';
   }
 
   editNews(id: number): void {
     console.log('Editando notícia:', id);
-    // Implementar lógica de edição
+    this.router.navigate(['/editar-noticia', id]);
   }
 
   deleteNews(id: number): void {
-    console.log('Excluindo notícia:', id);
-    // Implementar lógica de exclusão
+    if (confirm('Tem certeza que deseja excluir esta notícia?')) {
+      console.log('Excluindo notícia:', id);
+      // Implementar lógica de exclusão
+      this.latestNews = this.latestNews.filter(news => news.id !== id);
+    }
+  }
+
+  navigateToSection(section: string): void {
+    this.router.navigate([`/${section}`]);
+  }
+
+  logout(): void {
+    if (confirm('Tem certeza que deseja sair?')) {
+      this.router.navigate(['/login']);
+    }
   }
 }

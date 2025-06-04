@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterModule } from '@angular/router';
-import { Noticia } from '../../../model/noticia';
-import { Autor } from '../../../model/autor';
-import { lastValueFrom } from 'rxjs';
 import { NoticiaService } from '../../../service/noticia.service';
+import { lastValueFrom } from 'rxjs';
+import { NgFor, SlicePipe } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+
+
 
 @Component({
-  selector: 'app-gerenciar-noticias',
-  imports: [CommonModule, RouterModule,RouterLink],
-  templateUrl: './gerenciar-noticias.component.html',
-  styleUrl: './gerenciar-noticias.component.css'
+    standalone: true,
+    selector: 'app-noticia',
+    imports: [RouterModule, NgFor, SlicePipe],
+    templateUrl: './gerenciar-noticias.component.html',
+    styleUrl: './gerenciar-noticias.component.css'
 })
-export class GerenciarNoticiasComponent {
+export class NoticiaComponent implements OnInit {
   noticia$: any;
   categoria: any;
 

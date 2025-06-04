@@ -20,18 +20,18 @@ export const routes: Routes = [
   },
   {
     path: 'cadastro_categoria',
-    loadComponent: () => import('./components/admin/cadastro_categorias/cadastro-categorias.component').then(c => c.AdminCategoriasComponent)
+    loadComponent: () => import('./components/admin/cadastro_categorias/cadastro-categorias.component').then(c => c.CategoriaFormComponent)
   },
   {
     path: 'cadastro_noticia',
-    loadComponent: () => import('./components/admin/cadastro_noticias/cadastro-noticias.component').then(c => c.CadastroNoticiaComponent)
+    loadComponent: () => import('./components/admin/cadastro_noticias/cadastro-noticias.component').then(c => c.NoticiaFormComponent)
   },
   {
     path: 'gerenciar_noticia',
-    loadComponent: () => import('./components/admin/gerenciar-noticias/gerenciar-noticias.component').then(c => c.GerenciarNoticiasComponent)
+    loadComponent: () => import('./components/admin/gerenciar-noticias/gerenciar-noticias.component').then(c => c.NoticiaComponent)
   },
   {
     path: 'gerenciar_categoria',
-    loadComponent: () => import('./components/admin/gerenciar-categorias/gerenciar-categorias.component').then(c => c.GerenciarCategoriasComponent)
+    loadComponent: () => import('./components/admin/gerenciar-categorias/gerenciar-categorias.component').then(c => c.CategoriaComponent)
   }
 ];

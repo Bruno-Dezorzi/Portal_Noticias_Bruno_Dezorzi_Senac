@@ -1,81 +1,30 @@
-<!-- news-list.component.html -->
-<div class="container-fluid">
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-      <a class="navbar-brand" href="#">Sistema de Notícias</a>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="#">Início</a>
-        <a class="nav-link" href="#">Notícias</a>
-      </div>
-    </div>
-  </nav>
+<a routerLink="novo" class="btn btn-primary left">Novo</a>
 
-  <!-- Conteúdo Principal -->
-  <div class="container mt-4">
-    <div class="form-container">
-      <!-- Cabeçalho -->
-      <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="section-title">Gerenciar Notícias</h2>
-        <a routerLink="/cadastro_noticia" class="btn btn-publish">
-          <i class="fas fa-plus me-2"></i>
-          Nova Notícia
-        </a>
-      </div>
+<table class="table">
 
-      <!-- Tabela de Notícias -->
-      <div class="form-section">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Título</th>
-                <th scope="col">Data Publicação</th>
-                <th scope="col">Categoria</th>
-                <th scope="col">Autor</th>
-                <th scope="col">Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (noticia of noticia$; track noticia.id) {
-                <tr class="news-card">
-                  <td>{{ noticia.id }}</td>
-                  <td>{{ noticia.titulo }}</td>
-                  <td class="news-date">
-                    {{ noticia.dataPublicacao | date:'dd/MM/yyyy' }}
-                  </td>
-                  <td>
-                    <span class="badge category-badge">
-                      {{ noticia.categoria?.nome }}
-                    </span>
-                  </td>
-                  <td>{{ noticia.autor.nome }}</td>
-                  <td>
-                    <button (click)="editar(noticia.id)" class="btn btn-primary btn-sm me-2">
-                      Editar
-                    </button>
-                    <button (click)="remover(noticia.id)" class="btn btn-danger btn-sm">
-                      Excluir
-                    </button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Título</th>
+            <th scope="col">Corpo</th>
+            <th scope="col">Categoria</th>
+            <th scope="col">Ações</th>
+        </tr>
+    </thead>
 
-      <!-- Estado Vazio -->
-      @if (noticia$.length === 0) {
-        <div class="text-center py-5">
-          <h4 class="text-muted">Nenhuma notícia cadastrada</h4>
-          <p class="info-text">Clique em "Nova Notícia" para começar</p>
-          <a routerLink="/cadastro_noticia" class="btn btn-publish">
-            Nova Notícia
-          </a>
-        </div>
-      }
-    </div>
-  </div>
-</div>
+    <tbody>
+        <tr *ngFor="let noticia of noticia$">
+            <th>{{noticia.id}}</th>
+            <th>{{noticia.titulo}}</th>
+            <th [title]="noticia.corpo">
+                {{ noticia.corpo | slice:0:100 }}{{ noticia.corpo?.length > 100 ? '...' : '' }}
+            </th>
+            <th>{{noticia.categoria?.nome}}</th>
+            <th>
+                <a (click)="editar(noticia.id)" class="btn btn-primary">Editar</a>&nbsp;
+                <a (click)="remover(noticia.id)" class="btn btn-danger">Excluir</a>
+            </th>
+        </tr>
+    </tbody>
+
+</table>

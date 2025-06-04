@@ -1,327 +1,37 @@
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <div class="container">
-    <a class="navbar-brand" href="index.html">Meu Noticiário</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="home.component.html">Início</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="categoria.html?cat=esportes">Esportes</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="categoria.html?cat=lazer">Lazer</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="categoria.html?cat=politica">Política</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="categoria.html?cat=economia">Economia</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="categoria.html?cat=internacional">Internacional</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Buscar notícias" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Buscar</button>
-      </form>
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="adminDropdown" role="button"
-             data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-user-shield me-1"></i> Admin
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="adminDropdown">
-            <li><a class="dropdown-item" href="admin-dashboard.html">Dashboard</a></li>
-            <li><a class="dropdown-item" href="admin-noticias.html">Gerenciar Notícias</a></li>
-            <li><a class="dropdown-item active" href="admin-categorias.html">Gerenciar Categorias</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#" (click)="logout()">Sair</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<a routerLink="/categoria" class="btn btn-primary left">Voltar</a>
 
-<!-- Admin Header -->
-<div class="admin-header">
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-md-6">
-        <h2><i class="fas fa-tags me-2"></i> Gerenciamento de Categorias</h2>
-        <p class="text-muted">Adicione, edite ou exclua categorias e subcategorias de notícias do portal</p>
-      </div>
-      <div class="col-md-6 text-md-end">
-        <nav aria-label="breadcrumb">
-          <ol class="breadcrumb justify-content-md-end mb-0">
-            <li class="breadcrumb-item"><a href="index.html">Início</a></li>
-            <li class="breadcrumb-item"><a href="admin-dashboard.html">Admin</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Categorias</li>
-          </ol>
-        </nav>
-      </div>
-    </div>
-  </div>
-</div>
+<form class="form" [formGroup]="form">
 
-<!-- Main Content -->
-<div class="container mb-5">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-lg-3 mb-4">
-      <div class="admin-sidebar">
-        <h5 class="mb-3">Painel Administrativo</h5>
-        <div class="list-group">
-          <a href="admin-dashboard.html" class="list-group-item list-group-item-action">
-            <i class="fas fa-tachometer-alt me-2"></i> Dashboard
-          </a>
-          <a href="admin-noticias.html" class="list-group-item list-group-item-action">
-            <i class="fas fa-newspaper me-2"></i> Gerenciar Notícias
-          </a>
-          <a href="admin-categorias.html" class="list-group-item list-group-item-action active">
-            <i class="fas fa-tags me-2"></i> Gerenciar Categorias
-          </a>
-          <a href="admin-usuarios.html" class="list-group-item list-group-item-action">
-            <i class="fas fa-users me-2"></i> Gerenciar Usuários
-          </a>
-          <a href="admin-comentarios.html" class="list-group-item list-group-item-action">
-            <i class="fas fa-comments me-2"></i> Gerenciar Comentários
-          </a>
-          <a href="admin-configuracoes.html" class="list-group-item list-group-item-action">
-            <i class="fas fa-cog me-2"></i> Configurações
-          </a>
-        </div>
-      </div>
+    <div class="mb-3">
+        <label for="id"></label>
+        <input id="id" type="text" class="form-control" placeholder="ID" [formControl]="form.controls.id" readonly>
     </div>
 
-    <!-- Main Content -->
-    <div class="col-lg-9">
-      <div class="row">
-        <!-- Form for adding/editing categories -->
-        <div class="col-md-5">
-          <div class="admin-content">
-            <h4 class="mb-4">{{ formTitle }}</h4>
-
-            <div class="alert alert-info" role="alert">
-              <i class="fas fa-info-circle me-2"></i>
-              <strong>Dica:</strong> Você pode criar categorias principais ou subcategorias selecionando uma categoria pai.
-            </div>
-
-            <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
-              <div class="mb-3">
-                <label for="categoryName" class="form-label">
-                  Nome da Categoria <span class="text-danger">*</span>
-                </label>
-                <input
-                  type="text"
-                  class="form-control"
-                  id="categoryName"
-                  formControlName="nome"
-                  placeholder="Ex: Esportes, Futebol, Tecnologia..."
-                  [class.is-invalid]="categoryForm.get('nome')?.invalid && categoryForm.get('nome')?.touched">
-                <div class="form-text">Nome que será exibido no site</div>
-                <div class="invalid-feedback" *ngIf="categoryForm.get('nome')?.invalid && categoryForm.get('nome')?.touched">
-                  Nome da categoria é obrigatório
-                </div>
-              </div>
-
-              <div class="mb-3">
-                <label for="categoryParent" class="form-label">Categoria Pai (Opcional)</label>
-                <select class="form-select" id="categoryParent" formControlName="categoriaId">
-                  <option value="">Selecione uma categoria pai (deixe vazio para categoria principal)</option>
-                  <option *ngFor="let cat of mainCategories" [value]="cat.id">{{ cat.nome }}</option>
-                </select>
-                <div class="form-text">Selecione uma categoria existente para criar uma subcategoria</div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <div class="d-flex justify-content-between">
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      (click)="resetForm()"
-                      [style.display]="isEditing ? 'block' : 'none'">
-                      <i class="fas fa-times me-1"></i> Cancelar
-                    </button>
-                    <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">
-                      <i class="fas fa-save me-1"></i> {{ isEditing ? 'Atualizar Categoria' : 'Salvar Categoria' }}
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-
-          <!-- Statistics Card -->
-          <div class="admin-content mt-4">
-            <h5 class="mb-3"><i class="fas fa-chart-pie me-2"></i> Estatísticas</h5>
-            <div class="row text-center">
-              <div class="col-6">
-                <div class="border-end">
-                  <h3 class="text-primary mb-1">{{ statistics.total }}</h3>
-                  <small class="text-muted">Total</small>
-                </div>
-              </div>
-              <div class="col-6">
-                <h3 class="text-success mb-1">{{ statistics.main }}</h3>
-                <small class="text-muted">Principais</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- List of categories -->
-        <div class="col-md-7">
-          <div class="admin-content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-              <div>
-                <h4 class="mb-0">Categorias Existentes</h4>
-                <small class="text-muted">Hierarquia de categorias do sistema</small>
-              </div>
-              <div class="input-group w-50">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Buscar categoria..."
-                  [(ngModel)]="searchTerm"
-                  (input)="filterCategories()">
-                <button class="btn btn-outline-secondary" type="button">
-                  <i class="fas fa-search"></i>
-                </button>
-              </div>
-            </div>
-
-            <div class="category-list">
-              <table class="table table-hover">
-                <thead class="table-light">
-                  <tr>
-                    <th scope="col" width="5%">ID</th>
-                    <th scope="col" width="50%">Nome / Hierarquia</th>
-                    <th scope="col" width="20%">Tipo</th>
-                    <th scope="col" width="25%">Ações</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let categoria of filteredCategories"
-                      [ngClass]="{'subcategory-row': categoria.categoria}">
-                    <td>{{ categoria.id }}</td>
-                    <td>
-                      <div [ngClass]="{'subcategory-indent': categoria.categoria}">
-                        <i *ngIf="categoria.categoria" class="fas fa-level-up-alt fa-rotate-90 text-muted me-2"></i>
-                        <strong>{{ categoria.nome }}</strong>
-                        <div *ngIf="categoria.categoria" class="category-hierarchy">
-                          <i class="fas fa-arrow-up me-1"></i> {{ categoria.categoria.nome }}
-                        </div>
-                      </div>
-                    </td>
-                    <td>
-                      <span class="badge" [ngClass]="categoria.categoria ? 'bg-secondary' : 'bg-primary'">
-                        {{ categoria.categoria ? 'Subcategoria' : 'Principal' }}
-                      </span>
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-sm btn-outline-primary me-1"
-                        (click)="editCategory(categoria)"
-                        title="Editar">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <button
-                        class="btn btn-sm btn-outline-danger"
-                        (click)="openDeleteModal(categoria)"
-                        title="Excluir">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="mb-3">
+        <label for="nome"></label>
+        <input id="nome" type="text" class="form-control" placeholder="Nome" [formControl]="form.controls.nome">
     </div>
-  </div>
-</div>
 
-<!-- Delete Confirmation Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header bg-danger text-white">
-        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <p>Tem certeza que deseja excluir a categoria <strong>{{ categoryToDelete?.nome }}</strong>?</p>
-        <div class="alert alert-warning" role="alert">
-          <i class="fas fa-exclamation-triangle me-2"></i>
-          <strong>Atenção:</strong> Esta ação não pode ser desfeita.
-          <ul class="mb-0 mt-2">
-            <li *ngIf="subcategoriesCount > 0">Esta categoria possui {{ subcategoriesCount }} subcategoria(s) que também serão excluídas</li>
-            <li>Notícias associadas perderão a categorização</li>
-          </ul>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" class="btn btn-danger" (click)="confirmDelete()">
-          <i class="fas fa-trash me-1"></i> Sim, Excluir
-        </button>
-      </div>
+    <div class="mb-3">
+        <label for="descricao'"></label>
+        <input id="descricao" type="text" class="form-control" placeholder="Descricao" [formControl]="form.controls.descricao">
     </div>
-  </div>
-</div>
 
-<!-- Success Alert Template -->
-<div *ngIf="alertMessage"
-     class="alert alert-dismissible fade show"
-     [ngClass]="'alert-' + alertType"
-     style="position: fixed; top: 20px; right: 20px; z-index: 1055;">
-  <i class="fas" [ngClass]="alertType === 'success' ? 'fa-check-circle' : 'fa-exclamation-triangle'"></i>
-  {{ alertMessage }}
-  <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
-</div>
+    <div class="mb-3">
+        <select [formControl]="form.controls.categoria" class="form-select">
+            <option *ngFor="let categoria of categoria$" value="{{categoria.id}}">
+                {{categoria.nome}}
+            </option>
+        </select>
+    </div>
 
-<!-- Footer -->
-<footer class="bg-dark text-white mt-5 py-4">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h5>Meu Noticiário</h5>
-        <p>Seu portal de notícias completo e atualizado sobre os principais acontecimentos do Brasil e do mundo.</p>
-      </div>
-      <div class="col-md-4">
-        <h5>Links Rápidos</h5>
-        <ul class="list-unstyled">
-          <li><a href="#" class="text-white">Início</a></li>
-          <li><a href="#" class="text-white">Últimas Notícias</a></li>
-          <li><a href="#" class="text-white">Contato</a></li>
-          <li><a href="#" class="text-white">Política de Privacidade</a></li>
-        </ul>
-      </div>
-      <div class="col-md-4">
-        <h5>Contato</h5>
-        <address>
-          <strong>Meu Noticiário LTDA</strong><br>
-          Av. Paulista, 1000<br>
-          São Paulo, SP 01310-100<br>
-          <i class="fas fa-phone"></i> (11) 3456-7890<br>
-          <i class="fas fa-envelope"></i>
-        </address>
-      </div>
+    <br>
+
+    <div class="clearfix"></div>
+
+    <div class="container-fluid d-flex justify-contend-end">
+        <button class="btn btn-primary float-right" (click)="salvar()">Salvar</button>
     </div>
-    <hr>
-    <div class="text-center">
-      <p>&copy; 2024 Meu Noticiário. Todos os direitos reservados.</p>
-    </div>
-  </div>
-</footer>
+
+
+</form>

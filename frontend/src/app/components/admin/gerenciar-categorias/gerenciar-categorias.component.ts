@@ -1,84 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterLink, RouterModule } from '@angular/router';
-import { Categoria } from '../../../model/categoria';
+import { CategoriaService } from '../../../service/categoria.service';
+import { Router, RouterModule } from '@angular/router';
+import { lastValueFrom } from 'rxjs';
+import { NgFor } from '@angular/common';
 
 @Component({
-  selector: 'app-gerenciar-categorias',
-  imports: [CommonModule, RouterModule,RouterLink],
-  templateUrl: './gerenciar-categorias.component.html',
-  styleUrl: './gerenciar-categorias.component.css'
+    selector: 'app-categoria',
+    imports: [NgFor, RouterModule],
+    templateUrl: './gerenciar-categorias.component.html',
+    styleUrl: './gerenciar-categorias.component.css'
 })
-export class GerenciarCategoriasComponent implements OnInit {
-  categoria$: Categoria[] = [
-    {
-      id: 1,
-      nome: 'Tecnologia',
-      categoria: null
-    },
-    {
-      id: 2,
-      nome: 'Negócios',
-      categoria: null
-    },
-    {
-      id: 3,
-      nome: 'Esportes',
-      categoria: null
-    },
-    {
-      id: 4,
-      nome: 'Programação',
-      categoria: {
-        id: 1,
-        nome: 'Tecnologia',
-        categoria: null
-      }
-    },
-    {
-      id: 5,
-      nome: 'Futebol',
-      categoria: {
-        id: 3,
-        nome: 'Esportes',
-        categoria: null
-      }
-    },
-    {
-      id: 6,
-      nome: 'Marketing Digital',
-      categoria: {
-        id: 2,
-        nome: 'Negócios',
-        categoria: null
-      }
-    }
-  ];
+export class CategoriaComponent implements OnInit{
 
-  constructor() { }
+  categoria$: any;
+  categoria: any;
 
+  constructor(private categoriaService: CategoriaService, private router: Router){
+
+  }
   ngOnInit(): void {
+    this.getCategoria();
   }
 
-  editar(id: number | null): void {
-    if (id) {
-      console.log('Editando categoria:', id);
-      // Navegar para edição: this.router.navigate(['/categorias/editar', id]);
-    }
+  public async getCategoria(){
+    this.categoria$ = await lastValueFrom(this.categoriaService.get());
+
   }
 
-  remover(id: number | null): void {
-    if (id && confirm('Tem certeza que deseja excluir esta categoria?')) {
-      // Verificar se existem subcategorias antes de remover
-      const hasSubcategorias = this.categoria$.some(cat => cat.categoria?.id === id);
 
-      if (hasSubcategorias) {
-        alert('Não é possível excluir esta categoria pois existem subcategorias vinculadas a ela.');
-        return;
-      }
-
-      this.categoria$ = this.categoria$.filter(categoria => categoria.id !== id);
-      console.log('Categoria removida:', id);
-    }
+  public editar(id: number){
+    //this.categoria = await lastValueFrom(this.categoriaService.getCategoriaById(id));
+    this.router.navigate(['categoria/editar/', id]);
+    console.log(id);
   }
+
+  public async remover(id: number){
+    let ret = await lastValueFrom(this.categoriaService.remover(id));
+    this.categoria$ = await lastValueFrom(this.categoriaService.get());
+  }
+
 }
