@@ -1,39 +1,95 @@
-<a routerLink="/noticia" class="btn btn-primary left">Voltar</a>
+<a routerLink="/noticia" class="btn btn-primary mb-3">← Voltar</a>
 
-<form class="form" [formGroup]="form">
-
-    <div class="mb-3">
-        <label for="id"></label>
-        <input id="id" type="text" class="form-control" placeholder="ID" [formControl]="form.controls.id">
+<form [formGroup]="form" (ngSubmit)="salvar()" class="needs-validation">
+  <div class="row">
+    <!-- ID (hidden para novos registros) -->
+    <div class="col-12 mb-3" *ngIf="isEdicao">
+      <label for="id" class="form-label">ID</label>
+      <input 
+        id="id" 
+        type="text" 
+        class="form-control" 
+        formControlName="id" 
+        readonly>
     </div>
 
-    <div class="mb-3">
-        <label for="nome"></label>
-        <input id="nome" type="text" class="form-control" placeholder="Nome" [formControl]="form.controls.titulo">
+    <!-- Título -->
+    <div class="col-12 mb-3">
+      <label for="titulo" class="form-label">Título *</label>
+      <input 
+        id="titulo" 
+        type="text" 
+        class="form-control" 
+        formControlName="titulo"
+        placeholder="Digite o título da notícia"
+        required>
+      <div class="invalid-feedback" *ngIf="form.get('titulo')?.invalid && form.get('titulo')?.touched">
+        Título é obrigatório
+      </div>
     </div>
 
-    <div class="mb-3">
-        <label for="descricao'"></label>
-        <textarea id="descricao" type="text" class="form-control" placeholder="Corpo da Notícia" [formControl]="form.controls.titulo" rows="10">
-
-        </textarea>
+    <!-- Descrição -->
+    <div class="col-12 mb-3">
+      <label for="descricao" class="form-label">Descrição *</label>
+      <textarea 
+        id="descricao" 
+        class="form-control" 
+        formControlName="descricao"
+        placeholder="Digite o conteúdo da notícia"
+        rows="8"
+        required></textarea>
+      <div class="invalid-feedback" *ngIf="form.get('descricao')?.invalid && form.get('descricao')?.touched">
+        Descrição é obrigatória
+      </div>
     </div>
 
-    <div class="mb-3">
-        <select [formControl]="form.controls.categoria" class="form-select">
-            <option *ngFor="let cat of cat$" value="{{cat.id}}">
-                {{cat.nome}}
-            </option>
-        </select>
+    <!-- Categoria -->
+    <div class="col-md-6 mb-3">
+      <label for="categoria" class="form-label">Categoria *</label>
+      <select 
+        id="categoria" 
+        class="form-select" 
+        formControlName="categoria"
+        required>
+        <option value="">Selecione uma categoria</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria.id">
+          {{ categoria.nome }}
+        </option>
+      </select>
+      <div class="invalid-feedback" *ngIf="form.get('categoria')?.invalid && form.get('categoria')?.touched">
+        Categoria é obrigatória
+      </div>
     </div>
 
-    <br>
-
-    <div class="clearfix"></div>
-
-    <div class="container-fluid d-flex justify-contend-end">
-        <button class="btn btn-primary float-right" (click)="salvar()">Salvar</button>
+    <!-- Data de Publicação -->
+    <div class="col-md-6 mb-3">
+      <label for="dataPublicacao" class="form-label">Data de Publicação *</label>
+      <input 
+        id="dataPublicacao" 
+        type="date" 
+        class="form-control" 
+        formControlName="dataPublicacao"
+        required>
+      <div class="invalid-feedback" *ngIf="form.get('dataPublicacao')?.invalid && form.get('dataPublicacao')?.touched">
+        Data de publicação é obrigatória
+      </div>
     </div>
+  </div>
 
-
+  <!-- Botões -->
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <button 
+      type="button" 
+      class="btn btn-secondary" 
+      routerLink="/noticia">
+      Cancelar
+    </button>
+    <button 
+      type="submit" 
+      class="btn btn-primary"
+      [disabled]="form.invalid || salvando">
+      <span *ngIf="salvando" class="spinner-border spinner-border-sm me-2"></span>
+      {{ isEdicao ? 'Atualizar' : 'Salvar' }}
+    </button>
+  </div>
 </form>
