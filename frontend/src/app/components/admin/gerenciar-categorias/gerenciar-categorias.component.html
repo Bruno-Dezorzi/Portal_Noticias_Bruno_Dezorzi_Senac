@@ -1,30 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Categorias</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <!-- Botão Novo -->
+        <div class="mb-3">
+            <a routerLink="/cadastro_categoria" class="btn btn-primary">Novo</a>
+        </div>
 
-
-<a routerLink="novo" class="btn btn-primary left">Novo</a>
-
-<table class="table">
-
-    <thead>
-        <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nome</th>
-            <th scope="col">Descrição</th>
-            <th scope="col">Categoria Pai</th>
-            <th scope="col">Ações</th>
-        </tr>
-    </thead>
-
-    <tbody>
-        <tr *ngFor="let cat of categoria$">
-            <th>{{cat.id}}</th>
-            <th>{{cat.nome}}</th>
-            <th>{{cat.descricao}}</th>
-            <th>{{cat.categoria?.nome}}</th>
-            <th>
-                <a (click)="editar(cat.id)"  class="btn btn-primary">Editar</a>&nbsp;
-                <a (click)="remover(cat.id)" class="btn btn-danger">Excluir</a>
-            </th>
-        </tr>
-    </tbody>
-
-</table>
+        <!-- Tabela -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nome</th>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Categoria Pai</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (cat of categoria$; track cat.id){
+                            <tr>
+                                <th>{{cat.id}}</th>
+                                <th>{{cat.nome}}</th>
+                                <th>{{cat.descricao}}</th>
+                                <th>{{cat.categoria?.nome}}</th>
+                                <th>
+                                    <button type="button" (click)="editar(cat.id)" class="btn btn-sm btn-primary me-2">Editar</button>
+                                    <button type="button" (click)="remover(cat.id)" class="btn btn-sm btn-danger">Excluir</button>
+                                </th>
+                            </tr>
+                            }
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,151 +1,98 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
 import { NoticiaService } from '../../../service/noticia.service';
-import { CategoriaService } from '../../../service/categoria.service';
+import { lastValueFrom } from 'rxjs';
 import { Noticia } from '../../../model/noticia';
+import { CategoriaService } from '../../../service/categoria.service';
+import { NgFor } from '@angular/common';
 
 @Component({
-  standalone: true,
-  selector: 'app-noticia-form',
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    RouterModule
-  ],
-  templateUrl: './cadastro-noticias.component.html',
-  styleUrl: './cadastro-noticias.component.css'
+    standalone: true,
+    selector: 'app-noticia-form',
+    imports: [FormsModule,
+        ReactiveFormsModule,
+        RouterModule
+      ],
+    templateUrl: './cadastro-noticias.component.html',
+    styleUrl: './cadastro-noticias.component.css'
 })
 export class NoticiaFormComponent implements OnInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private noticiaService = inject(NoticiaService);
-  private categoriaService = inject(CategoriaService);
-
-  categorias: any[] = [];
-  noticiaId: number | null = null;
-  isEdicao = false;
-  salvando = false;
+  cat$: any;
+  noticia$: any;
+  noticia: any;
+  private activateRoute = inject(ActivatedRoute);
+  id: any;
 
   form = new FormGroup({
     id: new FormControl<number | null>(null),
-    titulo: new FormControl<string>('', [Validators.required, Validators.minLength(3)]),
-    descricao: new FormControl<string>('', [Validators.required, Validators.minLength(10)]),
-    dataPublicacao: new FormControl<string>('', Validators.required),
-    categoria: new FormControl<number | null>(null, Validators.required)
+    titulo: new FormControl<string>(''),
+    corpo: new FormControl<string>(''),
+    categoria: new FormControl<number | null>(null)
+
   });
 
+  constructor(private noticiaService: NoticiaService, private router: Router, private categoriaService: CategoriaService) {
+
+  }
   ngOnInit(): void {
-    this.noticiaId = this.route.snapshot.params['id'] ? +this.route.snapshot.params['id'] : null;
-    this.isEdicao = !!this.noticiaId;
-    
-    this.carregarCategorias();
-    
-    if (this.isEdicao) {
-      this.carregarNoticia();
-    } else {
-      // Para novos registros, define data atual
-      this.form.patchValue({
-        dataPublicacao: new Date().toISOString().split('T')[0]
-      });
+    this.get();
+    this.getCategorias();
+    this.id = this.activateRoute.snapshot.params['id'];
+    if (this.id) {
+      this.getById();
     }
+
   }
 
-  private async carregarCategorias(): Promise<void> {
-    try {
-      this.categorias = await this.categoriaService.get().toPromise() || [];
-    } catch (error) {
-      console.error('Erro ao carregar categorias:', error);
-      this.mostrarErro('Erro ao carregar categorias');
-    }
+  public async get() {
+    this.noticia$ = await lastValueFrom(this.noticiaService.get());
   }
 
-  private async carregarNoticia(): Promise<void> {
-    if (!this.noticiaId) return;
+  public async getById() {
+    this.noticia = await lastValueFrom(this.noticiaService.getById(this.id));
+    console.log(this.noticia);
+    this.form.controls.id.setValue(this.noticia.id);
+    this.form.controls.titulo.setValue(this.noticia.titulo);
+    this.form.controls.corpo.setValue(this.noticia.corpo);
+    this.form.controls.categoria.setValue(this.noticia.categoria?.id);
+  }
 
-    try {
-      const noticia = await this.noticiaService.getById(this.noticiaId).toPromise();
-      
-      if (noticia) {
-        this.form.patchValue({
-          id: noticia.id,
-          titulo: noticia.titulo || '',
-          descricao: noticia.descricao || '',
-          dataPublicacao: this.formatarDataParaInput(noticia.dataPublicacao),
-          categoria: noticia.categoria?.id || null
-        });
+  public async getCategorias(){
+    this.cat$ = await lastValueFrom(this.categoriaService.get());
+  }
+
+  public salvar() {
+    //todo
+    let id_ = null;
+    if (this.id) {
+      id_ = this.id;
+    }
+    let titulo = this.form.controls.titulo.value;
+    let corpo = this.form.controls.corpo.value;
+    let categoria = this.form.controls.categoria.value;
+    let noticia: Noticia;
+
+    noticia = {
+      "id": id_,
+      "titulo": titulo,
+      "corpo": corpo,
+      "categoria": {
+        "id": categoria,
+        "nome": null,
+        "descricao": null,
+        "categoria": null
       }
-    } catch (error) {
-      console.error('Erro ao carregar notícia:', error);
-      this.mostrarErro('Erro ao carregar notícia');
-      this.router.navigate(['/noticia']);
-    }
-  }
+    };
 
-  private formatarDataParaInput(data: any): string {
-    if (!data) return '';
-    
-    const date = new Date(data);
-    return date.toISOString().split('T')[0];
-  }
-
-  async salvar(): Promise<void> {
-    if (this.form.invalid) {
-      this.marcarCamposComoTocados();
-      return;
-    }
-
-    this.salvando = true;
-
-    try {
-      const formData = this.form.value;
-      
-      const noticia: Noticia = {
-        id: this.isEdicao ? this.noticiaId : null,
-        titulo: formData.titulo!,
-        descricao: formData.descricao!,
-        dataPublicacao: new Date(formData.dataPublicacao!),
-        categoria: {
-          id: formData.categoria!,
-          nome: null,
-          descricao: null,
-          categoria: null
-        },
-        autor: {
-          id: 1, // Você pode ajustar isso conforme sua lógica de autenticação
-          nome: null,
-          email: null,
-          biografia: null
-        }
-      };
-
-      await this.noticiaService.salvar(noticia).toPromise();
-      
-      this.mostrarSucesso(this.isEdicao ? 'Notícia atualizada com sucesso!' : 'Notícia criada com sucesso!');
-      this.router.navigate(['/noticia']);
-      
-    } catch (error) {
-      console.error('Erro ao salvar notícia:', error);
-      this.mostrarErro('Erro ao salvar notícia. Tente novamente.');
-    } finally {
-      this.salvando = false;
-    }
-  }
-
-  private marcarCamposComoTocados(): void {
-    Object.keys(this.form.controls).forEach(key => {
-      this.form.get(key)?.markAsTouched();
-    });
-  }
-
-  private mostrarSucesso(mensagem: string): void {
-    // Implementar notificação de sucesso (toast/alert)
-    console.log('Sucesso:', mensagem);
-  }
-
-  private mostrarErro(mensagem: string): void {
-    // Implementar notificação de erro (toast/alert)
-    console.error('Erro:', mensagem);
+    this.noticiaService.salvar(noticia).subscribe(
+      noticia => {
+        this.router.navigate(['noticia']);
+        console.log(noticia);
+      },
+      erro => {
+        console.log(erro);
+      }
+    );
   }
 }

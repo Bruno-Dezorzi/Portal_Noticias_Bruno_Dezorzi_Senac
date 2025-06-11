@@ -1,95 +1,48 @@
-<a routerLink="/noticia" class="btn btn-primary mb-3">← Voltar</a>
+<div class="container mt-4">
+        <!-- Botão Voltar -->
+        <div class="mb-3">
+            <a routerLink="/admin" class="btn btn-primary">Voltar</a>
+        </div>
 
-<form [formGroup]="form" (ngSubmit)="salvar()" class="needs-validation">
-  <div class="row">
-    <!-- ID (hidden para novos registros) -->
-    <div class="col-12 mb-3" *ngIf="isEdicao">
-      <label for="id" class="form-label">ID</label>
-      <input 
-        id="id" 
-        type="text" 
-        class="form-control" 
-        formControlName="id" 
-        readonly>
+        <!-- Formulário -->
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <!-- Campo ID -->
+                    <div class="mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id" placeholder="ID">
+                    </div>
+
+                    <!-- Campo Título -->
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label">Título</label>
+                        <input type="text" class="form-control" id="titulo" placeholder="Título da Notícia">
+                    </div>
+
+                    <!-- Campo Corpo da Notícia -->
+                    <div class="mb-3">
+                        <label for="corpo" class="form-label">Corpo da Notícia</label>
+                        <textarea class="form-control" id="corpo" placeholder="Corpo da Notícia" rows="10"></textarea>
+                    </div>
+
+                    <!-- Campo Categoria -->
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoria</label>
+                        <select class="form-select" id="categoria">
+                            <option selected disabled>Selecione uma categoria</option>
+                            <option value="1">Esportes</option>
+                            <option value="2">Política</option>
+                            <option value="3">Tecnologia</option>
+                            <option value="4">Economia</option>
+                        </select>
+                    </div>
+
+                    <!-- Botão Salvar -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <!-- Título -->
-    <div class="col-12 mb-3">
-      <label for="titulo" class="form-label">Título *</label>
-      <input 
-        id="titulo" 
-        type="text" 
-        class="form-control" 
-        formControlName="titulo"
-        placeholder="Digite o título da notícia"
-        required>
-      <div class="invalid-feedback" *ngIf="form.get('titulo')?.invalid && form.get('titulo')?.touched">
-        Título é obrigatório
-      </div>
-    </div>
-
-    <!-- Descrição -->
-    <div class="col-12 mb-3">
-      <label for="descricao" class="form-label">Descrição *</label>
-      <textarea 
-        id="descricao" 
-        class="form-control" 
-        formControlName="descricao"
-        placeholder="Digite o conteúdo da notícia"
-        rows="8"
-        required></textarea>
-      <div class="invalid-feedback" *ngIf="form.get('descricao')?.invalid && form.get('descricao')?.touched">
-        Descrição é obrigatória
-      </div>
-    </div>
-
-    <!-- Categoria -->
-    <div class="col-md-6 mb-3">
-      <label for="categoria" class="form-label">Categoria *</label>
-      <select 
-        id="categoria" 
-        class="form-select" 
-        formControlName="categoria"
-        required>
-        <option value="">Selecione uma categoria</option>
-        <option *ngFor="let categoria of categorias" [value]="categoria.id">
-          {{ categoria.nome }}
-        </option>
-      </select>
-      <div class="invalid-feedback" *ngIf="form.get('categoria')?.invalid && form.get('categoria')?.touched">
-        Categoria é obrigatória
-      </div>
-    </div>
-
-    <!-- Data de Publicação -->
-    <div class="col-md-6 mb-3">
-      <label for="dataPublicacao" class="form-label">Data de Publicação *</label>
-      <input 
-        id="dataPublicacao" 
-        type="date" 
-        class="form-control" 
-        formControlName="dataPublicacao"
-        required>
-      <div class="invalid-feedback" *ngIf="form.get('dataPublicacao')?.invalid && form.get('dataPublicacao')?.touched">
-        Data de publicação é obrigatória
-      </div>
-    </div>
-  </div>
-
-  <!-- Botões -->
-  <div class="d-flex justify-content-end gap-2 mt-4">
-    <button 
-      type="button" 
-      class="btn btn-secondary" 
-      routerLink="/noticia">
-      Cancelar
-    </button>
-    <button 
-      type="submit" 
-      class="btn btn-primary"
-      [disabled]="form.invalid || salvando">
-      <span *ngIf="salvando" class="spinner-border spinner-border-sm me-2"></span>
-      {{ isEdicao ? 'Atualizar' : 'Salvar' }}
-    </button>
-  </div>
-</form>

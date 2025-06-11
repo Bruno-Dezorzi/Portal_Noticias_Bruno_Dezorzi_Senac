@@ -1,5 +1,7 @@
 package br.com.brunodezorzi.api.noticiario.model;
 
+import java.time.LocalDate;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,7 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "Noticia", schema = "public")
@@ -32,6 +33,9 @@ public class Noticia {
   @ManyToOne
   @JoinColumn(name = "autor_id") // nome da coluna no banco
   private Autor autor;
+
+  @Column(name = "destaque")
+  private Boolean destaque = false;
 
   public Integer getId() {
     return id;
@@ -86,4 +90,12 @@ public class Noticia {
     this.categoria = categoria;
     this.autor = autor;
   }
+
+    public Boolean getDestaque() {
+        return destaque;
+    }
+
+    public void setDestaque(Boolean destaque) {
+        this.destaque = destaque;
+    }
 }

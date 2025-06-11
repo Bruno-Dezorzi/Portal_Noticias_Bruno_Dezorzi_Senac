@@ -9,7 +9,7 @@ import { Router, RouterModule } from '@angular/router';
 @Component({
     standalone: true,
     selector: 'app-noticia',
-    imports: [RouterModule, NgFor, SlicePipe],
+    imports: [RouterModule],
     templateUrl: './gerenciar-noticias.component.html',
     styleUrl: './gerenciar-noticias.component.css'
 })
@@ -26,7 +26,7 @@ export class NoticiaComponent implements OnInit {
 
   public async getCategoria(){
     this.noticia$ = await lastValueFrom(this.noticiaService.get());
-
+    
   }
 
 

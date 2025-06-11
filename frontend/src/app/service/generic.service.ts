@@ -1,41 +1,41 @@
-import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+// import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
-interface Identificador {
+export interface Identificador {
   id: number | null;
 }
 
-@Injectable({
+/*@Injectable({
   providedIn: 'root'
-})
-export class GenericService<T extends Identificador> {
+})*/
+export class GenericServiceService<T extends Identificador> {
 
-  private http: HttpClient;
+  protected headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
 
-  constructor(handler: HttpBackend, protected url: String) {
-    this.http = new HttpClient(handler);
+  constructor(
+    protected http: HttpClient,
+    protected url: string
+  ) {}
+
+  public get(): Observable<T[]> {
+    return this.http.get<T[]>(`${this.url}/listar`, { headers: this.headers });
   }
 
-  public get() {
-    return this.http.get(this.url + '/listar').pipe(map(response => response));
-  }
-
-  public getById(id: number) {
-    return this.http.get(this.url + '/listar/' + id).pipe(map(response => response));
+  public getById(id: number): Observable<T> {
+    return this.http.get<T>(`${this.url}/listar/${id}`, { headers: this.headers });
   }
 
   public salvar(object: T): Observable<T> {
-    const headers = new HttpHeaders();
-    headers.set("Content-Type", "Application/json");
-    if (object.id !== null) {
-      return this.http.put<T>(this.url + `/atualizar/${object.id}`, object, { headers });
+    if (object.id !== null && object.id !== undefined) {
+      return this.http.put<T>(`${this.url}/atualizar/${object.id}`, object, { headers: this.headers });
     }
-    return this.http.post<T>(this.url + '/novo', object, { headers });
-
+    return this.http.post<T>(`${this.url}/novo`, object, { headers: this.headers });
   }
 
-  public remover(id: number) {
-    return this.http.delete<T>(this.url + '/remover/' + id).pipe(map(response => response));
+  public remover(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/remover/${id}`, { headers: this.headers });
   }
 }

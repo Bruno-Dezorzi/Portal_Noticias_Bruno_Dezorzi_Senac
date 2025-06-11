@@ -1,4 +1,4 @@
-package br.com.brunodezorzi.api.noticiario.service;
+/*package br.com.brunodezorzi.api.noticiario.service;
 
 import br.com.brunodezorzi.api.noticiario.model.Autor;
 import br.com.brunodezorzi.api.noticiario.model.Categoria;
@@ -24,8 +24,8 @@ public class DataFixture implements CommandLineRunner {
   @Autowired
   NoticiaRepository noticiaRepository;
 
-  /*@Autowired
-  PessoaRepository pessoaRepository;*/
+  Autowired
+  PessoaRepository pessoaRepository;
 
   @Autowired
   UsuarioRepository usuarioRepository;
@@ -174,4 +174,4 @@ public class DataFixture implements CommandLineRunner {
     );
     noticiaRepository.save(noticiaEconomia);
   }
-}
+} */

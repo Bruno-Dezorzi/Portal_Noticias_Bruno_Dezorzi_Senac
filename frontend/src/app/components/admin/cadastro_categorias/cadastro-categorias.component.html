@@ -1,37 +1,47 @@
-<a routerLink="/categoria" class="btn btn-primary left">Voltar</a>
+<div class="container mt-4">
+        <!-- Botão Voltar -->
+        <div class="mb-3">
+            <a routerLink="/admin" class="btn btn-primary">Voltar</a>
+        </div>
 
-<form class="form" [formGroup]="form">
+        <!-- Formulário -->
+        <div class="card">
+            <div class="card-body">
+                <form>
+                    <!-- Campo ID -->
+                    <div class="mb-3">
+                        <label for="id" class="form-label">ID</label>
+                        <input type="text" class="form-control" id="id" placeholder="ID" readonly>
+                    </div>
 
-    <div class="mb-3">
-        <label for="id"></label>
-        <input id="id" type="text" class="form-control" placeholder="ID" [formControl]="form.controls.id" readonly>
+                    <!-- Campo Nome -->
+                    <div class="mb-3">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" placeholder="Nome">
+                    </div>
+
+                    <!-- Campo Descrição -->
+                    <div class="mb-3">
+                        <label for="descricao" class="form-label">Descrição</label>
+                        <input type="text" class="form-control" id="descricao" placeholder="Descrição">
+                    </div>
+
+                    <!-- Campo Categoria -->
+                    <div class="mb-3">
+                        <label for="categoria" class="form-label">Categoria</label>
+                        <select class="form-select" id="categoria">
+                            <option selected disabled>Selecione uma categoria</option>
+                            <option value="1">Categoria 1</option>
+                            <option value="2">Categoria 2</option>
+                            <option value="3">Categoria 3</option>
+                        </select>
+                    </div>
+
+                    <!-- Botão Salvar -->
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button type="button" class="btn btn-primary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-
-    <div class="mb-3">
-        <label for="nome"></label>
-        <input id="nome" type="text" class="form-control" placeholder="Nome" [formControl]="form.controls.nome">
-    </div>
-
-    <div class="mb-3">
-        <label for="descricao'"></label>
-        <input id="descricao" type="text" class="form-control" placeholder="Descricao" [formControl]="form.controls.descricao">
-    </div>
-
-    <div class="mb-3">
-        <select [formControl]="form.controls.categoria" class="form-select">
-            <option *ngFor="let categoria of categoria$" value="{{categoria.id}}">
-                {{categoria.nome}}
-            </option>
-        </select>
-    </div>
-
-    <br>
-
-    <div class="clearfix"></div>
-
-    <div class="container-fluid d-flex justify-contend-end">
-        <button class="btn btn-primary float-right" (click)="salvar()">Salvar</button>
-    </div>
-
-
-</form>

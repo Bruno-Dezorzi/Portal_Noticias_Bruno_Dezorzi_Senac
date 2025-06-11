@@ -1,15 +1,14 @@
-import { HttpBackend } from '@angular/common/http';
+import { HttpBackend, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GenericService } from './generic.service';
+import { GenericServiceService } from './generic.service';
 import { Usuario } from '../model/usuario';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuarioService extends GenericService<Usuario>{
+export class UsuarioService extends GenericServiceService<Usuario>{
 
-  constructor(handler: HttpBackend) {
-    let url = "http://localhost:8080/usuario";
-    super(handler, url);
+  constructor(http: HttpClient) {
+    super(http, 'http://localhost:8080/usuario');
   }
 }

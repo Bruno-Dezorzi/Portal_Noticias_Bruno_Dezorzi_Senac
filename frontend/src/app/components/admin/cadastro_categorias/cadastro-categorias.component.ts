@@ -5,16 +5,13 @@ import { lastValueFrom } from 'rxjs';
 import { Categoria } from '../../../model/categoria';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 
 
 @Component({
     selector: 'app-categoria-form',
     imports: [FormsModule,
         ReactiveFormsModule,
-        NgFor,
-        RouterModule,
-      HttpClientModule ],
+        RouterModule],
     templateUrl: './cadastro-categorias.component.html',
     styleUrl: './cadastro-categorias.component.css'
 })
@@ -30,7 +27,7 @@ export class CategoriaFormComponent implements OnInit{
     nome: new FormControl<string>(''),
     descricao: new FormControl<string>(''),
     categoria: new FormControl<number|null>(null)
-
+    
   });
 
   constructor(private categoriaService: CategoriaService, private router: Router){
@@ -58,7 +55,7 @@ export class CategoriaFormComponent implements OnInit{
     this.form.controls.categoria.setValue(this.categoria.categoria?.id);
   }
 
-
+ 
 
   public salvar(){
     //todo
@@ -72,26 +69,26 @@ export class CategoriaFormComponent implements OnInit{
     console.log(categoria_pai);
     let categoria: Categoria;
 
-    if(categoria_pai){
+    if(categoria_pai){      
       categoria = {
         "id": id_,
         "nome": nome,
         "descricao": descricao,
         "categoria": {
-          "id": categoria_pai,
+          "id": categoria_pai,        
           "nome": null,
           "descricao": null,
           "categoria": null
         }
-      };
-    }else {
+      };   
+    }else {      
       categoria = {
         "id": id_,
         "nome": nome,
         "descricao": descricao
-      };
+      };   
     }
-
+   
 
     console.log(categoria);
 

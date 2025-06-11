@@ -1,7 +1,8 @@
+
 services:
   db:
-    image: postgres:latest
-    restart: unless-stopped
+    image: postgres:17
+    restart: always
     environment:
       POSTGRES_DB: springboot
       POSTGRES_USER: postgres
@@ -9,12 +10,14 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      - "5432:5432"
     networks:
       - spring-net
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - db
     ports:

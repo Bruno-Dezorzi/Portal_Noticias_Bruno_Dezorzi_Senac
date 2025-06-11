@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
-import { GenericService } from './generic.service';
-import { Noticia } from '../model/noticia';
-import { HttpBackend } from '@angular/common/http';
+import { Noticia } from '../../app/model/noticia';
+import { HttpClient } from '@angular/common/http';
+import { GenericServiceService } from './generic.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class NoticiaService extends GenericService<Noticia> {
+export class NoticiaService extends GenericServiceService<Noticia> {
 
-  constructor(handler: HttpBackend) {
-    let url = "http://localhost:8080/noticia";
-    super(handler, url);
+  constructor(http: HttpClient) {
+    super(http, 'http://localhost:8080/noticia');
   }
 }
