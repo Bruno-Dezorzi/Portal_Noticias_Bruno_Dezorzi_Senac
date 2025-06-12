@@ -9,15 +9,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import br.com.brunodezorzi.api.noticiario.model.Publicidade;
-import br.com.brunodezorzi.api.noticiario.model.Posicao;
 import br.com.brunodezorzi.api.noticiario.model.Categoria;
+import br.com.brunodezorzi.api.noticiario.model.Posicao;
+import br.com.brunodezorzi.api.noticiario.model.Publicidade;
 
 @Repository
 public interface PublicidadeRepository extends JpaRepository<Publicidade, Integer> {
 
     // ===== QUERY DERIVADAS =====
     
+    List<Publicidade> findByPosicao_NomeIgnoreCase(String nome);
+
     // Buscar por status ativo
     List<Publicidade> findByAtivoTrue();
     List<Publicidade> findByAtivoFalse();
@@ -57,14 +59,8 @@ public interface PublicidadeRepository extends JpaRepository<Publicidade, Intege
         @Param("dataAtual") LocalDate dataAtual);
     
     // Buscar anúncios por categoria, ativos e vigentes
-    @Query("SELECT DISTINCT p FROM Publicidade p JOIN p.categorias c " +
-           "WHERE p.ativo = true " +
-           "AND :dataAtual BETWEEN p.dataInicio AND p.dataFim " +
-           "AND c = :categoria " +
-           "ORDER BY p.prioridade DESC")
-    List<Publicidade> buscarPorCategoriaAtivasEVigentes(
-        @Param("categoria") Categoria categoria, 
-        @Param("dataAtual") LocalDate dataAtual);
+    @Query("SELECT p FROM Publicidade p WHERE p.categoria = :categoria AND p.ativa = true AND :data BETWEEN p.inicio AND p.fim")
+       List<Publicidade> buscarPorCategoriaAtivasEVigentes(@Param("categoria") Categoria categoria, @Param("data") LocalDate data);
     
     // Buscar anúncios por múltiplas categorias
     @Query("SELECT DISTINCT p FROM Publicidade p JOIN p.categorias c " +

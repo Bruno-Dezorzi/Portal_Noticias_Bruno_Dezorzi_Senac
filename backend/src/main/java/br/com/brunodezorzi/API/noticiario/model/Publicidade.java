@@ -1,7 +1,6 @@
 package br.com.brunodezorzi.api.noticiario.model;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -9,71 +8,55 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Publicidade", schema = "public")
+@Table(name = "publicidade")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Publicidade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id; // : identificador único do anúncio.
 
     @Column(name = "titulo")
-    private String titulo;
+    private String titulo; // : título do anúncio.
 
     @Column(name = "imagemUrl")
-    private String imagemUrl;
+    private String imagemUrl; // : caminho da imagem (ou banner) a ser exibido.
 
     @Column(name = "linkDestino")
-    private String linkDestino;
+    private String linkDestino; // : link para o qual o usuário será redirecionado ao clicar no anúncio.
 
     @Column(name = "dataInicio")
-    private LocalDate dataInicio;
+    private LocalDate dataInicio; // : data de início da exibição.
 
     @Column(name = "dataFim")
-    private LocalDate dataFim;
+    private LocalDate dataFim; // : data final de exibição.
 
     @Column(name = "ativo")
-    private boolean ativo;
+    private Boolean ativo; // : indica se o anúncio está ativo.
 
-    // FIXED: Removed @Column annotation and kept only @ManyToOne with @JoinColumn
+    @Column(name = "prioridade")
+    private Boolean prioridade;
+
+    @JoinColumn(name = "posicao_id", referencedColumnName = "id")
     @ManyToOne
-    @JoinColumn(name = "id_posicao")
-    private Posicao posicao;
+    private Posicao posicao; // : posição da página onde o anúncio será exibido (relação com Posicao).
 
-    // Additional fields based on requirements
-    @Column(name = "visualizacoes", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer visualizacoes = 0;
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+    @ManyToOne
+    private Categoria categoria;//
 
-    @Column(name = "clicks", columnDefinition = "INTEGER DEFAULT 0")
-    private Integer clicks = 0;
-
-    @Column(name = "tipo_midia")
-    private String tipoMidia; // IMAGE, VIDEO, SCRIPT
-
-    @Column(name = "prioridade", columnDefinition = "INTEGER DEFAULT 1")
-    private Integer prioridade = 1;
-
-    @ManyToMany
-    @JoinTable(
-        name = "publicidade_categoria",
-        joinColumns = @JoinColumn(name = "publicidade_id"),
-        inverseJoinColumns = @JoinColumn(name = "categoria_id")
-    )
-    private List<Categoria> categorias;
-
-    // Constructors
-    public Publicidade() {
-    }
-
-    public Publicidade(String titulo, String imagemUrl, String linkDestino, 
-                      LocalDate dataInicio, LocalDate dataFim, boolean ativo, 
-                      Posicao posicao) {
+    public Publicidade(String titulo, String imagemUrl, String linkDestino, LocalDate dataInicio, LocalDate dataFim,
+            Boolean ativo, Posicao posicao, Categoria categoria) {
         this.titulo = titulo;
         this.imagemUrl = imagemUrl;
         this.linkDestino = linkDestino;
@@ -81,269 +64,7 @@ public class Publicidade {
         this.dataFim = dataFim;
         this.ativo = ativo;
         this.posicao = posicao;
-        this.visualizacoes = 0;
-        this.clicks = 0;
-        this.prioridade = 1;
-        this.tipoMidia = "IMAGE";
+        this.categoria = categoria;
     }
-
-    // Helper methods
-    public boolean isVigente() {
-        LocalDate hoje = LocalDate.now();
-        return hoje.isAfter(dataInicio.minusDays(1)) && hoje.isBefore(dataFim.plusDays(1));
-    }
-
-    public boolean isAtivoEVigente() {
-        return ativo && isVigente();
-    }
-
-    public void incrementarVisualizacoes() {
-        this.visualizacoes++;
-    }
-
-    public void incrementarClicks() {
-        this.clicks++;
-    }
-
-    // Getters and Setters
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getImagemUrl() {
-        return imagemUrl;
-    }
-
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
-    }
-
-    public String getLinkDestino() {
-        return linkDestino;
-    }
-
-    public void setLinkDestino(String linkDestino) {
-        this.linkDestino = linkDestino;
-    }
-
-    public LocalDate getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public LocalDate getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(LocalDate dataFim) {
-        this.dataFim = dataFim;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    public Posicao getPosicao() {
-        return posicao;
-    }
-
-    public void setPosicao(Posicao posicao) {
-        this.posicao = posicao;
-    }
-
-    public List<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
-    public Integer getVisualizacoes() {
-        return visualizacoes;
-    }
-
-    public void setVisualizacoes(Integer visualizacoes) {
-        this.visualizacoes = visualizacoes;
-    }
-
-    public Integer getClicks() {
-        return clicks;
-    }
-
-    public void setClicks(Integer clicks) {
-        this.clicks = clicks;
-    }
-
-    public String getTipoMidia() {
-        return tipoMidia;
-    }
-
-    public void setTipoMidia(String tipoMidia) {
-        this.tipoMidia = tipoMidia;
-    }
-
-    public Integer getPrioridade() {
-        return prioridade;
-    }
-
-    public void setPrioridade(Integer prioridade) {
-        this.prioridade = prioridade;
-    }
-}
-
-/*package br.com.brunodezorzi.api.noticiario.model;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "Publicidade", schema = "public")
-public class Publicidade {
-
-@Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private Integer id;
-
-  @Column(name = "titulo")
-  private String titulo;
-
-  @Column(name = "imagemUrl")
-  private String imagemUrl;
-
-  @Column(name = "linkDestino")
-  private String linkDestino;
-
-  @Column(name = "dataInicio")
-  private LocalDate dataInicio;
-
-  @Column(name = "dataFim")
-  private LocalDate dataFim;
-
-  @Column(name = "ativo")
-  private boolean ativo;
-
-  @ManyToOne
-  @JoinColumn(name = "id_posicao")
-  @Column(name = "posicao")
-  private Posicao posicao;
-
-  @ManyToMany
-    @JoinTable(
-        name = "publicidade_categoria",
-        joinColumns = @JoinColumn(name = "publicidade_id"),
-        inverseJoinColumns = @JoinColumn(name = "categoria_id")
-    )
-    private List<Categoria> categorias;
-
-    public Publicidade() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public void setTitulo(String titulo) {
-        this.titulo = titulo;
-    }
-
-    public String getImagemUrl() {
-        return imagemUrl;
-    }
-
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
-    }
-
-    public String getLinkDestino() {
-        return linkDestino;
-    }
-
-    public void setLinkDestino(String linkDestino) {
-        this.linkDestino = linkDestino;
-    }
-
-    public LocalDate getDataInicio() {
-        return dataInicio;
-    }
-
-    public void setDataInicio(LocalDate dataInicio) {
-        this.dataInicio = dataInicio;
-    }
-
-    public LocalDate getDataFim() {
-        return dataFim;
-    }
-
-    public void setDataFim(LocalDate dataFim) {
-        this.dataFim = dataFim;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(boolean ativo) {
-        this.ativo = ativo;
-    }
-
-    public Posicao getPosicao() {
-        return posicao;
-    }
-
-    public void setPosicao(Posicao posicao) {
-        this.posicao = posicao;
-    }
-
-    public List<Categoria> getCategorias() {
-        return categorias;
-    }
-
-    public void setCategorias(List<Categoria> categorias) {
-        this.categorias = categorias;
-    }
-
-
-    
 
 }
-*/

@@ -1,35 +1,37 @@
 package br.com.brunodezorzi.api.noticiario.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Table(name = "usuario")
 @Entity
-public class Usuario extends Pessoa {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Usuario {
 
-  private String login;
-  private String senha;
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
-  public String getLogin() {
-    return login;
-  }
+    @Column(name = "login")
+    private String login;
 
-  public void setLogin(String login) {
-    this.login = login;
-  }
+    @Column(name = "senha")
+    private String senha;
 
-  public String getSenha() {
-    return senha;
-  }
+    @JoinColumn(name = "pessoa_id", referencedColumnName = "id")
+    @ManyToOne
+    private Pessoa pessoa;
 
-  public void setSenha(String senha) {
-    this.senha = senha;
-  }
-
-  public Usuario(String nome, String email, String login, String senha) {
-    setNome(nome);
-    setEmail(email);
-    this.login = login;
-    this.senha = senha;
-  }
-
-  public Usuario() {}
 }

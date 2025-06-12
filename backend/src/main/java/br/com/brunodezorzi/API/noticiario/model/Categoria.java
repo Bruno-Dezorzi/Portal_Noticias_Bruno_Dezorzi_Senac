@@ -1,73 +1,53 @@
 package br.com.brunodezorzi.api.noticiario.model;
 
-import java.util.List;
-
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name="categoria")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Categoria {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
-  private String nome;
+    @Column(name="nome")
+    private String nome;
 
-  @ManyToOne
-  @JoinColumn(
-    name = "categoria_pai_id",
-    referencedColumnName = "id",
-    nullable = true
-  ) // nome da coluna de FK na tabela
-  private Categoria categoriaPai;
+    @Column(name="descricao")
+    private String descricao;
 
-  @ManyToMany(mappedBy = "categorias")
-  private List<Publicidade> publicidades;
+    @Column(name="destaque", nullable=false)
+    private Boolean  destaque;
 
-  public Categoria(String nome, Categoria categoriaPai) {
-    this.categoriaPai = categoriaPai;
-    this.nome = nome;
-  }
+    @JoinColumn(name = "categoria_pai_id", referencedColumnName = "id", nullable=true)
+    @ManyToOne(optional=true)
+    private Categoria categoria;
 
-  public Integer getId() {
-    return id;
-  }
+    
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public Categoria getCategoriaPai() {
-    return categoriaPai;
-  }
-
-  public void setCategoriaPai(Categoria categoriaPai) {
-    this.categoriaPai = categoriaPai;
-  }
-
-  public Categoria() {}
-
-  public String getNome() {
-    return nome;
-  }
-
-  public void setNome(String nome) {
-    this.nome = nome;
-  }
-
-    public List<Publicidade> getPublicidades() {
-        return publicidades;
+    public Categoria(String nome, String descricao, Categoria categoria, boolean destaque) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.destaque = destaque;
     }
 
-    public void setPublicidades(List<Publicidade> publicidades) {
-        this.publicidades = publicidades;
-    }
+
+
 
 
 }

@@ -10,92 +10,43 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Table(name="noticia")
 @Entity
-@Table(name = "Noticia", schema = "public")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Noticia {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id")
-  private Integer id;
+    @Id
+    @Column(name="id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private Integer id;
 
-  @Column(name = "titulo")
-  private String titulo;
+    @Column(name="titulo")
+    private String titulo;
+    
+    @Column(name="corpo", columnDefinition = "TEXT")
+    private String corpo;
 
-  @Column(name = "data_publicacao")
-  private LocalDate dataPublicacao;
+    @Column(name="data_publicacao")
+    private LocalDate dataPublicacao;
 
-  @ManyToOne
-  @JoinColumn(name = "id_categoria")
-  private Categoria categoria;
+    @Column(name = "imagem_url")
+    private String imagem_url;
 
-  @ManyToOne
-  @JoinColumn(name = "autor_id") // nome da coluna no banco
-  private Autor autor;
+    @JoinColumn(name="categoria_id", referencedColumnName="id")
+    @ManyToOne
+    private Categoria categoria;
 
-  @Column(name = "destaque")
-  private Boolean destaque = false;
+    @JoinColumn(name="autor_id", referencedColumnName="id")
+    @ManyToOne
+    private Autor autor;
 
-  public Integer getId() {
-    return id;
-  }
+    @Column(name="destaque")
+    private boolean destaque;
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getTitulo() {
-    return titulo;
-  }
-
-  public void setTitulo(String titulo) {
-    this.titulo = titulo;
-  }
-
-  public LocalDate getDataPublicacao() {
-    return dataPublicacao;
-  }
-
-  public void setDataPublicacao(LocalDate dataPublicacao) {
-    this.dataPublicacao = dataPublicacao;
-  }
-
-  public Categoria getCategoria() {
-    return categoria;
-  }
-
-  public void setCategoria(Categoria categoria) {
-    this.categoria = categoria;
-  }
-
-  public Autor getAutor() {
-    return autor;
-  }
-
-  public void setAutor(Autor autor) {
-    this.autor = autor;
-  }
-
-  public Noticia() {}
-
-  public Noticia(
-    String titulo,
-    LocalDate dataPublicacao,
-    Categoria categoria,
-    Autor autor
-  ) {
-    this.titulo = titulo;
-    this.dataPublicacao = dataPublicacao;
-    this.categoria = categoria;
-    this.autor = autor;
-  }
-
-    public Boolean getDestaque() {
-        return destaque;
-    }
-
-    public void setDestaque(Boolean destaque) {
-        this.destaque = destaque;
-    }
 }
