@@ -28,54 +28,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @for (not of noticia$; track not.id){
                             <tr>
-                                <td>1</td>
-                                <td>Nova tecnologia revoluciona mercado</td>
-                                <td title="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut...
-                                </td>
-                                <td>Tecnologia</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-primary me-2">Editar</button>
-                                    <button type="button" class="btn btn-sm btn-danger">Excluir</button>
-                                </td>
+                                <th>{{not.id}}</th>
+                                <th>{{not.titulo}}</th>
+                                <th>{{not.corpo}}</th>
+                                <th>{{not.categoria?.nome}}</th>
+                                <th>
+                                    <button type="button" (click)="editar(not.id)" class="btn btn-sm btn-primary me-2">Editar</button>
+                                    <button type="button" (click)="remover(not.id)" class="btn btn-sm btn-danger">Excluir</button>
+                                </th>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Campeonato nacional de futebol</td>
-                                <td title="Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.">
-                                    Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas...
-                                </td>
-                                <td>Esportes</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-primary me-2">Editar</button>
-                                    <button type="button" class="btn btn-sm btn-danger">Excluir</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Mudanças na política econômica</td>
-                                <td title="Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra.">
-                                    Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat...
-                                </td>
-                                <td>Política</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-primary me-2">Editar</button>
-                                    <button type="button" class="btn btn-sm btn-danger">Excluir</button>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Inovações em inteligência artificial</td>
-                                <td title="Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui.">
-                                    Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum...
-                                </td>
-                                <td>Tecnologia</td>
-                                <td>
-                                    <button type="button" class="btn btn-sm btn-primary me-2">Editar</button>
-                                    <button type="button" class="btn btn-sm btn-danger">Excluir</button>
-                                </td>
-                            </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

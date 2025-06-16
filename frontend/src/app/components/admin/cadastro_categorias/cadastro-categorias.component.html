@@ -1,47 +1,102 @@
+<!-- cadastro-categorias.component.html -->
 <div class="container mt-4">
-        <!-- Botão Voltar -->
-        <div class="mb-3">
-            <a routerLink="/admin" class="btn btn-primary">Voltar</a>
+    <!-- Botão Voltar -->
+    <div class="mb-3">
+        <button type="button" class="btn btn-secondary" (click)="cancelar()">
+            <i class="fas fa-arrow-left me-2"></i>Voltar
+        </button>
+    </div>
+
+    <!-- Formulário -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                {{ id ? 'Editar Categoria' : 'Nova Categoria' }}
+            </h5>
         </div>
+        <div class="card-body">
+            <form [formGroup]="form" (ngSubmit)="salvar()">
+                <!-- Campo ID -->
+                <div class="mb-3" *ngIf="id">
+                    <label for="id" class="form-label">ID</label>
+                    <input 
+                        id="id" 
+                        type="text" 
+                        class="form-control" 
+                        formControlName="id" 
+                        readonly>
+                </div>
 
-        <!-- Formulário -->
-        <div class="card">
-            <div class="card-body">
-                <form>
-                    <!-- Campo ID -->
-                    <div class="mb-3">
-                        <label for="id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" placeholder="ID" readonly>
+                <!-- Campo Nome -->
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome *</label>
+                    <input 
+                        id="nome" 
+                        type="text" 
+                        class="form-control"
+                        [class.is-invalid]="hasError('nome', 'required') || hasError('nome', 'minlength')"
+                        formControlName="nome"
+                        placeholder="Digite o nome da categoria">
+                    
+                    <div class="invalid-feedback" *ngIf="hasError('nome', 'required')">
+                        O nome é obrigatório.
                     </div>
+                    <div class="invalid-feedback" *ngIf="hasError('nome', 'minlength')">
+                        O nome deve ter pelo menos 2 caracteres.
+                    </div>
+                </div>
+                
+                <!-- Campo Descrição -->
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição *</label>
+                    <textarea 
+                        id="descricao" 
+                        class="form-control"
+                        [class.is-invalid]="hasError('descricao', 'required')"
+                        formControlName="descricao"
+                        placeholder="Digite a descrição da categoria"
+                        rows="3">
+                    </textarea>
+                    
+                    <div class="invalid-feedback" *ngIf="hasError('descricao', 'required')">
+                        A descrição é obrigatória.
+                    </div>
+                </div>
 
-                    <!-- Campo Nome -->
-                    <div class="mb-3">
-                        <label for="nome" class="form-label">Nome</label>
-                        <input type="text" class="form-control" id="nome" placeholder="Nome">
+                <!-- Select Categoria Pai -->
+                <div class="mb-3">
+                    <label for="categoria" class="form-label">Categoria Pai (Opcional)</label>
+                    <select id="categoria" formControlName="categoria" class="form-select">
+                        <option value="">Selecione uma categoria pai</option>
+                        <option 
+                            *ngFor="let categoria of categoria$" 
+                            [value]="categoria.id"
+                            [disabled]="categoria.id === id">
+                            {{ categoria.nome }}
+                        </option>
+                    </select>
+                    <div class="form-text">
+                        Deixe em branco se esta for uma categoria principal.
                     </div>
+                </div>
 
-                    <!-- Campo Descrição -->
-                    <div class="mb-3">
-                        <label for="descricao" class="form-label">Descrição</label>
-                        <input type="text" class="form-control" id="descricao" placeholder="Descrição">
-                    </div>
-
-                    <!-- Campo Categoria -->
-                    <div class="mb-3">
-                        <label for="categoria" class="form-label">Categoria</label>
-                        <select class="form-select" id="categoria">
-                            <option selected disabled>Selecione uma categoria</option>
-                            <option value="1">Categoria 1</option>
-                            <option value="2">Categoria 2</option>
-                            <option value="3">Categoria 3</option>
-                        </select>
-                    </div>
-
-                    <!-- Botão Salvar -->
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
+                <!-- Botões de Ação -->
+                <div class="d-flex justify-content-end gap-2">
+                    <button 
+                        type="button" 
+                        class="btn btn-secondary" 
+                        (click)="cancelar()">
+                        Cancelar
+                    </button>
+                    <button 
+                        type="submit" 
+                        class="btn btn-primary"
+                        [disabled]="form.invalid">
+                        <i class="fas fa-save me-2"></i>
+                        {{ id ? 'Atualizar' : 'Salvar' }}
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>

@@ -1,48 +1,68 @@
 <div class="container mt-4">
-        <!-- Botão Voltar -->
-        <div class="mb-3">
-            <a routerLink="/admin" class="btn btn-primary">Voltar</a>
+    <!-- Botão Voltar -->
+    <div class="mb-3">
+        <a routerLink="/admin" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Voltar
+        </a>
+    </div>
+
+    <!-- Formulário -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">
+                Novo Post
+            </h5>
         </div>
+        <div class="card-body">
+            <form>
+                <!-- Campo Título -->
+                <div class="mb-3">
+                    <label for="titulo" class="form-label">Título *</label>
+                    <input 
+                        id="titulo" 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Digite o título" 
+                        [formControl]="form.controls.titulo">
+                </div>
 
-        <!-- Formulário -->
-        <div class="card">
-            <div class="card-body">
-                <form>
-                    <!-- Campo ID -->
-                    <div class="mb-3">
-                        <label for="id" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="id" placeholder="ID">
-                    </div>
+                <!-- Campo Corpo -->
+                <div class="mb-3">
+                    <label for="corpo" class="form-label">Corpo *</label>
+                    <textarea 
+                        id="corpo" 
+                        class="form-control" 
+                        placeholder="Digite o corpo do post" 
+                        [formControl]="form.controls.corpo"
+                        rows="5">
+                    </textarea>
+                </div>
 
-                    <!-- Campo Título -->
-                    <div class="mb-3">
-                        <label for="titulo" class="form-label">Título</label>
-                        <input type="text" class="form-control" id="titulo" placeholder="Título da Notícia">
-                    </div>
+                <!-- Select Categoria -->
+                <div class="mb-3">
+                    <label for="categoria" class="form-label">Categoria *</label>
+                    <select id="categoria" [formControl]="form.controls.categoria" class="form-select">
+                        <option value="">Selecione uma categoria</option>
+                        <option *ngFor="let cat of cat$" [value]="cat.id">
+                            {{cat.nome}}
+                        </option>
+                    </select>
+                </div>
 
-                    <!-- Campo Corpo da Notícia -->
-                    <div class="mb-3">
-                        <label for="corpo" class="form-label">Corpo da Notícia</label>
-                        <textarea class="form-control" id="corpo" placeholder="Corpo da Notícia" rows="10"></textarea>
-                    </div>
-
-                    <!-- Campo Categoria -->
-                    <div class="mb-3">
-                        <label for="categoria" class="form-label">Categoria</label>
-                        <select class="form-select" id="categoria">
-                            <option selected disabled>Selecione uma categoria</option>
-                            <option value="1">Esportes</option>
-                            <option value="2">Política</option>
-                            <option value="3">Tecnologia</option>
-                            <option value="4">Economia</option>
-                        </select>
-                    </div>
-
-                    <!-- Botão Salvar -->
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button type="button" class="btn btn-primary">Salvar</button>
-                    </div>
-                </form>
-            </div>
+                <!-- Botões de Ação -->
+                <div class="d-flex justify-content-end gap-2">
+                    <a routerLink="/admin" class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                    <button 
+                        type="button" 
+                        class="btn btn-primary" 
+                        (click)="salvar()">
+                        <i class="fas fa-save me-2"></i>
+                        Salvar
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>

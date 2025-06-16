@@ -1,0 +1,75 @@
+<div class="publicidades-container">
+  
+  <!-- Publicidades no topo -->
+  <section class="publicidades-topo mb-4" *ngIf="getPublicidadesPorPosicao('topo').length > 0">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div *ngFor="let pub of getPublicidadesPorPosicao('topo')" 
+               class="banner-topo mb-3">
+            <div class="publicidade-wrapper">
+              <a (click)="abrirLink(pub.linkDestino)" 
+                 class="publicidade-link"
+                 [attr.aria-label]="'Banner publicitário: ' + pub.titulo">
+                <img [src]="pub.imagemUrl" 
+                     [alt]="pub.titulo" 
+                     class="img-fluid publicidade-imagem img-topo"
+                     loading="lazy">
+              </a>
+              <small class="publicidade-titulo text-muted d-block mt-1">
+                {{ pub.titulo }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Layout principal com publicidades laterais -->
+  <div class="container-fluid">
+    <div class="row">
+      
+      <!-- Conteúdo principal (onde ficaria as notícias) -->
+      <div class="col-lg-9 col-md-8">
+        <!-- Aqui seria o conteúdo principal do portal -->
+        <div class="content-placeholder">
+          <ng-content></ng-content>
+        </div>
+      </div>
+
+      <!-- Publicidades na lateral -->
+      <aside class="col-lg-3 col-md-4" *ngIf="getPublicidadesPorPosicao('lateral').length > 0">
+        <div class="publicidades-lateral">
+          <h5 class="sidebar-title mb-3">Publicidade</h5>
+          
+          <div *ngFor="let pub of getPublicidadesPorPosicao('lateral')" 
+               class="banner-lateral mb-4">
+            <div class="publicidade-wrapper">
+              <a (click)="abrirLink(pub.linkDestino)" 
+                 class="publicidade-link"
+                 [attr.aria-label]="'Banner publicitário: ' + pub.titulo">
+                <img [src]="pub.imagemUrl" 
+                     [alt]="pub.titulo" 
+                     class="img-fluid publicidade-imagem img-lateral"
+                     loading="lazy">
+              </a>
+              <small class="publicidade-titulo text-muted d-block mt-2 text-center">
+                {{ pub.titulo }}
+              </small>
+            </div>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- Mensagem quando não há publicidades -->
+  <div *ngIf="publicidades.length === 0" 
+       class="alert alert-info text-center mt-4">
+    <i class="fas fa-info-circle me-2"></i>
+    Nenhuma publicidade ativa encontrada no momento.
+  </div>
+
+</div>

@@ -33,5 +33,9 @@ export const routes: Routes = [
   {
     path: 'gerenciar_categoria',
     loadComponent: () => import('./components/admin/gerenciar-categorias/gerenciar-categorias.component').then(c => c.CategoriaComponent)
+  },
+  {
+    path: 'lista_publicidade',
+    loadComponent: () => import('./components/publicidade-list/publicidade-list.component').then(c => c.PublicidadeListComponent)
   }
 ];
