@@ -1,5 +1,6 @@
 package br.com.brunodezorzi.api.noticiario.controller;
 
+import br.com.brunodezorzi.api.noticiario.dto.CategoriaDTO;
 import br.com.brunodezorzi.api.noticiario.model.Categoria;
 import br.com.brunodezorzi.api.noticiario.repository.CategoriaRepository;
 import java.util.List;
@@ -43,11 +44,13 @@ public class CategoriaController {
   }
 
   @PostMapping("/novo")
-  public ResponseEntity<Categoria> novo(@RequestBody Categoria categoria) {
-    return new ResponseEntity<>(
-      categoriaRepository.save(categoria),
-      HttpStatus.OK
-    );
+  public ResponseEntity<Categoria> novo(@RequestBody CategoriaDTO categoriaDTO) {
+
+    Categoria categoria = new Categoria(categoriaDTO);
+
+    categoriaRepository.save(categoria);
+
+    return ResponseEntity.ok().build();
   }
 
   @PutMapping("/atualizar/{id}")

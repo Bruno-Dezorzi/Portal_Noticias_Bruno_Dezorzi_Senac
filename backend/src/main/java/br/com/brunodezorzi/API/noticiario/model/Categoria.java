@@ -1,5 +1,6 @@
 package br.com.brunodezorzi.api.noticiario.model;
 
+import br.com.brunodezorzi.api.noticiario.dto.CategoriaDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,9 +34,12 @@ public class Categoria {
     @Column(name="destaque", nullable=false)
     private Boolean  destaque;
 
-    @JoinColumn(name = "categoria_pai_id", referencedColumnName = "id", nullable=true)
+    @JoinColumn(name = "categoria_pai_id", referencedColumnName = "id", nullable=true, updatable=false, insertable=false)
     @ManyToOne(optional=true)
     private Categoria categoria;
+
+    @Column(name="categoria_pai_id")
+    private Integer categoriaPaiId;
 
     
 
@@ -46,6 +50,12 @@ public class Categoria {
         this.destaque = destaque;
     }
 
+    public Categoria(CategoriaDTO categoria){
+        this.nome = categoria.getNome();
+        this.descricao = categoria.getDescricao();
+        this.categoriaPaiId = categoria.getCategoriaPaiId();
+        this.destaque = categoria.getDestaque();
+    }
 
 
 
