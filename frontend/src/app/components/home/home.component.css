@@ -1,3 +1,4 @@
+/* Estilos originais mantidos */
 .navbar {
   background-color: #0d6efd !important;
 }
@@ -143,25 +144,6 @@
   transform: translateY(-1px);
 }
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .carousel-caption {
-    padding: 15px;
-  }
-
-  .carousel-caption h2 {
-    font-size: 1.2rem;
-  }
-
-  .carousel-caption p {
-    font-size: 0.9rem;
-  }
-
-  .welcome-section .card-body {
-    padding: 1.5rem;
-  }
-}
-
 /* Loading spinner customization */
 .spinner-border {
   width: 3rem;
@@ -193,4 +175,316 @@ footer address {
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* === SIDEBARS OTIMIZADAS PARA IMAGENS MÁXIMAS === */
+
+/* Container principal com grid layout otimizado */
+.portal-container {
+  display: grid;
+  grid-template-columns: 160px1fr 160px; /* Aumentado para 160pxcada sidebar */
+  gap: 20px;
+  min-height: 100vh;
+  background-color: #f8f9fa;
+  padding: 10px;
+}
+
+/* Sidebars com largura máxima */
+.sidebar {
+  background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+  border: 1px solid #dee2e6;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: fit-content;
+  position: sticky;
+  top: 20px;
+}
+
+.sidebar.esquerda,
+.sidebar.direita {
+  width: 160px; /* Largura máxima para sidebars */
+}
+
+/* Conteúdo principal */
+.conteudo-principal {
+  background-color: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos das publicidades otimizados */
+.publicidade-sidebar {
+  width: 100%;
+  height: 50%;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.publicidade-sidebar a {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #ffffff;
+  border: 3px solid #0d6efd;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+.publicidade-sidebar a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+}
+
+/* IMAGENS DAS SIDEBARS - TAMANHO MÁXIMO */
+.publicidade-sidebar img {
+  width: auto;
+  height: auto;
+  max-height: 100%; /* Altura máxima muito grande */
+  min-height: 100%; /* Altura mínima garantida */
+  object-fit: contain; /* Mantém proporções */
+  display: block;
+  transition: transform 0.3s ease;
+  background-color: #f8f9fa; /* Fundo caso a imagem não preencha */
+}
+
+.publicidade-sidebar a:hover img {
+  transform: scale(1.03);
+}
+
+/* Publicidade do topo */
+.publicidade-topo {
+  width: 100%;
+  max-width: 900px; /* Aumentado */
+  margin: 25px auto;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.publicidade-topo a {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  border: 3px solid #0d6efd;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+.publicidade-topo a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+}
+
+.publicidade-topo img {
+  width: 100%;
+  height: auto;
+  max-height: 250px; /* Aumentado */
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.publicidade-topo a:hover img {
+  transform: scale(1.03);
+}
+
+/* Publicidade do rodapé */
+.publicidade-rodape {
+  width: 100%;
+  max-width: 900px; /* Aumentado */
+  margin: 35px auto 25px;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.publicidade-rodape a {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  border: 3px solid #0d6efd;
+  box-shadow: 0 4px 12px rgba(13, 110, 253, 0.2);
+}
+
+.publicidade-rodape a:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(13, 110, 253, 0.3);
+}
+
+.publicidade-rodape img {
+  width: 100%;
+  height: auto;
+  max-height: 250px; /* Aumentado */
+  object-fit: contain;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.publicidade-rodape a:hover img {
+  transform: scale(1.03);
+}
+
+/* === RESPONSIVIDADE OTIMIZADA === */
+
+/* Telas grandes (1400px+) - Sidebars ainda maiores */
+@media (min-width: 1400px) {
+  .portal-container {
+    grid-template-columns: 126px 1fr 126px; /* Sidebars de 126px */
+    gap: 25px;
+  }
+  
+  .sidebar.esquerda,
+  .sidebar.direita {
+    width: 126px;
+  }
+  
+  .publicidade-sidebar img {
+    max-height: 1100px; /* Altura máxima ainda maior */
+  }
+}
+
+/* Telas médias-grandes (1200px-1399px) */
+@media (max-width: 1399px) and (min-width: 1200px) {
+  .portal-container {
+    grid-template-columns: 300px 1fr 300px;
+    gap: 18px;
+  }
+  
+  .sidebar.esquerda,
+  .sidebar.direita {
+    width: 300px;
+  }
+  
+  .publicidade-sidebar img {
+    max-height: 800px;
+  }
+}
+
+/* Telas médias (992px-1199px) */
+@media (max-width: 1199px) and (min-width: 992px) {
+  .portal-container {
+    grid-template-columns: 250px 1fr 250px;
+    gap: 15px;
+  }
+  
+  .sidebar.esquerda,
+  .sidebar.direita {
+    width: 250px;
+  }
+  
+  .publicidade-sidebar img {
+    max-height: 700px;
+  }
+}
+
+/* Tablets (768px-991px) */
+@media (max-width: 991px) and (min-width: 768px) {
+  .portal-container {
+    grid-template-columns: 1fr;
+    gap: 25px;
+    padding: 15px;
+  }
+  
+  .sidebar {
+    position: relative;
+    top: auto;
+    width: 100%;
+    max-width: 500px; /* Aumentado para tablets */
+    margin: 0 auto;
+  }
+  
+  .sidebar.esquerda {
+    order: 2;
+  }
+  
+  .conteudo-principal {
+    order: 1;
+  }
+  
+  .sidebar.direita {
+    order: 3;
+  }
+  
+  .publicidade-sidebar img {
+    max-height: 600px; /* Bom tamanho para tablets */
+  }
+}
+
+/* Mobile (até 767px) */
+@media (max-width: 767px) {
+  .portal-container {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 10px;
+  }
+  
+  .sidebar {
+    position: relative;
+    top: auto;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 15px;
+  }
+  
+  .publicidade-sidebar img {
+    max-height: 500px;
+    min-height: 250px;
+  }
+  
+  .publicidade-topo,
+  .publicidade-rodape {
+    max-width: 100%;
+    padding: 0 10px;
+  }
+  
+  .publicidade-topo img,
+  .publicidade-rodape img {
+    max-height: 180px;
+  }
+  
+  .carousel-caption {
+    padding: 15px;
+  }
+
+  .carousel-caption h2 {
+    font-size: 1.2rem;
+  }
+
+  .carousel-caption p {
+    font-size: 0.9rem;
+  }
+
+  .welcome-section .card-body {
+    padding: 1.5rem;
+  }
+}
+
+/* Mobile pequeno (até 480px) */
+@media (max-width: 480px) {
+  .portal-container {
+    padding: 5px;
+    gap: 15px;
+  }
+  
+  .sidebar {
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .publicidade-sidebar img {
+    max-height: 400px;
+    min-height: 200px;
+  }
+  
+  .publicidade-topo img,
+  .publicidade-rodape img {
+    max-height: 150px;
+  }
 }

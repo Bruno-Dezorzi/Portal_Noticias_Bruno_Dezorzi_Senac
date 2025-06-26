@@ -10,10 +10,12 @@ import { NgFor } from '@angular/common';
 @Component({
     standalone: true,
     selector: 'app-noticia-form',
-    imports: [FormsModule,
+    imports: [
+        FormsModule,
         ReactiveFormsModule,
-        RouterModule
-      ],
+        RouterModule,
+        NgFor  // Add NgFor to the imports array
+    ],
     templateUrl: './cadastro-noticias.component.html',
     styleUrl: './cadastro-noticias.component.css'
 })
@@ -29,12 +31,11 @@ export class NoticiaFormComponent implements OnInit {
     titulo: new FormControl<string>(''),
     corpo: new FormControl<string>(''),
     categoria: new FormControl<number | null>(null)
-
   });
 
   constructor(private noticiaService: NoticiaService, private router: Router, private categoriaService: CategoriaService) {
-
   }
+
   ngOnInit(): void {
     this.get();
     this.getCategorias();
@@ -42,7 +43,6 @@ export class NoticiaFormComponent implements OnInit {
     if (this.id) {
       this.getById();
     }
-
   }
 
   public async get() {
@@ -62,37 +62,36 @@ export class NoticiaFormComponent implements OnInit {
     this.cat$ = await lastValueFrom(this.categoriaService.get());
   }
 
-  public salvar() {
-    //todo
-    let id_ = null;
-    if (this.id) {
-      id_ = this.id;
+  public salvar(): void {
+        if (this.form.invalid) {
+            this.form.markAllAsTouched();
+            return;
+        }
+
+        const formValues = this.form.value;
+        const noticia: Noticia = {
+            id: this.id,
+            titulo: formValues.titulo || '',
+            corpo: formValues.corpo || '',
+            categoria: formValues.categoria ? {
+                id: formValues.categoria,
+                nome: null,
+                descricao: null,
+                categoria: null
+            } : undefined
+        };
+
+        console.log('Salvando notícia:', noticia);
+
+        this.noticiaService.salvar(noticia).subscribe({
+            next: (response) => {
+                console.log('Notícia salva com sucesso:', response);
+                this.router.navigate(['/admin']); // Navegação consistente
+            },
+            error: (erro) => {
+                console.error('Erro ao salvar notícia:', erro);
+                // Aqui você pode adicionar uma notificação de erro para o usuário
+            }
+        });
     }
-    let titulo = this.form.controls.titulo.value;
-    let corpo = this.form.controls.corpo.value;
-    let categoria = this.form.controls.categoria.value;
-    let noticia: Noticia;
-
-    noticia = {
-      "id": id_,
-      "titulo": titulo,
-      "corpo": corpo,
-      "categoria": {
-        "id": categoria,
-        "nome": null,
-        "descricao": null,
-        "categoria": null
-      }
-    };
-
-    this.noticiaService.salvar(noticia).subscribe(
-      noticia => {
-        this.router.navigate(['noticia']);
-        console.log(noticia);
-      },
-      erro => {
-        console.log(erro);
-      }
-    );
-  }
 }

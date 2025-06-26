@@ -1,5 +1,6 @@
 package br.com.brunodezorzi.api.noticiario.model;
 
+import br.com.brunodezorzi.api.noticiario.dto.PosicaoDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +28,10 @@ public class Posicao {
 
     public Posicao(String nome) {
         this.nome = nome;
+    }
+
+    public Posicao(PosicaoDTO posicao) {
+        this.nome = posicao.getNome();
     }
 
 }

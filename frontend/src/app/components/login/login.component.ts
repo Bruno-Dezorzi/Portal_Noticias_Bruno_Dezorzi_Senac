@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         if (formData.userType === 'admin') {
           this.router.navigate(['/admin']); // ou a rota do admin
         } else {
-          this.router.navigate(['/']);
+          this.router.navigate(['/home']);
         }
       } else {
         this.showError = true;

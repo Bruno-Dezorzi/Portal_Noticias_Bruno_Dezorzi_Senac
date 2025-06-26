@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.brunodezorzi.api.noticiario.dto.PosicaoDTO;
 import br.com.brunodezorzi.api.noticiario.model.Posicao;
 import br.com.brunodezorzi.api.noticiario.repository.PosicaoRepository;
 
@@ -22,57 +23,67 @@ import br.com.brunodezorzi.api.noticiario.repository.PosicaoRepository;
 @RequestMapping("/posicao")
 public class PosicaoController {
 
-    @Autowired
-  private PosicaoRepository PosicaoRepository;
-
+  @Autowired
+  private PosicaoRepository posicaoRepository;
 
   @GetMapping("/listar")
   public ResponseEntity<List<Posicao>> listar() {
-    List<Posicao> posicoes = PosicaoRepository.findAll();
+    List<Posicao> posicoes = posicaoRepository.findAll();
     return ResponseEntity.ok(posicoes);
   }
 
-  // pegar pelo id
   @GetMapping("/listar/{id}")
-  public ResponseEntity<Posicao> listar(@PathVariable(value = "id") Integer Id) {
-    Optional<Posicao> Posicao = PosicaoRepository.findById(Id);
-    if (Posicao.isPresent()) {
-      return new ResponseEntity<>(Posicao.get(), HttpStatus.OK);
+  public ResponseEntity<Posicao> listar(@PathVariable(value = "id") Integer id) {
+    Optional<Posicao> posicao = posicaoRepository.findById(id);
+    if (posicao.isPresent()) {
+      return ResponseEntity.ok(posicao.get());
     } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return ResponseEntity.notFound().build();
     }
   }
 
   @PostMapping("/novo")
-  public ResponseEntity<Posicao> novo(@RequestBody Posicao Posicao) {
-    return new ResponseEntity<>(PosicaoRepository.save(Posicao), HttpStatus.OK);
+  public ResponseEntity<Posicao> novo(@RequestBody PosicaoDTO posicaoDTO) {
+    // Convertendo DTO para Entity
+    Posicao posicao = new Posicao();
+    // Aqui você faria a conversão dos campos do DTO para a Entity
+    // posicao.setNome(posicaoDTO.getNome());
+    // posicao.setDescricao(posicaoDTO.getDescricao());
+    // etc...
+    
+    Posicao posicaoSalva = posicaoRepository.save(posicao);
+    return ResponseEntity.status(HttpStatus.CREATED).body(posicaoSalva);
   }
 
   @PutMapping("/atualizar/{id}")
   public ResponseEntity<Posicao> atualizar(
     @PathVariable(value = "id") Integer id,
-    @RequestBody Posicao novPosicao
+    @RequestBody PosicaoDTO posicaoDTO
   ) {
-    Optional<Posicao> Posicao = PosicaoRepository.findById(id);
-    if (Posicao.isPresent()) {
-      return new ResponseEntity<>(
-        PosicaoRepository.save(novPosicao),
-        HttpStatus.OK
-      );
+    Optional<Posicao> posicao = posicaoRepository.findById(id);
+    if (posicao.isPresent()) {
+      // Convertendo DTO para Entity
+      Posicao posicaoAtualizada = new Posicao();
+      posicaoAtualizada.setId(id); // Mantém o ID para atualização
+      // Aqui você faria a conversão dos campos do DTO para a Entity
+      // posicaoAtualizada.setNome(posicaoDTO.getNome());
+      // posicaoAtualizada.setDescricao(posicaoDTO.getDescricao());
+      // etc...
+      
+      return ResponseEntity.ok(posicaoRepository.save(posicaoAtualizada));
     } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return ResponseEntity.notFound().build();
     }
   }
 
   @DeleteMapping("/remover/{id}")
   public ResponseEntity<Void> remover(@PathVariable("id") Integer id) {
-    Optional<Posicao> Posicao = PosicaoRepository.findById(id);
-    if (Posicao.isPresent()) {
-      PosicaoRepository.deleteById(id);
-      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    Optional<Posicao> posicao = posicaoRepository.findById(id);
+    if (posicao.isPresent()) {
+      posicaoRepository.deleteById(id);
+      return ResponseEntity.noContent().build();
     } else {
-      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+      return ResponseEntity.notFound().build();
     }
   }
-
 }

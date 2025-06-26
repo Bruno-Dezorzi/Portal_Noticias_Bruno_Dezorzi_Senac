@@ -1,16 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Categorias</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
     <div class="container mt-4">
         <!-- Botão Novo -->
         <div class="mb-3">
-            <a routerLink="/cadastro_categoria" class="btn btn-primary">Novo</a>
+            <a routerLink="/categoria/novo" class="btn btn-primary">Novo</a>
         </div>
 
         <!-- Tabela -->
@@ -35,8 +26,8 @@
                                 <th>{{cat.descricao}}</th>
                                 <th>{{cat.categoria?.nome}}</th>
                                 <th>
-                                    <button type="button" (click)="editar(cat.id)" class="btn btn-sm btn-primary me-2">Editar</button>
-                                    <button type="button" (click)="remover(cat.id)" class="btn btn-sm btn-danger">Excluir</button>
+                                    <a (click)="editar(cat.id)" class="btn btn-primary">Editar</a>&nbsp;
+                                    <a (click)="remover(cat.id)" class="btn btn-danger">Excluir</a>
                                 </th>
                             </tr>
                             }

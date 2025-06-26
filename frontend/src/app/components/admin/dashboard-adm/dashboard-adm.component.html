@@ -32,23 +32,23 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/cadastro_noticia">
-              <i class="fas fa-newspaper me-2"></i>Cadastrar Notícias
+            <a class="nav-link" routerLink="/categoria">
+              <i class="fas fa-list me-2"></i>Gerenciar Categorias
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/gerenciar_noticia">
-              <i class="fas fa-edit me-2"></i>Gerenciar Notícias
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" routerLink="/cadastro_categoria">
+            <a class="nav-link" routerLink="/categoria/novo">
               <i class="fas fa-tags me-2"></i>Cadastrar Categorias
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="/gerenciar_categoria">
-              <i class="fas fa-list me-2"></i>Gerenciar Categorias
+            <a class="nav-link" routerLink="/noticia">
+              <i class="fas fa-edit me-2"></i>Gerenciar Notícias
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/noticia/novo">
+              <i class="fas fa-newspaper me-2"></i>Cadastrar Notícias
             </a>
           </li>
           <li class="nav-item">
@@ -147,13 +147,13 @@
             </div>
             <div class="card-body">
               <div class="quick-actions">
-                <a routerLink="/cadastro-noticia" class="btn btn-primary w-100 mb-2">
+                <a routerLink="/categoria/novo" class="btn btn-primary w-100 mb-2">
                   <i class="fas fa-plus me-2"></i>Nova Notícia
                 </a>
-                <a routerLink="/cadastro-categoria" class="btn btn-info w-100 mb-2">
+                <a routerLink="/noticia/novo" class="btn btn-info w-100 mb-2">
                   <i class="fas fa-tag me-2"></i>Nova Categoria
                 </a>
-                <a routerLink="/gerenciar-noticia" class="btn btn-warning w-100 mb-2">
+                <a routerLink="/noticia" class="btn btn-warning w-100 mb-2">
                   <i class="fas fa-edit me-2"></i>Gerenciar Notícias
                 </a>
                 <a routerLink="/relatorios" class="btn btn-success w-100">
@@ -190,7 +190,7 @@
           <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
               <h5><i class="fas fa-newspaper me-2"></i>Últimas Notícias Publicadas</h5>
-              <a routerLink="/gerenciar-noticia" class="btn btn-primary btn-sm">Ver Todas</a>
+              <a routerLink="/noticia" class="btn btn-primary btn-sm">Ver Todas</a>
             </div>
             <div class="card-body">
               <div class="table-responsive">

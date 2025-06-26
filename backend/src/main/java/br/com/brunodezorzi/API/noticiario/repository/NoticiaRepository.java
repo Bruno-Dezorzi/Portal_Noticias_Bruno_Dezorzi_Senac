@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import br.com.brunodezorzi.api.noticiario.model.Categoria;
 import br.com.brunodezorzi.api.noticiario.model.Noticia;
 
 public interface NoticiaRepository extends JpaRepository<Noticia, Integer> {
@@ -25,5 +26,11 @@ public interface NoticiaRepository extends JpaRepository<Noticia, Integer> {
     // Exemplo alternativo com JPQL (não necessário neste caso, mas aqui está para referência)
     @Query("SELECT n FROM Noticia n WHERE n.destaque = true")
     List<Noticia> buscarNoticiasEmDestaqueComQuery();
+
+    List<Noticia> findAllNoticiasByCategoria(Categoria categoria);
+    
+    Noticia findTopByOrderByDataPublicacaoDesc();
+
+    Noticia findTopByCategoriaIdOrderByDataPublicacaoDesc(Integer categoriaId);
 
 }

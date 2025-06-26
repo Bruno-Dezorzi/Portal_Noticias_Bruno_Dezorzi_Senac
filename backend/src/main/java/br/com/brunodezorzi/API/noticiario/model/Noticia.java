@@ -2,6 +2,7 @@ package br.com.brunodezorzi.api.noticiario.model;
 
 import java.time.LocalDate;
 
+import br.com.brunodezorzi.api.noticiario.dto.NoticiaDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,15 +39,35 @@ public class Noticia {
     @Column(name = "imagem_url")
     private String imagem_url;
 
-    @JoinColumn(name="categoria_id", referencedColumnName="id")
+    @JoinColumn(name="categoria_pai_id", referencedColumnName="id",nullable=true, updatable=false, insertable=false)
     @ManyToOne
     private Categoria categoria;
 
-    @JoinColumn(name="autor_id", referencedColumnName="id")
+    @Column(name="categoria_pai_id")
+    private Integer categoriaId;
+
+    @JoinColumn(name="autor_id", referencedColumnName="id",nullable=true, updatable=false, insertable=false)
     @ManyToOne
     private Autor autor;
 
+    @Column(name="autor_id")
+    private Integer autorId;
+
+
     @Column(name="destaque")
     private boolean destaque;
+
+    public Noticia(NoticiaDTO noticia){
+        this.titulo = noticia.getTitulo();
+        this.corpo = noticia.getCorpo();
+        this.dataPublicacao = noticia.getDataPublicacao();
+        this.imagem_url = noticia.getImagem_url();
+        this.categoriaId = noticia.getCategoriaId();
+        this.autorId = noticia.getAutorId();
+        this.destaque = noticia.isDestaque();
+    }
+
+
+    
 
 }

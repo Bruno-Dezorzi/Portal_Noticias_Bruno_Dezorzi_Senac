@@ -2,6 +2,7 @@ package br.com.brunodezorzi.api.noticiario.model;
 
 import java.time.LocalDate;
 
+import br.com.brunodezorzi.api.noticiario.dto.PublicidadeDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,13 +48,19 @@ public class Publicidade {
     @Column(name = "prioridade")
     private Boolean prioridade;
 
-    @JoinColumn(name = "posicao_id", referencedColumnName = "id")
+    @JoinColumn(name = "posicao_id", referencedColumnName = "id", nullable = true, updatable = false, insertable = false)
     @ManyToOne
     private Posicao posicao; // : posição da página onde o anúncio será exibido (relação com Posicao).
 
-    @JoinColumn(name = "categoria_id", referencedColumnName = "id")
+    @Column(name = "posicao_id")
+    private Integer posicaoId;
+
+    @JoinColumn(name = "categoria_id", referencedColumnName = "id", nullable = true, updatable = false, insertable = false)
     @ManyToOne
     private Categoria categoria;//
+
+     @Column(name = "categoria_id")
+    private Integer categoriaId;
 
     public Publicidade(String titulo, String imagemUrl, String linkDestino, LocalDate dataInicio, LocalDate dataFim,
             Boolean ativo, Posicao posicao, Categoria categoria) {
@@ -65,6 +72,19 @@ public class Publicidade {
         this.ativo = ativo;
         this.posicao = posicao;
         this.categoria = categoria;
+    }
+
+    public Publicidade(PublicidadeDTO publicidade){
+        this.titulo = publicidade.getTitulo();
+        this.imagemUrl = publicidade.getImagemUrl();
+        this.linkDestino = publicidade.getLinkDestino();
+        this.dataInicio = publicidade.getDataInicio();
+        this.dataFim = publicidade.getDataFim();
+        this.ativo = publicidade.isAtivo();
+        this.prioridade = publicidade.isPrioridade();
+        this.posicaoId = publicidade.getPosicaoId();
+        this.categoriaId = publicidade.getCategoriaId();
+
     }
 
 }

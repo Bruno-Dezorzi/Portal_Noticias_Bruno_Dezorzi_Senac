@@ -1,5 +1,6 @@
 package br.com.brunodezorzi.api.noticiario.model;
 
+import br.com.brunodezorzi.api.noticiario.dto.PessoaDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,6 +32,11 @@ public class Pessoa {
     public Pessoa(String nome, String email) {
         this.nome = nome;
         this.email = email;
+    }
+
+    public Pessoa(PessoaDTO pessoa){
+        this.nome = pessoa.getNome();
+        this.email = pessoa.getEmail();
     }
 
 }

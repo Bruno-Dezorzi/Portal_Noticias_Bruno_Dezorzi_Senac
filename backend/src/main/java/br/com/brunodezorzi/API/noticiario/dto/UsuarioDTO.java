@@ -10,21 +10,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoriaDTO {
-
-    private String nome;
-
-    private String descricao;
-
-    //private Boolean  destaque;
-
-    private Integer categoriaPaiId;
+public class UsuarioDTO {
+    private String login;
+    private String senha;
+    //private Integer pessoaId;
     
-
-
-
-
-
-
-
+    // Adicionar campos da Pessoa
+    private String nome;
+    private String email;
 }

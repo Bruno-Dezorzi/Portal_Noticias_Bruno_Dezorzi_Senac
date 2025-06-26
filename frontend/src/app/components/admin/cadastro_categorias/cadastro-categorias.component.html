@@ -50,14 +50,12 @@
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição *</label>
                     <textarea 
-                        id="descricao" 
-                        class="form-control"
-                        [class.is-invalid]="hasError('descricao', 'required')"
-                        formControlName="descricao"
-                        placeholder="Digite a descrição da categoria"
-                        rows="3">
-                    </textarea>
-                    
+                    id="descricao" 
+                    class="form-control"
+                    [class.is-invalid]="hasError('descricao', 'required')"
+                    formControlName="descricao"
+                    placeholder="Digite a descrição da categoria"
+                    rows="3"></textarea>
                     <div class="invalid-feedback" *ngIf="hasError('descricao', 'required')">
                         A descrição é obrigatória.
                     </div>
@@ -67,7 +65,7 @@
                 <div class="mb-3">
                     <label for="categoria" class="form-label">Categoria Pai (Opcional)</label>
                     <select id="categoria" formControlName="categoria" class="form-select">
-                        <option value="">Selecione uma categoria pai</option>
+                        <option value="">-- Nenhuma (Categoria Principal) --</option>
                         <option 
                             *ngFor="let categoria of categoria$" 
                             [value]="categoria.id"
@@ -76,7 +74,8 @@
                         </option>
                     </select>
                     <div class="form-text">
-                        Deixe em branco se esta for uma categoria principal.
+                        <i class="fas fa-info-circle me-1"></i>
+                        Deixe como "Nenhuma" para criar uma categoria principal (sem pai).
                     </div>
                 </div>
 
@@ -91,9 +90,9 @@
                     <button 
                         type="submit" 
                         class="btn btn-primary"
-                        [disabled]="form.invalid">
+                        (click)="salvar()">
                         <i class="fas fa-save me-2"></i>
-                        {{ id ? 'Atualizar' : 'Salvar' }}
+                        Salvar
                     </button>
                 </div>
             </form>
